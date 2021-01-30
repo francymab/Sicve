@@ -1,5 +1,9 @@
-package com.francescomabilia.model;
+package com.francescomabilia.model.auto;
 
+import com.francescomabilia.model.Utente;
+import com.francescomabilia.model.percorrimenti.PercorrimentiObserver;
+
+import java.util.List;
 import java.util.Objects;
 
 public class Autoveicolo extends Utente {
@@ -9,7 +13,7 @@ public class Autoveicolo extends Utente {
     private String targa;
     private String telefono;
     private boolean mandaSMS;
-    private List<TrattaObserver> trattaObserver;
+    private List<PercorrimentiObserver> trattaObserver;
 
     //COSTRUTTORI
     public Autoveicolo(Marca marca, String modello, String targa, String telefono, boolean mandaSMS, String username, String password){
@@ -42,7 +46,7 @@ public class Autoveicolo extends Utente {
         this.mandaSMS = mandaSMS;
     }
 
-    public void setTrattaObserver(List<TrattaObserver> trattaObserver) {
+    public void setTrattaObserver(List<PercorrimentiObserver> trattaObserver) {
         this.trattaObserver = trattaObserver;
     }
 
@@ -67,7 +71,7 @@ public class Autoveicolo extends Utente {
         return this.mandaSMS;
     }
 
-    public List<TrattaObserver> getTrattaObserver() {
+    public List<PercorrimentiObserver> getTrattaObserver() {
         return trattaObserver;
     }
 

@@ -1,4 +1,4 @@
-package com.francescomabilia.model;
+package com.francescomabilia.model.auto;
 
 public enum Marca {
     /**

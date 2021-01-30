@@ -1,6 +1,7 @@
-package com.francescomabilia.model;
+package com.francescomabilia.model.infrazione;
 
-import com.francescomabilia.model.infrazione.Infrazione;
+import com.francescomabilia.model.Proprietario;
+
 import java.util.List;
 import java.util.Objects;
 
