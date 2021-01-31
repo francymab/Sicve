@@ -11,48 +11,94 @@ public class Infrazione {
     private int kmInfrazione;
 
     //COSTRUTTORI
+
+    /**
+     * Costruttore dell' infrazione
+     */
     public Infrazione(){
         //Default
     }
 
     //SETTER
+
+    /**
+     * Setter della descrizione dell' infrazione
+     * @param descrizione Descrizione dell' infrazione
+     */
     public void setDescrizione(String descrizione) {
         this.descrizione = descrizione;
     }
 
+    /**
+     * Setter della targa dell' autoveicolo
+     * @param targa Targa dell' autoveicolo
+     */
     public void setTarga(String targa) {
         this.targa = targa;
     }
 
+    /**
+     * Setter della velocita istantanea dell' autoveicolo
+     * @param velocittaIstantanea velocita istantanea dell' autoveicolo
+     */
     public void setVelocittaInstantanea(int velocittaIstantanea) {
         this.velocittaIstantanea = velocittaIstantanea;
     }
 
+    /**
+     * Setter della velocita media dell' autoveicolo
+     * @param velocitaMedia Velocita media dell' autoveicolo
+     */
     public void setVelocitaMedia(double velocitaMedia) {
         this.velocitaMedia = velocitaMedia;
     }
 
+    /**
+     * Setter del km dell' ifrazione
+     * @param kmInfrazione Km dell' infrazione
+     */
     public void setKmInfrazione(int kmInfrazione) {
         this.kmInfrazione = kmInfrazione;
     }
 
     //GETTER
+
+    /**
+     * Getter della descrizione dell' infrazione
+     * @return Descrizione dell' infrazione
+     */
     public String getDescrizione() {
         return this.descrizione;
     }
 
+    /**
+     * Getter della targa dell' autoveicolo
+     * @return Targa dell' autoveicolo
+     */
     public String getTarga() {
         return this.targa;
     }
 
+    /**
+     * Getter della velocita istantanea dell' autoveicolo
+     * @return Velocita istantanea dell' autoveicolo
+     */
     public int getVelocittaIstantanea() {
         return this.velocittaIstantanea;
     }
 
+    /**
+     * Getter della velocita media dell' autoveicolo
+     * @return Velocita media dell' autoveicolo
+     */
     public double getVelocitaMedia() {
         return this.velocitaMedia;
     }
 
+    /**
+     * Getter del km dell' infrazione
+     * @return Km dell' infrazione
+     */
     public int getKmInfrazione() {
         return this.kmInfrazione;
     }

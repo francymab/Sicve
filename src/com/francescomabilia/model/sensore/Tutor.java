@@ -6,18 +6,40 @@ import java.util.Objects;
 
 public class Tutor {
     //VARIABILI D'ISTANZA
+
+    /*Sensore di inizio della tratta*/
     private Sensore inizio;
+
+    /*Sensore di fine della tratta*/
     private Sensore fine;
+
+    /*Lista degli autovelox della tratta*/
     private List<Sensore> autovelox;
+
+    /**/
     private InfrazioneBuilder infrazioneBuilder;
 
     //COSTRUTTORI
+
+    /**
+     * Costruttore del tutor
+     * @param inizio Sensore di inizio della tratta
+     * @param fine Sensore di fine della tratta
+     * @param autovelox Lista degli autovelox della tratta
+     */
     public Tutor(Sensore inizio, Sensore fine, List<Sensore> autovelox) {
         this.inizio = inizio;
         this.fine = fine;
         this.autovelox = autovelox;
     }
 
+    /**
+     * Costruttore del tutor con l' infrazione
+     * @param inizio
+     * @param fine
+     * @param autovelox
+     * @param infrazioneBuilder
+     */
     public Tutor(Sensore inizio, Sensore fine, List<Sensore> autovelox, InfrazioneBuilder infrazioneBuilder) {
         this.inizio = inizio;
         this.fine = fine;

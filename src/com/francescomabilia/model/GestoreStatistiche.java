@@ -1,7 +1,6 @@
 package com.francescomabilia.model;
 
 import com.francescomabilia.model.tratta.Tratta;
-
 import java.util.Objects;
 
 public class GestoreStatistiche {
