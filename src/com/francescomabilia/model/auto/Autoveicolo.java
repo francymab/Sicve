@@ -1,5 +1,6 @@
 package com.francescomabilia.model.auto;
 
+import com.francescomabilia.model.Proprietario;
 import com.francescomabilia.model.Utente;
 import com.francescomabilia.model.percorrimenti.PercorrimentiObserver;
 import java.util.List;
@@ -32,6 +33,10 @@ public class Autoveicolo {
 
     /*Password dell' autoveicolo*/
     private String password;
+
+    private Proprietario proprietario;
+
+    private int velocita;
 
     //COSTRUTTORI
     /**
