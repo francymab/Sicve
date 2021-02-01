@@ -1,6 +1,7 @@
 package com.francescomabilia.controller;
 
 import com.francescomabilia.db.SicveDb;
+import com.francescomabilia.model.Proprietario;
 import com.francescomabilia.model.auto.Autoveicolo;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -19,8 +20,10 @@ import java.sql.SQLException;
 
 public class LoginAuto {
     private static final String fileName = "src/com/francescomabilia/view/fxml/sicve.fxml";
+    private static final String fileNameHome = "src/com/francescomabilia/view/fxml/homeAuto.fxml";
 
     private final SicveDb sicveDb = SicveDb.getInstance();
+    Autoveicolo autoveicolo = new Autoveicolo();
 
     @FXML
     private Button backButton;
@@ -52,9 +55,17 @@ public class LoginAuto {
         loginButton.setOnAction(e ->{
             try {
 
-                login();
+                autoveicolo = login();
+                Stage stage = (Stage) loginButton.getScene().getWindow();
+                stage.close();
+
                 FXMLLoader loader = new FXMLLoader();
-                Parent root = loader.load(new FileInputStream(fileName));
+                Parent root = loader.load(new FileInputStream(fileNameHome));
+
+                HomeAuto homeAuto = loader.getController();
+                homeAuto.setAutoveicolo(autoveicolo);
+                homeAuto.setSalveLabel(autoveicolo.getProprietario().getNome(), autoveicolo.getProprietario().getCognome());
+                homeAuto.setSendSMSToggleButton(autoveicolo.isMandaSMS());
 
                 Stage homePage = new Stage();
                 homePage.setTitle("SICVE");
@@ -77,9 +88,10 @@ public class LoginAuto {
         loginStage.show();
     }
 
-    private void login() throws Exception {
+    private Autoveicolo login() throws Exception {
         ResultSet rs = sicveDb.getAuto(sicveDb.connection(), usernameTextField.getText().trim(), passwordField.getText().trim());
         Autoveicolo autoveicolo = new Autoveicolo();
+        Proprietario proprietario = new Proprietario();
 
         while (rs.next()){
             autoveicolo.setMarca(rs.getString("marca"));
@@ -89,10 +101,20 @@ public class LoginAuto {
             };
             autoveicolo.setMandaSMS(sms);
             autoveicolo.setTarga(rs.getString("targa"));
+            autoveicolo.setModello(rs.getString("modello"));
+            autoveicolo.setTelefono(rs.getString("telefono"));
+
+            proprietario.setCap(rs.getString("cap"));
+            proprietario.setCodiceFiscale(rs.getString("cf"));
+            proprietario.setIndirizzo(rs.getString("via_piazza") + rs.getString("civico"));
+            proprietario.setNome(rs.getString("nome"));
+            proprietario.setCognome(rs.getString("cognome"));
         }
         if (autoveicolo.getTarga() == null){
             throw new Exception();
         }
+        autoveicolo.setProprietario(proprietario);
 
+        return autoveicolo;
     }
 }

@@ -3,18 +3,32 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<GridPane xmlns="http://javafx.com/javafx"
+
+<BorderPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
-            fx:controller="com.francescomabilia.controller.HomeAdmin"
+            fx:controller="com.francescomabilia.controller.HomeAuto"
             prefHeight="400.0" prefWidth="600.0">
 
+    <top>
+        <Label fx:id="salveLabel" text="Salve, " alignment="CENTER" style="-fx-font-family: 'Times New Roman'; -fx-font-size: 20;"/>
+    </top>
 
-    <Label fx:id="ciao" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
 
-    <Label text="Per aggiungere una tratta " GridPane.rowIndex="1" GridPane.columnIndex="0"/>
-    <Button fx:id="addTrattaButton" text="Clicca qui" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+    <center>
+        <GridPane alignment="CENTER">
+            <Label text="Per aggiungere una tratta " GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+            <Button fx:id="addTrattaButton" text="Clicca qui" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
 
-    <Label text="Per modificare una tratta " GridPane.rowIndex="3" GridPane.columnIndex="0"/>
-    <Button fx:id="modifyTrattaButton" text="Clicca qui" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
+            <Label text="Per modificare una tratta " GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+            <Button fx:id="modifyTrattaButton" text="Clicca qui" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
+         </GridPane>
+    </center>
 
-</GridPane>
+    <bottom>
+        <HBox>
+            <Button fx:id="logoutButton" text="Logout" style="-fx-font-family: 'Times New Roman'; -fx-font-size: 15;"/>
+        </HBox>
+    </bottom>
+
+</BorderPane>
+

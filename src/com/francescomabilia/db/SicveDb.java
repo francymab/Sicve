@@ -1,5 +1,7 @@
 package com.francescomabilia.db;
 
+import com.francescomabilia.model.auto.Autoveicolo;
+
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.ConnectException;
@@ -42,7 +44,7 @@ public class SicveDb {
         try {
             Class.forName(this.driver);
             connection = DriverManager.getConnection(this.address, this.username, this.password);
-            System.out.println("avvenuta la connessione di chi ti vuole bene ");
+            System.out.println("avvenuta la connessione");
         }catch (ClassNotFoundException | SQLException e){
             if (e instanceof ClassNotFoundException){
                 System.out.println("driver not found!");
@@ -62,5 +64,18 @@ public class SicveDb {
         ps.setString(2, password);
         rs = ps.executeQuery();
         return rs;
+    }
+
+    public void changeStateMandaSMS(Connection connection, Autoveicolo autoveicolo) throws SQLException {
+        PreparedStatement ps = null;
+        String qry = "UPDATE `autoveicolo` SET `sms` = ? WHERE `autoveicolo`.`targa` = ?;";
+        ps = connection.prepareStatement(qry);
+        int sendSMS = 1;
+        if (autoveicolo.isMandaSMS()){
+            sendSMS = 0;
+        }
+        ps.setInt(1, sendSMS);
+        ps.setString(2, autoveicolo.getTarga());
+        ps.executeUpdate();
     }
 }

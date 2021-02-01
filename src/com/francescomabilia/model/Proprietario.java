@@ -22,6 +22,9 @@ public class Proprietario {
         this.cap = cap;
     }
 
+    public Proprietario(){
+        //Default
+    }
     //SETTER
     public void setNome(String nome) {
         this.nome = nome;

@@ -54,6 +54,7 @@ public class Autoveicolo {
         this.targa = targa;
         this.telefono = telefono;
         this.mandaSMS = mandaSMS;
+        this.password = password;
     }
 
     public Autoveicolo(){
@@ -118,6 +119,14 @@ public class Autoveicolo {
         this.password = password;
     }
 
+    /**
+     * Setter del proprietario dell' autoveicolo
+     * @param proprietario Proprietario
+     */
+    public void setProprietario(Proprietario proprietario) {
+        this.proprietario = proprietario;
+    }
+
     //GETTER
 
     /**
@@ -176,6 +185,16 @@ public class Autoveicolo {
         return password;
     }
 
+
+    /**
+     * Getter del prprietario dell' autoveicolo
+     * @return proprietario
+     */
+    public Proprietario getProprietario() {
+        return proprietario;
+    }
+
+
     //METODI SOVRASCRITTI
 
     @Override
@@ -199,13 +218,14 @@ public class Autoveicolo {
 
     @Override
     public String toString() {
-        return super.toString() + "\nAutoveicolo{" +
+        return "Autoveicolo{" +
                 "marca=" + marca +
                 ", modello='" + modello + '\'' +
                 ", targa='" + targa + '\'' +
                 ", telefono='" + telefono + '\'' +
                 ", mandaSMS=" + mandaSMS +
                 ", trattaObserver=" + trattaObserver +
+                getProprietario() +
                 '}';
     }
 }
