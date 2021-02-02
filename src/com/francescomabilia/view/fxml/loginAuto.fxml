@@ -26,7 +26,7 @@
 
     <center>
         <GridPane alignment="CENTER">
-            <Label text="Username" GridPane.rowIndex="0" GridPane.columnIndex="0" style="-fx-font-family: 'Times New Roman'; -fx-font-size: 20;"/>
+            <Label text="Targa" GridPane.rowIndex="0" GridPane.columnIndex="0" style="-fx-font-family: 'Times New Roman'; -fx-font-size: 20;"/>
             <TextField fx:id="usernameTextField" promptText="Targa" prefWidth="207" prefHeight="25" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
 
             <Label text="Password" GridPane.rowIndex="2" GridPane.columnIndex="0" style="-fx-font-family: 'Times New Roman'; -fx-font-size: 20;"/>

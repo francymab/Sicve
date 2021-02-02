@@ -13,6 +13,9 @@ public class Utente {
         this.password = password;
     }
 
+    public Utente(){
+        //Default
+    }
     //SETTER
     public void setUsername(String username){
         this.username = username;

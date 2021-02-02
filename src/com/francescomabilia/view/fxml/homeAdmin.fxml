@@ -6,21 +6,22 @@
 
 <BorderPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
-            fx:controller="com.francescomabilia.controller.HomeAuto"
-            prefHeight="400.0" prefWidth="600.0">
+            fx:controller="com.francescomabilia.controller.HomeAdmin"
+            prefHeight="400.0" prefWidth="600.0"
+            fx:id="borderPane">
 
     <top>
-        <Label fx:id="salveLabel" text="Salve, " alignment="CENTER" style="-fx-font-family: 'Times New Roman'; -fx-font-size: 20;"/>
+        <Label fx:id="salveLabel" text="Salve, Amministratore" alignment="CENTER" style="-fx-font-family: 'Times New Roman'; -fx-font-size: 20;"/>
     </top>
 
 
     <center>
         <GridPane alignment="CENTER">
-            <Label text="Per aggiungere una tratta " GridPane.rowIndex="1" GridPane.columnIndex="0"/>
-            <Button fx:id="addTrattaButton" text="Clicca qui" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+            <Label text="Per aggiungere una tratta " GridPane.rowIndex="1" GridPane.columnIndex="0" style="-fx-font-family: 'Times New Roman'; -fx-font-size: 15;"/>
+            <Button fx:id="addTrattaButton" text="Clicca qui" GridPane.rowIndex="1" GridPane.columnIndex="1" style="-fx-font-family: 'Times New Roman';"/>
 
-            <Label text="Per modificare una tratta " GridPane.rowIndex="3" GridPane.columnIndex="0"/>
-            <Button fx:id="modifyTrattaButton" text="Clicca qui" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
+            <Label text="Per modificare una tratta " GridPane.rowIndex="3" GridPane.columnIndex="0" style="-fx-font-family: 'Times New Roman'; -fx-font-size: 15;"/>
+            <Button fx:id="modifyTrattaButton" text="Clicca qui" GridPane.rowIndex="3" GridPane.columnIndex="1" style="-fx-font-family: 'Times New Roman';"/>
          </GridPane>
     </center>
 

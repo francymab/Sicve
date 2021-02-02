@@ -47,7 +47,7 @@ public class HomeAuto {
     public void logoutAlert() throws IOException {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Exit!");
-        alert.setContentText("Sicuro di voler uscire ed effettuare il logout?");
+        alert.setContentText("Sicuro di voler effettuare il logout?");
         Optional<ButtonType> result = alert.showAndWait();
 
         if(result.isPresent() && (result.get() == ButtonType.OK)){
@@ -87,7 +87,6 @@ public class HomeAuto {
 
     public void changeState() {
         if(sendSMSToggleButton.isSelected()){
-            System.out.println("true");
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setTitle("Alert!");
             alert.setContentText("Verrà inviato un SMS al numero \'" + autoveicolo.getTelefono() +"\' all' inizio della tratta, confermare la scelta?");
@@ -106,7 +105,6 @@ public class HomeAuto {
                 sendSMSToggleButton.setText("false");
             }
         }else {
-            System.out.println("false");
             sendSMSToggleButton.setSelected(false);
             sendSMSToggleButton.setText("false");
             try {

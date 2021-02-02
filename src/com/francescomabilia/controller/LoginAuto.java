@@ -12,11 +12,9 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 
 public class LoginAuto {
     private static final String fileName = "src/com/francescomabilia/view/fxml/sicve.fxml";

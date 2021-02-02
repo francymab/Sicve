@@ -78,4 +78,16 @@ public class SicveDb {
         ps.setString(2, autoveicolo.getTarga());
         ps.executeUpdate();
     }
+
+    public ResultSet getAdmin(Connection conn, String username, String password) throws SQLException {
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        String qry = "SELECT * FROM amministratore WHERE (username = ? AND password= ?);";
+        ps = conn.prepareStatement(qry);
+        ps.setString(1, username);
+        ps.setString(2, password);
+        System.out.println(username + password);
+        rs = ps.executeQuery();
+        return rs;
+    }
 }

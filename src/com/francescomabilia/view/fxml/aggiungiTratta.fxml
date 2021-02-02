@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.francescomabilia.controller.AggiungiTratta"
+            prefHeight="400.0" prefWidth="600.0">
+
+    <top>
+
+    </top>
+
+    <center>
+        <GridPane>
+            <Label text="(*) Tutti i campi sono obbligatori" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+
+            <Label text="Id Tratta*" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+            <TextField fx:id="idTrattaTextField" promptText="Id Tratta" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+
+            <Label text="Autostrada*" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+            <TextField fx:id="autostradaTextField" promptText="Autostrada" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
+
+            <Label text="Velocità Max*" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
+            <TextField fx:id="velocitaMaxTextField" promptText="Velocità Max" GridPane.rowIndex="4" GridPane.columnIndex="1"/>
+
+            <Label text="Velocità Min*" GridPane.rowIndex="5" GridPane.columnIndex="0"/>
+            <TextField fx:id="velocitaMinTextField" promptText="Velocità Min" GridPane.rowIndex="5" GridPane.columnIndex="1"/>
+
+            <Label text="Citta Fine Tratta*" GridPane.rowIndex="6" GridPane.columnIndex="0"/>
+            <TextField fx:id="cittaFineTrattaTextField" promptText="Città Tutor Fine" GridPane.rowIndex="6" GridPane.columnIndex="1"/>
+
+            <Label text="KM Tratta*" GridPane.rowIndex="7" GridPane.columnIndex="0"/>
+            <TextField fx:id="kmTrattaTextField" promptText="KM Tratta" GridPane.rowIndex="7" GridPane.columnIndex="1"/>
+
+
+        </GridPane>
+    </center>
+
+</BorderPane>

@@ -12,21 +12,22 @@ public class Tratta {
     //VARIABILI D'ISTANZA
     private Tutor tutor;
     private String comune;
-    private AutoveicoloObservable autoveicolo;
     private int velocitaMin;
     private int velocitaMax;
     private int kmTratta;
     private List<Percorrimento> percorrimento;
+    private int idTratta;
+    private String autostrada;
 
     //COSTRUTTORI
-    public Tratta(Tutor tutor, String comune, AutoveicoloObservable autoveicolo, int velocitaMin, int velocitaMax, int kmTratta, List<Percorrimento> percorrimento) {
+    public Tratta(Tutor tutor, String comune, int velocitaMin, int velocitaMax, int kmTratta, int idTratta, List<Percorrimento> percorrimento) {
         this.tutor = tutor;
         this.comune = comune;
-        this.autoveicolo = autoveicolo;
         this.velocitaMin = velocitaMin;
         this.velocitaMax = velocitaMax;
         this.kmTratta = kmTratta;
         this.percorrimento = percorrimento;
+        this.idTratta = idTratta;
     }
 
     //SETTER
@@ -36,10 +37,6 @@ public class Tratta {
 
     public void setComune(String comune) {
         this.comune = comune;
-    }
-
-    public void setAutoveicolo(AutoveicoloObservable autoveicolo) {
-        this.autoveicolo = autoveicolo;
     }
 
     public void setVelocitaMin(int velocitaMin) {
@@ -54,6 +51,10 @@ public class Tratta {
         this.kmTratta = kmTratta;
     }
 
+    public void setIdTratta(int idTratta) {
+        this.idTratta = idTratta;
+    }
+
     public void setPercorrimento(List<Percorrimento> percorrimento) {
         this.percorrimento = percorrimento;
     }
@@ -65,10 +66,6 @@ public class Tratta {
 
     public String getComune() {
         return this.comune;
-    }
-
-    public AutoveicoloObservable getAutoveicolo() {
-        return this.autoveicolo;
     }
 
     public int getVelocitaMax(){
@@ -87,6 +84,10 @@ public class Tratta {
         return this.percorrimento;
     }
 
+    public int getIdTratta() {
+        return this.idTratta;
+    }
+
     //METODI SOVRASCRITTI
     @Override
     public boolean equals(Object o) {
@@ -98,21 +99,20 @@ public class Tratta {
                 kmTratta == tratta.kmTratta &&
                 tutor.equals(tratta.tutor) &&
                 comune.equals(tratta.comune) &&
-                autoveicolo.equals(tratta.autoveicolo) &&
                 percorrimento.equals(tratta.percorrimento);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(tutor, comune, autoveicolo, velocitaMin, velocitaMax, kmTratta, percorrimento);
+        return Objects.hash(tutor, comune, velocitaMin, velocitaMax, kmTratta, percorrimento);
     }
 
     @Override
     public String toString() {
         return "Tratta{" +
+                "idTratta=" + idTratta +
                 "tutor=" + tutor +
                 ", comune='" + comune + '\'' +
-                ", autoveicolo=" + autoveicolo +
                 ", velocitaMin=" + velocitaMin +
                 ", velocitaMax=" + velocitaMax +
                 ", kmTratta=" + kmTratta +
