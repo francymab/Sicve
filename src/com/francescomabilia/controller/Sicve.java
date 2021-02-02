@@ -40,7 +40,6 @@ public class Sicve {
                 Stage stage = (Stage) buttonAmministratore.getScene().getWindow();
                 stage.close();
                 fileName = "src/com/francescomabilia/view/fxml/loginAdmin.fxml";
-                System.out.println("1");
                 showLogin(fileName);
             } catch (IOException ioException) {
                 ioException.printStackTrace();

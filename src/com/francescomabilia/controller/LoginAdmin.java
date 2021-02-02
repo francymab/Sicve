@@ -13,7 +13,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.sql.ResultSet;
@@ -54,6 +53,8 @@ public class LoginAdmin {
         loginButton.setOnAction(e ->{
             try{
                 login();
+                Stage stage = (Stage) loginButton.getScene().getWindow();
+                stage.close();
                 FXMLLoader loader = new FXMLLoader();
                 Parent root = loader.load(new FileInputStream(fileNameHomeAdmin));
 

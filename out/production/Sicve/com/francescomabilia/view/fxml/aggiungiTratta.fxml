@@ -26,7 +26,7 @@
             <TextField fx:id="autostradaTextField" promptText="Autostrada" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
 
             <Label text="Velocità Max*" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
-            <TextField fx:id="velocitaMaxTextField" promptText="Velocità Max" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
+            <TextField fx:id="velocitaMaxTextField" promptText="Velocità Max" GridPane.rowIndex="4" GridPane.columnIndex="1"/>
 
             <Label text="Velocità Min*" GridPane.rowIndex="5" GridPane.columnIndex="0"/>
             <TextField fx:id="velocitaMinTextField" promptText="Velocità Min" GridPane.rowIndex="5" GridPane.columnIndex="1"/>

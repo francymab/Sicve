@@ -30,6 +30,15 @@ public class Tratta {
         this.idTratta = idTratta;
     }
 
+    public Tratta(int idTratta, String autostrada, String comune, int kmTratta, int velocitaMin, int velocitaMax){
+        this.comune = comune;
+        this.velocitaMin = velocitaMin;
+        this.velocitaMax = velocitaMax;
+        this.kmTratta = kmTratta;
+        this.idTratta = idTratta;
+        this.autostrada = autostrada;
+    }
+
     //SETTER
     public void setTutor(Tutor tutor) {
         this.tutor = tutor;
@@ -59,6 +68,10 @@ public class Tratta {
         this.percorrimento = percorrimento;
     }
 
+    public void setAutostrada(String autostrada) {
+        this.autostrada = autostrada;
+    }
+
     //GETTER
     public Tutor getTutor() {
         return this.tutor;
@@ -86,6 +99,10 @@ public class Tratta {
 
     public int getIdTratta() {
         return this.idTratta;
+    }
+
+    public String getAutostrada() {
+        return this.autostrada;
     }
 
     //METODI SOVRASCRITTI

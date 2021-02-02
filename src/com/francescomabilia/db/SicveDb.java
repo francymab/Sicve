@@ -1,6 +1,7 @@
 package com.francescomabilia.db;
 
 import com.francescomabilia.model.auto.Autoveicolo;
+import com.francescomabilia.model.tratta.Tratta;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -86,8 +87,25 @@ public class SicveDb {
         ps = conn.prepareStatement(qry);
         ps.setString(1, username);
         ps.setString(2, password);
-        System.out.println(username + password);
         rs = ps.executeQuery();
         return rs;
     }
+
+    public int insertTratta(Connection connection, Tratta tratta) throws SQLException {
+        PreparedStatement ps = null;
+        String qry = "INSERT INTO `tratta` (`comune`, `autostrada`, `velocità_massima`, `velocita_minima`, `lunghezza`, `id_tratta`) " +
+                     "VALUES (?, ?, ?, ?, ?, ?);";
+
+        ps = connection.prepareStatement(qry);
+
+        ps.setString(1, tratta.getComune());
+        ps.setString(2, tratta.getAutostrada());
+        ps.setInt(3, tratta.getVelocitaMax());
+        ps.setInt(4, tratta.getVelocitaMin());
+        ps.setInt(5, tratta.getKmTratta());
+        ps.setInt(6, tratta.getIdTratta());
+
+        return ps.executeUpdate();
+    }
+
 }
