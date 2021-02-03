@@ -20,11 +20,15 @@
             <Label text="Per aggiungere una tratta " GridPane.rowIndex="1" GridPane.columnIndex="0" style="-fx-font-family: 'Times New Roman'; -fx-font-size: 15;"/>
             <Button fx:id="addTrattaButton" text="Clicca qui" GridPane.rowIndex="1" GridPane.columnIndex="1" style="-fx-font-family: 'Times New Roman';"/>
 
-            <Label text="Per effettuare operazioni su una tratta " GridPane.rowIndex="3" GridPane.columnIndex="0" style="-fx-font-family: 'Times New Roman'; -fx-font-size: 15;"/>
-            <Button fx:id="showTratteButton" text="Clicca qui" GridPane.rowIndex="3" GridPane.columnIndex="1" style="-fx-font-family: 'Times New Roman';"/>
+            <Label GridPane.rowIndex="2" GridPane.columnIndex="0"/>
 
-<!--            <Label text="Per modificare una tratta " GridPane.rowIndex="4" GridPane.columnIndex="0" style="-fx-font-family: 'Times New Roman'; -fx-font-size: 15;"/>-->
-<!--            <Button fx:id="modifyTrattaButton" text="Clicca qui" GridPane.rowIndex="4" GridPane.columnIndex="1" style="-fx-font-family: 'Times New Roman';"/>-->
+            <Label text="Per effettuare operazioni su una tratta " GridPane.rowIndex="4" GridPane.columnIndex="0" style="-fx-font-family: 'Times New Roman'; -fx-font-size: 15;"/>
+            <Button fx:id="showTratteButton" text="Clicca qui" GridPane.rowIndex="4" GridPane.columnIndex="1" style="-fx-font-family: 'Times New Roman';"/>
+
+            <Label GridPane.rowIndex="5" GridPane.columnIndex="0"/>
+
+            <Label text="Per effettuare statistiche " GridPane.rowIndex="6" GridPane.columnIndex="0" style="-fx-font-family: 'Times New Roman'; -fx-font-size: 15;"/>
+            <Button fx:id="statisticheTrattaButton" text="Clicca qui" GridPane.rowIndex="6" GridPane.columnIndex="1" style="-fx-font-family: 'Times New Roman';"/>
          </GridPane>
     </center>
 

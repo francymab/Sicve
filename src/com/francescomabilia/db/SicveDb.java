@@ -59,7 +59,7 @@ public class SicveDb {
     public ResultSet getAuto(Connection conn, String targa, String password) throws SQLException {
         PreparedStatement ps = null;
         ResultSet rs = null;
-        String qry = "SELECT * FROM autoveicolo WHERE (targa = ? AND password= ?);";
+        String qry = "SELECT * FROM `autoveicolo` WHERE (`targa` = ? AND `password`= ?);";
         ps = conn.prepareStatement(qry);
         ps.setString(1, targa);
         ps.setString(2, password);
@@ -83,7 +83,18 @@ public class SicveDb {
     public ResultSet getAdmin(Connection conn, String username, String password) throws SQLException {
         PreparedStatement ps = null;
         ResultSet rs = null;
-        String qry = "SELECT * FROM amministratore WHERE (username = ? AND password= ?);";
+        String qry = "SELECT * FROM `amministratore` WHERE (`username` = ? AND `password`= ?);";
+        ps = conn.prepareStatement(qry);
+        ps.setString(1, username);
+        ps.setString(2, password);
+        rs = ps.executeQuery();
+        return rs;
+    }
+
+    public ResultSet getPolizia(Connection conn, String username, String password) throws SQLException {
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        String qry = "SELECT * FROM `stazione` WHERE (`username` = ? AND `password`= ?);";
         ps = conn.prepareStatement(qry);
         ps.setString(1, username);
         ps.setString(2, password);

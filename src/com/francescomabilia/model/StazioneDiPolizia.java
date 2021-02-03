@@ -14,6 +14,10 @@ public class StazioneDiPolizia extends Utente{
         this.indirizzo = indirizzo;
     }
 
+    public StazioneDiPolizia(){
+        //Default
+    }
+
     //SETTER
     public void setComune(String comune){
         this.comune = comune;

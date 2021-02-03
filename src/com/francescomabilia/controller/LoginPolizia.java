@@ -1,5 +1,9 @@
 package com.francescomabilia.controller;
 
+import com.francescomabilia.db.SicveDb;
+import com.francescomabilia.model.Amministratore;
+import com.francescomabilia.model.StazioneDiPolizia;
+import com.francescomabilia.model.Utente;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -12,9 +16,13 @@ import javafx.stage.Stage;
 
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.sql.ResultSet;
 
 public class LoginPolizia {
     private static final String fileName = "src/com/francescomabilia/view/fxml/sicve.fxml";
+    private static final String fileNameHomePolizia = "src/com/francescomabilia/view/fxml/homePolizia.fxml";
+
+    private final SicveDb sicveDb = SicveDb.getInstance();
 
     @FXML
     private Button backButton;
@@ -44,18 +52,20 @@ public class LoginPolizia {
         });
 
         loginButton.setOnAction(e ->{
-            if(usernameTextField.getText().isEmpty() || passwordField.getText().isEmpty()){
-                errorLogin.setText("Username o password errate. Riprovare o registrarsi!");
-            }else {
-                if (true) {
-                    try {
-                        login();
-                    } catch (IOException ioException) {
-                        ioException.printStackTrace();
-                    }
-                }else {
-                    errorLogin.setText("Username o password errate. Riprovare o registrarsi!");
-                }
+            try{
+                login();
+                Stage stage = (Stage) loginButton.getScene().getWindow();
+                stage.close();
+
+                FXMLLoader loader = new FXMLLoader();
+                Parent root = loader.load(new FileInputStream(fileNameHomePolizia));
+
+                Stage homePage = new Stage();
+                homePage.setTitle("SICVE");
+                homePage.setScene(new Scene(root, 600, 500));
+                homePage.show();
+            }catch (Exception exception){
+                errorLogin.setText("Username o password errate. Riprovare!");
             }
         });
     }
@@ -71,15 +81,18 @@ public class LoginPolizia {
         loginStage.show();
     }
 
-    private void login() throws IOException {
+    private void login() throws Exception {
+        ResultSet rs = sicveDb.getPolizia(sicveDb.connection(), usernameTextField.getText().trim(), passwordField.getText().trim());
+        Utente polizia = new StazioneDiPolizia();
 
-        FXMLLoader loader = new FXMLLoader();
-        Parent root = loader.load(new FileInputStream(fileName));
+        while(rs.next()){
+            polizia.setUsername(rs.getString("username"));
+            polizia.setPassword(rs.getString("password"));
+        }
 
-        Stage homePage = new Stage();
-        homePage.setTitle("SICVE");
-        homePage.setScene(new Scene(root, 600, 500));
-        homePage.show();
+        if (polizia.getUsername() == null){
+            throw new Exception();
+        }
     }
 
 }

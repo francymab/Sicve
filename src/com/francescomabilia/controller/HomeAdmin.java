@@ -65,7 +65,7 @@ public class HomeAdmin {
 
             Stage loginStage = new Stage();
             loginStage.setTitle("SICVE");
-            loginStage.setScene(new Scene(root, 810, 500));
+            loginStage.setScene(new Scene(root, 810, 400));
             loginStage.show();
         });
     }

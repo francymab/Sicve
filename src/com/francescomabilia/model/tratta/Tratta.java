@@ -138,11 +138,11 @@ public class Tratta {
 
     @Override
     public String toString() {
-        return  "Id Tratta=" + idTratta +
-                ", Autostrada='" + autostrada +
-                ", Velocita Min=" + velocitaMin +
-                ", Velocita Max=" + velocitaMax +
-                ", Km Tratta Iniziale=" + kmTrattaInizio +
-                ", Km Tratta Finale=" + kmTrattaFine;
+        return  "Id Tratta= " + idTratta +
+                ", Autostrada= " + autostrada +
+                ", Velocita Min= " + velocitaMin +
+                ", Velocita Max= " + velocitaMax +
+                ", Km Tratta Iniziale= " + kmTrattaInizio +
+                ", Km Tratta Finale= " + kmTrattaFine;
     }
 }
