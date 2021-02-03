@@ -19,6 +19,7 @@ import java.util.Optional;
 public class HomeAdmin {
     private static final String fileName = "src/com/francescomabilia/view/fxml/loginAdmin.fxml";
     private static final String fileNameAddTratta = "src/com/francescomabilia/view/fxml/aggiungiTratta.fxml";
+    private static final String fileNameMostraTratta = "src/com/francescomabilia/view/fxml/mostraTratte.fxml";
 
     private final SicveDb sicveDb = SicveDb.getInstance();
 
@@ -26,7 +27,7 @@ public class HomeAdmin {
     private Button addTrattaButton;
 
     @FXML
-    private Button modifyTrattaButton;
+    private Button showTratteButton;
 
     @FXML
     private BorderPane borderPane;
@@ -50,6 +51,22 @@ public class HomeAdmin {
             }catch (Exception exception){
                 exception.printStackTrace();
             }
+        });
+
+        showTratteButton.setOnAction(e -> {
+            FXMLLoader loader = new FXMLLoader();
+            Parent root = null;
+            try {
+                root = loader.load(new FileInputStream(fileNameMostraTratta));
+            } catch (IOException ioException) {
+                ioException.printStackTrace();
+            }
+
+
+            Stage loginStage = new Stage();
+            loginStage.setTitle("SICVE");
+            loginStage.setScene(new Scene(root, 810, 500));
+            loginStage.show();
         });
     }
 
@@ -97,4 +114,7 @@ public class HomeAdmin {
             }
         }
     }
+
+
+
 }

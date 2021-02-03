@@ -14,29 +14,34 @@ public class Tratta {
     private String comune;
     private int velocitaMin;
     private int velocitaMax;
-    private int kmTratta;
+    private int kmTrattaInizio;
+    private int kmTrattaFine;
     private List<Percorrimento> percorrimento;
     private int idTratta;
     private String autostrada;
 
     //COSTRUTTORI
-    public Tratta(Tutor tutor, String comune, int velocitaMin, int velocitaMax, int kmTratta, int idTratta, List<Percorrimento> percorrimento) {
+    public Tratta(Tutor tutor, String comune, int velocitaMin, int velocitaMax, int kmTrattaInizio, int idTratta, List<Percorrimento> percorrimento) {
         this.tutor = tutor;
         this.comune = comune;
         this.velocitaMin = velocitaMin;
         this.velocitaMax = velocitaMax;
-        this.kmTratta = kmTratta;
+        this.kmTrattaInizio = kmTrattaInizio;
         this.percorrimento = percorrimento;
         this.idTratta = idTratta;
     }
 
-    public Tratta(int idTratta, String autostrada, String comune, int kmTratta, int velocitaMin, int velocitaMax){
+    public Tratta(String autostrada, String comune, int kmTrattaInizio, int velocitaMin, int velocitaMax, int kmTrattaFine){
         this.comune = comune;
         this.velocitaMin = velocitaMin;
         this.velocitaMax = velocitaMax;
-        this.kmTratta = kmTratta;
-        this.idTratta = idTratta;
+        this.kmTrattaInizio = kmTrattaInizio;
         this.autostrada = autostrada;
+        this.kmTrattaFine = kmTrattaFine;
+    }
+
+    public Tratta(){
+        //Default
     }
 
     //SETTER
@@ -56,8 +61,8 @@ public class Tratta {
         this.velocitaMax = velocitaMax;
     }
 
-    public void setKmTratta(int kmTratta) {
-        this.kmTratta = kmTratta;
+    public void setKmTrattaInizio(int kmTrattaInizio) {
+        this.kmTrattaInizio = kmTrattaInizio;
     }
 
     public void setIdTratta(int idTratta) {
@@ -70,6 +75,10 @@ public class Tratta {
 
     public void setAutostrada(String autostrada) {
         this.autostrada = autostrada;
+    }
+
+    public void setKmTrattaFine(int kmTrattaFine) {
+        this.kmTrattaFine = kmTrattaFine;
     }
 
     //GETTER
@@ -89,8 +98,8 @@ public class Tratta {
         return this.velocitaMin;
     }
 
-    public int getKmTratta(){
-        return this.kmTratta;
+    public int getKmTrattaInizio(){
+        return this.kmTrattaInizio;
     }
 
     public List<Percorrimento> getPercorrimento(){
@@ -105,6 +114,10 @@ public class Tratta {
         return this.autostrada;
     }
 
+    public int getKmTrattaFine() {
+        return kmTrattaFine;
+    }
+
     //METODI SOVRASCRITTI
     @Override
     public boolean equals(Object o) {
@@ -113,7 +126,6 @@ public class Tratta {
         Tratta tratta = (Tratta) o;
         return velocitaMin == tratta.velocitaMin &&
                 velocitaMax == tratta.velocitaMax &&
-                kmTratta == tratta.kmTratta &&
                 tutor.equals(tratta.tutor) &&
                 comune.equals(tratta.comune) &&
                 percorrimento.equals(tratta.percorrimento);
@@ -121,19 +133,16 @@ public class Tratta {
 
     @Override
     public int hashCode() {
-        return Objects.hash(tutor, comune, velocitaMin, velocitaMax, kmTratta, percorrimento);
+        return Objects.hash(tutor, comune, velocitaMin, velocitaMax, kmTrattaInizio, percorrimento);
     }
 
     @Override
     public String toString() {
-        return "Tratta{" +
-                "idTratta=" + idTratta +
-                "tutor=" + tutor +
-                ", comune='" + comune + '\'' +
-                ", velocitaMin=" + velocitaMin +
-                ", velocitaMax=" + velocitaMax +
-                ", kmTratta=" + kmTratta +
-                ", percorrimento=" + percorrimento +
-                '}';
+        return  "Id Tratta=" + idTratta +
+                ", Autostrada='" + autostrada +
+                ", Velocita Min=" + velocitaMin +
+                ", Velocita Max=" + velocitaMax +
+                ", Km Tratta Iniziale=" + kmTrattaInizio +
+                ", Km Tratta Finale=" + kmTrattaFine;
     }
 }

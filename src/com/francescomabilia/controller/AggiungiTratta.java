@@ -6,7 +6,7 @@ import javafx.scene.control.TextField;
 
 public class AggiungiTratta {
     @FXML
-    private TextField idTrattaTextField;
+    private TextField kmTrattaFineTextField;
 
     @FXML
     private TextField autostradaTextField;
@@ -21,16 +21,16 @@ public class AggiungiTratta {
     private TextField cittaFineTrattaTextField;
 
     @FXML
-    private TextField kmTrattaTextField;
+    private TextField kmTrattaInizioTextField;
 
     public Tratta addTratta() {
-        int idTratta = Integer.parseInt(idTrattaTextField.getText().trim());
+        int kmTrattaFine = Integer.parseInt(kmTrattaFineTextField.getText().trim());
         String autostrada = autostradaTextField.getText().trim();
         int velocitaMax = Integer.parseInt(velocitaMaxTextField.getText().trim());
         int velocitàMin = Integer.parseInt(velocitaMinTextField.getText().trim());
         String cittaFineTratta = cittaFineTrattaTextField.getText().trim();
-        int kmTratta = Integer.parseInt(kmTrattaTextField.getText().trim());
+        int kmTrattaInizio = Integer.parseInt(kmTrattaInizioTextField.getText().trim());
 
-        return new Tratta(idTratta, autostrada, cittaFineTratta, kmTratta, velocitàMin, velocitaMax);
+        return new Tratta(autostrada, cittaFineTratta, kmTrattaInizio, velocitàMin, velocitaMax, kmTrattaFine);
     }
 }

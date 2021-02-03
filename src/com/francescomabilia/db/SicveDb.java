@@ -7,7 +7,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.ConnectException;
 import java.sql.*;
-import java.util.Properties;
+import java.util.*;
 
 public class SicveDb {
     /*Singleton - Lazy Iniziatilation*/
@@ -93,17 +93,60 @@ public class SicveDb {
 
     public int insertTratta(Connection connection, Tratta tratta) throws SQLException {
         PreparedStatement ps = null;
-        String qry = "INSERT INTO `tratta` (`comune`, `autostrada`, `velocità_massima`, `velocita_minima`, `lunghezza`, `id_tratta`) " +
+        String qry = "INSERT INTO `tratta` (`comune`, `autostrada`, `velocita_minima`, `velocità_massima`, `kmTrattaFine`, `kmTrattaInizio`) " +
                      "VALUES (?, ?, ?, ?, ?, ?);";
 
         ps = connection.prepareStatement(qry);
 
         ps.setString(1, tratta.getComune());
         ps.setString(2, tratta.getAutostrada());
-        ps.setInt(3, tratta.getVelocitaMax());
-        ps.setInt(4, tratta.getVelocitaMin());
-        ps.setInt(5, tratta.getKmTratta());
-        ps.setInt(6, tratta.getIdTratta());
+        ps.setInt(3, tratta.getVelocitaMin());
+        ps.setInt(4, tratta.getVelocitaMax());
+        ps.setInt(5, tratta.getKmTrattaFine());
+        ps.setInt(6, tratta.getKmTrattaInizio());
+
+        return ps.executeUpdate();
+    }
+
+    public List<Tratta> getTratte(Connection connection) throws SQLException{
+        List<Tratta> tratte = new ArrayList<>();
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        String qry = "SELECT * FROM `tratta`;";
+        ps = connection.prepareStatement(qry);
+        rs = ps.executeQuery();
+
+        while (rs.next()){
+            Tratta t = new Tratta();
+
+            t.setAutostrada(rs.getString("autostrada"));
+            t.setComune(rs.getString("comune"));
+            t.setKmTrattaInizio(rs.getInt("kmTrattaInizio"));
+            t.setKmTrattaFine(rs.getInt("kmTrattaFine"));
+            t.setIdTratta(rs.getInt("id_tratta"));
+            t.setVelocitaMax(rs.getInt("velocita_massima"));
+            t.setVelocitaMin(rs.getInt("velocita_minima"));
+
+            tratte.add(t);
+        }
+
+        return tratte;
+    }
+
+    public int updateTratta(Connection connection, Tratta oldTratta, Tratta newTratta) throws SQLException {
+        PreparedStatement ps = null;
+        String qry = "UPDATE `tratta` SET `comune` = ?, `autostrada` = ?, `velocita_minima` = ?, `velocita_massima` = ?," +
+                                         "`kmTrattaFine` = ?, `kmTrattaInizio` = ? " +
+                                     "WHERE `tratta`.`id_tratta` = ?;";
+        ps = connection.prepareStatement(qry);
+
+        ps.setString(1, newTratta.getComune());
+        ps.setString(2, newTratta.getAutostrada());
+        ps.setInt(3, newTratta.getVelocitaMin());
+        ps.setInt(4, newTratta.getVelocitaMax());
+        ps.setInt(5, newTratta.getKmTrattaFine());
+        ps.setInt(6, newTratta.getKmTrattaInizio());
+        ps.setInt(7, oldTratta.getIdTratta());
 
         return ps.executeUpdate();
     }
