@@ -25,10 +25,14 @@ public class MostraTratte {
     @FXML
     private BorderPane borderPane;
 
+    private String tipoAccesso;
+
     public void initialize() throws SQLException {
 
         contextMenu = new ContextMenu();
         MenuItem updateMenuItem = new MenuItem("Modifica");
+        MenuItem enterMenuItem = new MenuItem("Entra");
+
         updateMenuItem.setOnAction(e -> {
             Tratta tratta = tratteListView.getSelectionModel().getSelectedItem();
             try {
@@ -38,7 +42,12 @@ public class MostraTratte {
             }
         });
 
-        contextMenu.getItems().addAll(updateMenuItem);
+        enterMenuItem.setOnAction(e -> {
+            Tratta tratta = tratteListView.getSelectionModel().getSelectedItem();
+            System.out.println(tratta);
+        });
+
+        contextMenu.getItems().addAll(updateMenuItem, enterMenuItem);
 
         tratteListView.getItems().setAll(sicveDb.getTratte(sicveDb.connection()));
         tratteListView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
@@ -61,6 +70,11 @@ public class MostraTratte {
                     cell.setContextMenu(null);
                 }else{
                     cell.setContextMenu(contextMenu);
+                    if (getTipoAccesso().equals("Auto")){
+                        updateMenuItem.setDisable(true);
+                    }else {
+                        enterMenuItem.setDisable(true);
+                    }
                 }
             });
 
@@ -99,5 +113,16 @@ public class MostraTratte {
                 tratteListView.getItems().setAll(sicveDb.getTratte(sicveDb.connection()));
             }
         }
+    }
+
+    //SETTER
+    public void setTipoAccesso(String tipoAccesso) {
+        this.tipoAccesso = tipoAccesso;
+    }
+
+    //GETTER
+
+    public String getTipoAccesso() {
+        return this.tipoAccesso;
     }
 }

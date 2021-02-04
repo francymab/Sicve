@@ -62,6 +62,8 @@ public class HomeAdmin {
                 ioException.printStackTrace();
             }
 
+            MostraTratte showTratte = loader.getController();
+            showTratte.setTipoAccesso("Admin");
 
             Stage loginStage = new Stage();
             loginStage.setTitle("SICVE");

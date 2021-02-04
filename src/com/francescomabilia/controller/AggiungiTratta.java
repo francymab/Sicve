@@ -23,6 +23,9 @@ public class AggiungiTratta {
     @FXML
     private TextField kmTrattaInizioTextField;
 
+    @FXML
+    private TextField direzioneTextField;
+
     public Tratta addTratta() {
         int kmTrattaFine = Integer.parseInt(kmTrattaFineTextField.getText().trim());
         String autostrada = autostradaTextField.getText().trim();
@@ -30,7 +33,8 @@ public class AggiungiTratta {
         int velocitàMin = Integer.parseInt(velocitaMinTextField.getText().trim());
         String cittaFineTratta = cittaFineTrattaTextField.getText().trim();
         int kmTrattaInizio = Integer.parseInt(kmTrattaInizioTextField.getText().trim());
+        String direzione = direzioneTextField.getText().trim();
 
-        return new Tratta(autostrada, cittaFineTratta, kmTrattaInizio, velocitàMin, velocitaMax, kmTrattaFine);
+        return new Tratta(autostrada, cittaFineTratta, kmTrattaInizio, velocitàMin, velocitaMax, kmTrattaFine, direzione);
     }
 }

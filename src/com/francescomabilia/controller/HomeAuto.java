@@ -15,6 +15,8 @@ import java.util.Optional;
 
 public class HomeAuto {
     private static final String fileName = "src/com/francescomabilia/view/fxml/loginAuto.fxml";
+    private static final String fileNameMostraTratta = "src/com/francescomabilia/view/fxml/mostraTratte.fxml";
+
     Autoveicolo autoveicolo = new Autoveicolo();
     private final SicveDb sicveDb = SicveDb.getInstance();
 
@@ -27,6 +29,9 @@ public class HomeAuto {
 
     @FXML
     private Button logoutButton;
+
+    @FXML
+    private Button enterTratteButton;
 
     @FXML
     public void initialize(){
@@ -42,6 +47,23 @@ public class HomeAuto {
             changeState();
         });
 
+        enterTratteButton.setOnAction(event -> {
+            FXMLLoader loader = new FXMLLoader();
+            Parent root = null;
+            try {
+                root = loader.load(new FileInputStream(fileNameMostraTratta));
+            } catch (IOException ioException) {
+                ioException.printStackTrace();
+            }
+
+            MostraTratte showTratte = loader.getController();
+            showTratte.setTipoAccesso("Auto");
+
+            Stage loginStage = new Stage();
+            loginStage.setTitle("SICVE");
+            loginStage.setScene(new Scene(root, 810, 400));
+            loginStage.show();
+        });
     }
 
     public void logoutAlert() throws IOException {
@@ -64,10 +86,12 @@ public class HomeAuto {
         }
     }
 
+    //SETTER
     public void setAutoveicolo(Autoveicolo autoveicolo) {
         this.autoveicolo = autoveicolo;
     }
 
+    //GETTER
     public Autoveicolo getAutoveicolo() {
         return this.autoveicolo;
     }

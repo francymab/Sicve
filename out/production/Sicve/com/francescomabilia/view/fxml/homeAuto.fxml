@@ -20,7 +20,7 @@
             <Label text="Scegliere se ricevere un SMS quando si entra in una tratta " GridPane.rowIndex="0" GridPane.columnIndex="0" style="-fx-font-family: 'Times New Roman'; -fx-font-size: 15;"/>
             <ToggleButton fx:id="sendSMSToggleButton" text="" GridPane.rowIndex="0" GridPane.columnIndex="1" style="-fx-font-family: 'Times New Roman'"/>
 
-            <Label text="Per entrare ed uscire in una tratta " GridPane.rowIndex="2" GridPane.columnIndex="0" style="-fx-font-family: 'Times New Roman'; -fx-font-size: 15;"/>
+            <Label text="Per entrare in una tratta " GridPane.rowIndex="2" GridPane.columnIndex="0" style="-fx-font-family: 'Times New Roman'; -fx-font-size: 15;"/>
             <Button fx:id="enterTratteButton" text="Clicca qui" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
         </GridPane>
     </center>

@@ -10,11 +10,9 @@
             fx:id="borderPane">
 
     <center>
-        <AnchorPane fx:id="ancorPane">
-            <ListView fx:id="tratteListView" prefWidth="810" prefHeight="412">
+        <ListView fx:id="tratteListView">
 
-            </ListView>
-        </AnchorPane>
+        </ListView>
     </center>
 
 </BorderPane>

@@ -104,8 +104,8 @@ public class SicveDb {
 
     public int insertTratta(Connection connection, Tratta tratta) throws SQLException {
         PreparedStatement ps = null;
-        String qry = "INSERT INTO `tratta` (`comune`, `autostrada`, `velocita_minima`, `velocità_massima`, `kmTrattaFine`, `kmTrattaInizio`) " +
-                     "VALUES (?, ?, ?, ?, ?, ?);";
+        String qry = "INSERT INTO `tratta` (`comune`, `autostrada`, `velocita_minima`, `velocità_massima`, `kmTrattaFine`, `kmTrattaInizio`, `direzione`) " +
+                     "VALUES (?, ?, ?, ?, ?, ?, ?);";
 
         ps = connection.prepareStatement(qry);
 
@@ -115,6 +115,7 @@ public class SicveDb {
         ps.setInt(4, tratta.getVelocitaMax());
         ps.setInt(5, tratta.getKmTrattaFine());
         ps.setInt(6, tratta.getKmTrattaInizio());
+        ps.setString(7, tratta.getDirezione());
 
         return ps.executeUpdate();
     }
@@ -137,6 +138,7 @@ public class SicveDb {
             t.setIdTratta(rs.getInt("id_tratta"));
             t.setVelocitaMax(rs.getInt("velocita_massima"));
             t.setVelocitaMin(rs.getInt("velocita_minima"));
+            t.setDirezione(rs.getString("direzione"));
 
             tratte.add(t);
         }
@@ -147,7 +149,7 @@ public class SicveDb {
     public int updateTratta(Connection connection, Tratta oldTratta, Tratta newTratta) throws SQLException {
         PreparedStatement ps = null;
         String qry = "UPDATE `tratta` SET `comune` = ?, `autostrada` = ?, `velocita_minima` = ?, `velocita_massima` = ?," +
-                                         "`kmTrattaFine` = ?, `kmTrattaInizio` = ? " +
+                                         "`kmTrattaFine` = ?, `kmTrattaInizio` = ?, `direzione` = ? " +
                                      "WHERE `tratta`.`id_tratta` = ?;";
         ps = connection.prepareStatement(qry);
 
@@ -157,7 +159,8 @@ public class SicveDb {
         ps.setInt(4, newTratta.getVelocitaMax());
         ps.setInt(5, newTratta.getKmTrattaFine());
         ps.setInt(6, newTratta.getKmTrattaInizio());
-        ps.setInt(7, oldTratta.getIdTratta());
+        ps.setString(7, newTratta.getDirezione());
+        ps.setInt(8, oldTratta.getIdTratta());
 
         return ps.executeUpdate();
     }

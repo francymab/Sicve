@@ -12,22 +12,25 @@
             <Label text="(*) Tutti i campi sono obbligatori" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
 
             <Label text="Autostrada*" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
-            <TextField fx:id="autostradaTextField" promptText="Autostrada" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+            <TextField fx:id="autostradaTextField" promptText="Autostrada" GridPane.rowIndex="2" GridPane.columnIndex="1" minWidth="300"/>
 
-            <Label text="Velocità Max*" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
-            <TextField fx:id="velocitaMaxTextField" promptText="Velocità Max" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
+            <Label text="Direzione*" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+            <TextField fx:id="direzioneTextField" promptText="Direzione" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
 
-            <Label text="Velocità Min*" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
-            <TextField fx:id="velocitaMinTextField" promptText="Velocità Min" GridPane.rowIndex="4" GridPane.columnIndex="1"/>
+            <Label text="Velocità Max*" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
+            <TextField fx:id="velocitaMaxTextField" promptText="Velocità Max" GridPane.rowIndex="4" GridPane.columnIndex="1"/>
 
-            <Label text="Citta Fine Tratta*" GridPane.rowIndex="5" GridPane.columnIndex="0"/>
-            <TextField fx:id="cittaFineTrattaTextField" promptText="Città Tutor Fine" GridPane.rowIndex="5" GridPane.columnIndex="1"/>
+            <Label text="Velocità Min*" GridPane.rowIndex="5" GridPane.columnIndex="0"/>
+            <TextField fx:id="velocitaMinTextField" promptText="Velocità Min" GridPane.rowIndex="5" GridPane.columnIndex="1"/>
 
-            <Label text="KM Tratta Inizio*" GridPane.rowIndex="6" GridPane.columnIndex="0"/>
-            <TextField fx:id="kmTrattaInizioTextField" promptText="KM Tratta Inizio" GridPane.rowIndex="6" GridPane.columnIndex="1"/>
+            <Label text="Citta Fine Tratta*" GridPane.rowIndex="6" GridPane.columnIndex="0"/>
+            <TextField fx:id="cittaFineTrattaTextField" promptText="Città Tutor Fine" GridPane.rowIndex="6" GridPane.columnIndex="1"/>
 
-            <Label text="Km Tratta Fine*" GridPane.rowIndex="7" GridPane.columnIndex="0"/>
-            <TextField fx:id="kmTrattaFineTextField" promptText="km Tratta Fine" GridPane.rowIndex="7" GridPane.columnIndex="1"/>
+            <Label text="KM Tratta Inizio*" GridPane.rowIndex="7" GridPane.columnIndex="0"/>
+            <TextField fx:id="kmTrattaInizioTextField" promptText="KM Tratta Inizio" GridPane.rowIndex="7" GridPane.columnIndex="1"/>
+
+            <Label text="Km Tratta Fine*" GridPane.rowIndex="8" GridPane.columnIndex="0"/>
+            <TextField fx:id="kmTrattaFineTextField" promptText="km Tratta Fine" GridPane.rowIndex="8" GridPane.columnIndex="1"/>
 
         </GridPane>
     </center>

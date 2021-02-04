@@ -19,6 +19,7 @@ public class Tratta {
     private List<Percorrimento> percorrimento;
     private int idTratta;
     private String autostrada;
+    private String direzione;
 
     //COSTRUTTORI
     public Tratta(Tutor tutor, String comune, int velocitaMin, int velocitaMax, int kmTrattaInizio, int idTratta, List<Percorrimento> percorrimento) {
@@ -31,13 +32,14 @@ public class Tratta {
         this.idTratta = idTratta;
     }
 
-    public Tratta(String autostrada, String comune, int kmTrattaInizio, int velocitaMin, int velocitaMax, int kmTrattaFine){
+    public Tratta(String autostrada, String comune, int kmTrattaInizio, int velocitaMin, int velocitaMax, int kmTrattaFine, String direzione){
         this.comune = comune;
         this.velocitaMin = velocitaMin;
         this.velocitaMax = velocitaMax;
         this.kmTrattaInizio = kmTrattaInizio;
         this.autostrada = autostrada;
         this.kmTrattaFine = kmTrattaFine;
+        this.direzione = direzione;
     }
 
     public Tratta(){
@@ -81,6 +83,10 @@ public class Tratta {
         this.kmTrattaFine = kmTrattaFine;
     }
 
+    public void setDirezione(String direzione) {
+        this.direzione = direzione;
+    }
+
     //GETTER
     public Tutor getTutor() {
         return this.tutor;
@@ -118,6 +124,10 @@ public class Tratta {
         return kmTrattaFine;
     }
 
+    public String getDirezione() {
+        return this.direzione;
+    }
+
     //METODI SOVRASCRITTI
     @Override
     public boolean equals(Object o) {
@@ -140,8 +150,10 @@ public class Tratta {
     public String toString() {
         return  "Id Tratta= " + idTratta +
                 ", Autostrada= " + autostrada +
-                ", Velocita Min= " + velocitaMin +
+                ", Direzione = " + direzione +
+                ", Citta di Fine = " + comune +
                 ", Velocita Max= " + velocitaMax +
+                ", Velocita Min= " + velocitaMin +
                 ", Km Tratta Iniziale= " + kmTrattaInizio +
                 ", Km Tratta Finale= " + kmTrattaFine;
     }
