@@ -14,7 +14,7 @@ public class Tutor {
     private Sensore fine;
 
     /*Lista degli autovelox della tratta*/
-    private List<Sensore> autovelox;
+    private List<Autovelox> autovelox;
 
     /**/
     private InfrazioneBuilder infrazioneBuilder;
@@ -27,7 +27,7 @@ public class Tutor {
      * @param fine Sensore di fine della tratta
      * @param autovelox Lista degli autovelox della tratta
      */
-    public Tutor(Sensore inizio, Sensore fine, List<Sensore> autovelox) {
+    public Tutor(Sensore inizio, Sensore fine, List<Autovelox> autovelox) {
         this.inizio = inizio;
         this.fine = fine;
         this.autovelox = autovelox;
@@ -40,7 +40,7 @@ public class Tutor {
      * @param autovelox
      * @param infrazioneBuilder
      */
-    public Tutor(Sensore inizio, Sensore fine, List<Sensore> autovelox, InfrazioneBuilder infrazioneBuilder) {
+    public Tutor(Sensore inizio, Sensore fine, List<Autovelox> autovelox, InfrazioneBuilder infrazioneBuilder) {
         this.inizio = inizio;
         this.fine = fine;
         this.autovelox = autovelox;
@@ -56,7 +56,7 @@ public class Tutor {
         this.fine = fine;
     }
 
-    public void setAutovelox(List<Sensore> autovelox) {
+    public void setAutovelox(List<Autovelox> autovelox) {
         this.autovelox = autovelox;
     }
 
@@ -73,12 +73,29 @@ public class Tutor {
         return this.fine;
     }
 
-    public List<Sensore> getAutovelox() {
+    public List<Autovelox> getAutovelox() {
         return this.autovelox;
     }
 
     public InfrazioneBuilder getInfrazioneBuilder() {
         return this.infrazioneBuilder;
+    }
+
+    //METODI
+    public void builderVelocitaIstantanea(int kmTratta, String descrizione, String targa, Integer velocitaIstantanea){
+        this.infrazioneBuilder.buildKmTratta(kmTratta);
+        this.infrazioneBuilder.builDescrizione(descrizione);
+        this.infrazioneBuilder.buildTarga(targa);
+        this.infrazioneBuilder.buildVelocitaIstantanea(velocitaIstantanea);
+        this.infrazioneBuilder.buildVelocitaMedia(null);
+    }
+
+    public void builderVelocitaMedia(int kmTratta, String descrizione, String targa, Double velocitaMedia){
+        this.infrazioneBuilder.buildKmTratta(kmTratta);
+        this.infrazioneBuilder.builDescrizione(descrizione);
+        this.infrazioneBuilder.buildTarga(targa);
+        this.infrazioneBuilder.buildVelocitaIstantanea(null);
+        this.infrazioneBuilder.buildVelocitaMedia(velocitaMedia);
     }
 
     //METODI SOVRASCRITTI

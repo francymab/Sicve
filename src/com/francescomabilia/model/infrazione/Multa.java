@@ -11,9 +11,6 @@ public class Multa {
     /* Lista delle Infrazioni*/
     private List<Infrazione> infrazioni;
 
-    /*Proprietario dell' autoveicolo*/
-    private Proprietario proprietario;
-
     /*Data della multa*/
     private LocalDate dataMulta;
 
@@ -22,11 +19,9 @@ public class Multa {
     /**
      * Costruttore della multa
      * @param infrazioni Lista delle Infrazioni
-     * @param proprietario Proprietario dell' autoveicolo
      */
-    public Multa (List<Infrazione> infrazioni, Proprietario proprietario, LocalDate dataMulta){
+    public Multa (List<Infrazione> infrazioni, LocalDate dataMulta){
         this.infrazioni = infrazioni;
-        this.proprietario = proprietario;
         this.dataMulta = dataMulta;
     }
 
@@ -38,14 +33,6 @@ public class Multa {
      */
     public void setInfrazioni(List<Infrazione> infrazioni) {
         this.infrazioni = infrazioni;
-    }
-
-    /**
-     * Setter del proprietario
-     * @param proprietario
-     */
-    public void setProprietario(Proprietario proprietario) {
-        this.proprietario = proprietario;
     }
 
     /**
@@ -67,14 +54,6 @@ public class Multa {
     }
 
     /**
-     * Getter del proprietario
-     * @return prorprietario
-     */
-    public Proprietario getProprietario() {
-        return this.proprietario;
-    }
-
-    /**
      * Getter della data della multa
      * @return Data della multa
      */
@@ -88,20 +67,18 @@ public class Multa {
         if (this == o) return true;
         if (!(o instanceof Multa)) return false;
         Multa multa = (Multa) o;
-        return infrazioni.equals(multa.infrazioni) &&
-                proprietario.equals(multa.proprietario);
+        return infrazioni.equals(multa.infrazioni);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(infrazioni, proprietario);
+        return Objects.hash(infrazioni);
     }
 
     @Override
     public String toString() {
         return "Multa{" +
                 "infrazioni=" + infrazioni +
-                ", proprietario=" + proprietario +
                 '}';
     }
 }

@@ -2,6 +2,7 @@ package com.francescomabilia.controller;
 
 import com.francescomabilia.db.SicveDb;
 import com.francescomabilia.model.auto.Autoveicolo;
+import com.francescomabilia.model.tratta.Tratta;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -11,7 +12,15 @@ import javafx.stage.Stage;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import java.time.Duration;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.util.List;
 import java.util.Optional;
+import java.util.Random;
+import java.util.concurrent.TimeUnit;
 
 public class HomeAuto {
     private static final String fileName = "src/com/francescomabilia/view/fxml/loginAuto.fxml";
@@ -35,6 +44,7 @@ public class HomeAuto {
 
     @FXML
     public void initialize(){
+
         logoutButton.setOnAction(e -> {
             try{
                 logoutAlert();
@@ -139,4 +149,40 @@ public class HomeAuto {
             }
         }
     }
+
+    public void generaPercorrenza() throws Exception {
+
+        System.out.println(getAutoveicolo());
+        Random random = new Random();
+        List<Tratta> tratte = sicveDb.getTratte(sicveDb.connection());
+        int iTratte = random.nextInt(tratte.size());
+
+        LocalDateTime timeStart = LocalDateTime.now();
+
+        int sec = random.nextInt(150) + 360;
+
+        LocalDateTime timeEnd = LocalDateTime.now().plus(Duration.ofSeconds(sec));
+
+        Tratta tratta = new Tratta();
+
+        for (Tratta t : tratte){
+            if (t.getIdTratta() ==(iTratte)){
+                tratta = t;
+                break;
+            }
+        }
+
+        sicveDb.insertPercorrenza(sicveDb.connection(), tratta, autoveicolo, timeStart, timeEnd);
+
+        System.out.println(autoveicolo.isMandaSMS());
+        if (autoveicolo.isMandaSMS()){
+            System.out.println("3");
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Alert!");
+            alert.setContentText("Sei entrato nella tratta: " + tratta);
+            alert.show();
+
+        }
+    }
+
 }

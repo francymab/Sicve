@@ -69,6 +69,7 @@ public class LoginAuto {
                 homePage.setTitle("SICVE");
                 homePage.setScene(new Scene(root, 600, 500));
                 homePage.show();
+
             } catch (Exception ioException) {
                 errorLogin.setText("Targa o password errate. Riprovare!");
             }
@@ -78,7 +79,6 @@ public class LoginAuto {
     private void goBack() throws IOException {
         FXMLLoader loader = new FXMLLoader();
         Parent root = loader.load(new FileInputStream(fileName));
-
 
         Stage loginStage = new Stage();
         loginStage.setTitle("SICVE");

@@ -1,6 +1,7 @@
 package com.francescomabilia.model.sensore;
 
 import com.francescomabilia.model.auto.Autoveicolo;
+import com.francescomabilia.model.percorrimenti.Percorrimento;
 
 import java.util.Objects;
 
@@ -9,6 +10,7 @@ public class Autovelox implements Sensore{
 
     /*Km dell' autovelox*/
     private int kmAutovelox;
+    private int idAutovelox;
 
     //COSTRUTTORI
 
@@ -18,6 +20,13 @@ public class Autovelox implements Sensore{
      */
     public Autovelox(int kmAutovelox){
         this.kmAutovelox = kmAutovelox;
+    }
+
+    /**
+     * Costruttore dell' Autovelox di default
+     */
+    public Autovelox(){
+        //Default
     }
 
     //SETTER
@@ -30,6 +39,15 @@ public class Autovelox implements Sensore{
         this.kmAutovelox = kmAutovelox;
     }
 
+    /**
+     * Setter dell' id dell' autovelox
+     * @param idAutovelox id dell' Autovelox
+     */
+    public void setIdAutovelox(int idAutovelox) {
+        this.idAutovelox = idAutovelox;
+    }
+
+
     //GETTER
 
     /**
@@ -40,9 +58,17 @@ public class Autovelox implements Sensore{
         return kmAutovelox;
     }
 
+    /**
+     * Getter dell' id dell' autovelox
+     * @return id dell' autovelox
+     */
+    public int getIdAutovelox() {
+        return idAutovelox;
+    }
+
     //METODI SOVRASCRITTI
     @Override
-    public double calcolaVelocitaMedia(Autoveicolo autoveicolo) {
+    public double calcolaVelocitaMedia(Percorrimento percorrimento) {
         return 0;
     }
 

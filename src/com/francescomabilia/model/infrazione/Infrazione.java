@@ -6,8 +6,8 @@ public class Infrazione {
     //VARIABILI D'ISTANZA
     private String descrizione;
     private String targa;
-    private int velocittaIstantanea;
-    private double velocitaMedia;
+    private Integer velocitaIstantanea;
+    private Double velocitaMedia;
     private int kmInfrazione;
 
     //COSTRUTTORI
@@ -39,17 +39,17 @@ public class Infrazione {
 
     /**
      * Setter della velocita istantanea dell' autoveicolo
-     * @param velocittaIstantanea velocita istantanea dell' autoveicolo
+     * @param velocitaIstantanea velocita istantanea dell' autoveicolo
      */
-    public void setVelocittaInstantanea(int velocittaIstantanea) {
-        this.velocittaIstantanea = velocittaIstantanea;
+    public void setVelocitaInstantanea(Integer velocitaIstantanea) {
+        this.velocitaIstantanea = velocitaIstantanea;
     }
 
     /**
      * Setter della velocita media dell' autoveicolo
      * @param velocitaMedia Velocita media dell' autoveicolo
      */
-    public void setVelocitaMedia(double velocitaMedia) {
+    public void setVelocitaMedia(Double velocitaMedia) {
         this.velocitaMedia = velocitaMedia;
     }
 
@@ -83,15 +83,15 @@ public class Infrazione {
      * Getter della velocita istantanea dell' autoveicolo
      * @return Velocita istantanea dell' autoveicolo
      */
-    public int getVelocittaIstantanea() {
-        return this.velocittaIstantanea;
+    public Integer getVelocitaIstantanea() {
+        return this.velocitaIstantanea;
     }
 
     /**
      * Getter della velocita media dell' autoveicolo
      * @return Velocita media dell' autoveicolo
      */
-    public double getVelocitaMedia() {
+    public Double getVelocitaMedia() {
         return this.velocitaMedia;
     }
 
@@ -109,7 +109,7 @@ public class Infrazione {
         if (this == o) return true;
         if (!(o instanceof Infrazione)) return false;
         Infrazione that = (Infrazione) o;
-        return velocittaIstantanea == that.velocittaIstantanea &&
+        return velocitaIstantanea == that.velocitaIstantanea &&
                 Double.compare(that.velocitaMedia, velocitaMedia) == 0 &&
                 kmInfrazione == that.kmInfrazione &&
                 descrizione.equals(that.descrizione) &&
@@ -118,7 +118,7 @@ public class Infrazione {
 
     @Override
     public int hashCode() {
-        return Objects.hash(descrizione, targa, velocittaIstantanea, velocitaMedia, kmInfrazione);
+        return Objects.hash(descrizione, targa, velocitaIstantanea, velocitaMedia, kmInfrazione);
     }
 
     @Override
@@ -126,7 +126,7 @@ public class Infrazione {
         return "Infrazione{" +
                 "descrizione='" + descrizione + '\'' +
                 ", targa='" + targa + '\'' +
-                ", velocittaInstantanea=" + velocittaIstantanea +
+                ", velocittaInstantanea=" + velocitaIstantanea +
                 ", velocitaMedia=" + velocitaMedia +
                 ", kmInfrazione=" + kmInfrazione +
                 '}';

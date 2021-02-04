@@ -3,27 +3,27 @@ package com.francescomabilia.model.infrazione;
 public class InfrazioneVelocitaMediaBuilder extends InfrazioneBuilder{
     //METODI SOVRASCRITTI
     @Override
-    void builDescrizione(String descrizione) {
+    public void builDescrizione(String descrizione) {
         infrazione.setDescrizione(descrizione);
     }
 
     @Override
-    void buildTarga(String targa) {
+    public void buildTarga(String targa) {
         infrazione.setTarga(targa);
     }
 
     @Override
-    void buildVelocitaIstantanea(int velocitaIstantanea) {
-        infrazione.setVelocittaInstantanea(velocitaIstantanea);
+    public void buildVelocitaIstantanea(Integer velocitaIstantanea) {
+        infrazione.setVelocitaInstantanea(velocitaIstantanea);
     }
 
     @Override
-    void buildVelocitaMedia(double velocitaMedia) {
+    public void buildVelocitaMedia(Double velocitaMedia) {
 
     }
 
     @Override
-    void buildKmTratta(int kmTratta) {
+    public void buildKmTratta(int kmTratta) {
 
     }
 }

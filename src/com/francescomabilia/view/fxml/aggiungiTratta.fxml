@@ -26,11 +26,8 @@
             <Label text="Citta Fine Tratta*" GridPane.rowIndex="6" GridPane.columnIndex="0"/>
             <TextField fx:id="cittaFineTrattaTextField" promptText="Città Tutor Fine" GridPane.rowIndex="6" GridPane.columnIndex="1"/>
 
-            <Label text="KM Tratta Inizio*" GridPane.rowIndex="7" GridPane.columnIndex="0"/>
-            <TextField fx:id="kmTrattaInizioTextField" promptText="KM Tratta Inizio" GridPane.rowIndex="7" GridPane.columnIndex="1"/>
-
-            <Label text="Km Tratta Fine*" GridPane.rowIndex="8" GridPane.columnIndex="0"/>
-            <TextField fx:id="kmTrattaFineTextField" promptText="km Tratta Fine" GridPane.rowIndex="8" GridPane.columnIndex="1"/>
+            <Label text="KM Tratta*" GridPane.rowIndex="7" GridPane.columnIndex="0"/>
+            <TextField fx:id="kmTrattaTextField" promptText="KM Tratta o" GridPane.rowIndex="7" GridPane.columnIndex="1"/>
 
         </GridPane>
     </center>

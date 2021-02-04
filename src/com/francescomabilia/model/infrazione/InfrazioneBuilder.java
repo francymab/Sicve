@@ -5,15 +5,15 @@ public abstract class InfrazioneBuilder {
     protected Infrazione infrazione;
 
     //BUILD
-    abstract void builDescrizione(String descrizione);
+    public abstract void builDescrizione(String descrizione);
 
-    abstract void buildTarga(String targa);
+    public abstract void buildTarga(String targa);
 
-    abstract void buildVelocitaIstantanea(int velocitaIstantanea);
+    public abstract void buildVelocitaIstantanea(Integer velocitaIstantanea);
 
-    abstract void buildVelocitaMedia(double velocitaMedia);
+    public abstract void buildVelocitaMedia(Double velocitaMedia);
 
-    abstract void buildKmTratta(int kmTratta);
+    public abstract void buildKmTratta(int kmTratta);
 
     final Infrazione getResult(){
         return infrazione;
