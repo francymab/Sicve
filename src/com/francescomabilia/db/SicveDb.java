@@ -2,6 +2,7 @@ package com.francescomabilia.db;
 
 import com.francescomabilia.model.auto.Autoveicolo;
 import com.francescomabilia.model.sensore.Autovelox;
+import com.francescomabilia.model.sensore.SensoreIstantaneo;
 import com.francescomabilia.model.sensore.Tutor;
 import com.francescomabilia.model.tratta.Tratta;
 
@@ -178,9 +179,9 @@ public class SicveDb {
         return ps.executeUpdate();
     }
 
-    public List<Autovelox> getAutovelox(Connection conn, int idTratta) throws SQLException {
+    public List<SensoreIstantaneo> getAutovelox(Connection conn, int idTratta) throws SQLException {
         //Inizializzo Lista di autovelox a vuoto
-        List<Autovelox> autoveloxes = new ArrayList<>();
+        List<SensoreIstantaneo> autoveloxes = new ArrayList<>();
 
         PreparedStatement ps = null;
         ResultSet rs = null;

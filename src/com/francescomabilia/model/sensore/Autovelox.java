@@ -5,7 +5,7 @@ import com.francescomabilia.model.percorrimenti.Percorrimento;
 
 import java.util.Objects;
 
-public class Autovelox implements Sensore{
+public class Autovelox implements SensoreIstantaneo{
     //VARIABILI D'ISTANZA
 
     /*Km dell' autovelox*/
@@ -92,7 +92,7 @@ public class Autovelox implements Sensore{
                 '}';
     }
 
-    //METODI
+    @Override
     public int calcolaVelocitaIstantanea(Autoveicolo autoveicolo){
         return 0;
     }
