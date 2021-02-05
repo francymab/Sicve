@@ -3,7 +3,7 @@ package com.francescomabilia.model.percorrimenti;
 import java.time.LocalTime;
 import java.util.Objects;
 
-public class Percorrimento implements PercorrimentiObserver {
+public class Percorrimento {
     //VARIABILI D'ISTANZA
     private LocalTime orarioEntrata;
     private LocalTime orarioUscita;
@@ -77,10 +77,5 @@ public class Percorrimento implements PercorrimentiObserver {
                 ", velocitaMedia=" + velocitaMedia +
                 ", velocitaVeicolo=" + velocitaVeicolo +
                 '}';
-    }
-
-    @Override
-    public void update() {
-
     }
 }

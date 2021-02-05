@@ -12,10 +12,10 @@
             <Label text="(*) Tutti i campi sono obbligatori" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
 
             <Label text="Id Autovelox*" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
-            <TextField fx:id="idAutoveloxTextField" promptText="Autostrada" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+            <TextField fx:id="idAutoveloxTextField" promptText="Id Autovelox" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
 
             <Label text="Km Autovelox*" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
-            <TextField fx:id="kmAutoveloxMaxTextField" promptText="Velocità Max" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
+            <TextField fx:id="kmAutoveloxTextField" promptText="Km Autovelox" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
 
         </GridPane>
     </center>

@@ -172,7 +172,7 @@ public class HomeAuto {
             }
         }
 
-        sicveDb.insertPercorrenza(sicveDb.connection(), tratta, autoveicolo, timeStart, timeEnd);
+        //sicveDb.insertPercorrenza(sicveDb.connection(), tratta, autoveicolo, timeStart, timeEnd);
 
         System.out.println(autoveicolo.isMandaSMS());
         if (autoveicolo.isMandaSMS()){

@@ -21,6 +21,8 @@ public class MostraTratte {
 
     private final SicveDb sicveDb = SicveDb.getInstance();
 
+    private String tipoAccesso;
+
     @FXML
     private ListView<Tratta> tratteListView;
 
@@ -30,8 +32,7 @@ public class MostraTratte {
     @FXML
     private BorderPane borderPane;
 
-    private String tipoAccesso;
-
+    @FXML
     public void initialize() throws SQLException {
 
         contextMenu = new ContextMenu();

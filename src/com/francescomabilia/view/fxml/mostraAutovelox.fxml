@@ -16,6 +16,6 @@
     </center>
 
     <bottom>
-        <Button text="Aggiungi Autovelox"/>
+        <Button fx:id="addAutoveloxButton" text="Aggiungi Autovelox" />
     </bottom>
 </BorderPane>

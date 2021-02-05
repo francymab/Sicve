@@ -134,7 +134,7 @@ public class SicveDb {
         String qry = "SELECT * FROM `tratta`;";
         ps = connection.prepareStatement(qry);
         rs = ps.executeQuery();
-//TODO: completare costruzione tratte con tutor e autovelox
+
         while (rs.next()){
             Tratta t = new Tratta();
 
@@ -203,24 +203,53 @@ public class SicveDb {
         return autoveloxes;
     }
 
-    public int insertPercorrenza(Connection connection, Tratta tratta, Autoveicolo autoveicolo, LocalDateTime start, LocalDateTime end) throws SQLException {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+//    public int insertPercorrenza(Connection connection, Tratta tratta, Autoveicolo autoveicolo, LocalDateTime start, LocalDateTime end) throws SQLException {
+//        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+//
+//        String s = start.format(formatter);
+//        String e = end.format(formatter);
+//
+//        PreparedStatement ps = null;
+//        String qry = "INSERT INTO `percorrenza` (`id_tratta`, `orario_fine`, `orario_inizio`, `targa`) " +
+//                "VALUES (?, ?, ?, ?);";
+//
+//        ps = connection.prepareStatement(qry);
+//
+//        ps.setInt(1, tratta.getIdTratta());
+//        ps.setString(2, e);
+//        ps.setString(3, s);
+//        ps.setString(4, autoveicolo.getTarga());
+//
+//        return ps.executeUpdate();
+//    }
 
-        String s = start.format(formatter);
-        String e = end.format(formatter);
-
+    public int insertAutovelox(Connection connection, Autovelox autovelox, Tratta tratta) throws SQLException{
+        System.out.println(autovelox);
         PreparedStatement ps = null;
-        String qry = "INSERT INTO `percorrenza` (`id_tratta`, `orario_fine`, `orario_inizio`, `targa`) " +
-                "VALUES (?, ?, ?, ?);";
+        String qry = "INSERT INTO `autovelox` (`id_tratta`, `id_autovelox`, `posizione_km`) " +
+                "VALUES (?, ?, ?);";
 
         ps = connection.prepareStatement(qry);
 
         ps.setInt(1, tratta.getIdTratta());
-        ps.setString(2, e);
-        ps.setString(3, s);
-        ps.setString(4, autoveicolo.getTarga());
+        ps.setInt(2, autovelox.getIdAutovelox());
+        ps.setInt(3, autovelox.getKmAutovelox());
 
-        return ps.executeUpdate();
+        int i = ps.executeUpdate();
+        if (i != 0) {
+            tratta.setTutor(new Tutor(
+                    percorrimento -> {
+                        return 0;
+                    },
+                    percorrimento -> {
+                        return tratta.getKmTratta() / (Duration.between(percorrimento.getOrarioUscita(), percorrimento.getOrarioEntrata()).toMinutes() / 60D);
+                    },
+                    getAutovelox(this.connection(), tratta.getIdTratta())
+            ));
+        }else {
+            throw new SQLException();
+        }
+
+        return i;
     }
-
 }

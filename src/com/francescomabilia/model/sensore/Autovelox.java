@@ -18,8 +18,9 @@ public class Autovelox implements SensoreIstantaneo{
      * Costruttore dell' autovelox
      * @param kmAutovelox Km dell' autovelox
      */
-    public Autovelox(int kmAutovelox){
+    public Autovelox(int kmAutovelox, int idAutovelox){
         this.kmAutovelox = kmAutovelox;
+        this.idAutovelox = idAutovelox;
     }
 
     /**
@@ -89,6 +90,7 @@ public class Autovelox implements SensoreIstantaneo{
     public String toString() {
         return "Autovelox{" +
                 "kmAutovelox=" + kmAutovelox +
+                ", idAutovelox=" + idAutovelox +
                 '}';
     }
 

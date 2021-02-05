@@ -1,9 +1,6 @@
 package com.francescomabilia.model.auto;
 
 import com.francescomabilia.model.Proprietario;
-import com.francescomabilia.model.Utente;
-import com.francescomabilia.model.percorrimenti.PercorrimentiObserver;
-import java.util.List;
 import java.util.Objects;
 
 /**
@@ -28,12 +25,10 @@ public class Autoveicolo {
     /*Valore booleano per la selezione della scelta della ricezione SMS*/
     private boolean mandaSMS;
 
-    /*Lista degli observer dei Percorrimenti*/
-    private List<PercorrimentiObserver> trattaObserver;
-
     /*Password dell' autoveicolo*/
     private String password;
 
+    /*Proprietario dell' autoveicolo*/
     private Proprietario proprietario;
 
     private int velocita;
@@ -57,6 +52,9 @@ public class Autoveicolo {
         this.password = password;
     }
 
+    /**
+     * Costruttore di default di un autoveicolo
+     */
     public Autoveicolo(){
         //Default
     }
@@ -101,14 +99,6 @@ public class Autoveicolo {
      */
     public void setMandaSMS(boolean mandaSMS){
         this.mandaSMS = mandaSMS;
-    }
-
-    /**
-     * Setter dell' observer della tratta
-     * @param trattaObserver Observer della tratta
-     */
-    public void setTrattaObserver(List<PercorrimentiObserver> trattaObserver) {
-        this.trattaObserver = trattaObserver;
     }
 
     /**
@@ -170,14 +160,6 @@ public class Autoveicolo {
     }
 
     /**
-     * Getter della lista degli observer della tratta
-     * @return Lista degli observer della tratta
-     */
-    public List<PercorrimentiObserver> getTrattaObserver() {
-        return trattaObserver;
-    }
-
-    /**
      * Getter della password dell' autoveicolo
      * @return Password dell' autoveicolo
      */
@@ -207,13 +189,12 @@ public class Autoveicolo {
                 marca == that.marca &&
                 modello.equals(that.modello) &&
                 targa.equals(that.targa) &&
-                telefono.equals(that.telefono) &&
-                trattaObserver.equals(that.trattaObserver);
+                telefono.equals(that.telefono);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), marca, modello, targa, telefono, mandaSMS, trattaObserver);
+        return Objects.hash(super.hashCode(), marca, modello, targa, telefono, mandaSMS);
     }
 
     @Override
@@ -224,7 +205,6 @@ public class Autoveicolo {
                 ", targa='" + targa + '\'' +
                 ", telefono='" + telefono + '\'' +
                 ", mandaSMS=" + mandaSMS +
-                ", trattaObserver=" + trattaObserver +
                 getProprietario() +
                 '}';
     }
