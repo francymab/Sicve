@@ -7,13 +7,17 @@ public class Percorrimento {
     //VARIABILI D'ISTANZA
     private LocalTime orarioEntrata;
     private LocalTime orarioUscita;
-    private double velocitaMedia;
-    private int velocitaVeicolo;
+    private String targa;
+    private String idTratta;
 
     //COSTRUTTORI
 
-    public Percorrimento(LocalTime orarioEntrata) {
+
+    public Percorrimento(LocalTime orarioEntrata, LocalTime orarioUscita, String targa, String idTratta) {
         this.orarioEntrata = orarioEntrata;
+        this.orarioUscita = orarioUscita;
+        this.targa = targa;
+        this.idTratta = idTratta;
     }
 
     //SETTER
@@ -25,13 +29,6 @@ public class Percorrimento {
         this.orarioUscita = orarioUscita;
     }
 
-    public void setVelocitaMedia(double velocitaMedia) {
-        this.velocitaMedia = velocitaMedia;
-    }
-
-    public void setVelocitaVeicolo(int velocitaVeicolo) {
-        this.velocitaVeicolo = velocitaVeicolo;
-    }
 
     //GETTER
 
@@ -44,38 +41,33 @@ public class Percorrimento {
         return this.orarioUscita;
     }
 
-    public double getVelocitaMedia() {
-        return this.velocitaMedia;
-    }
 
-    public int getVelocitaVeicolo() {
-        return this.velocitaVeicolo;
-    }
 
     //METODI SOVRASCRITTI
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof Percorrimento)) return false;
         Percorrimento that = (Percorrimento) o;
-        return Double.compare(that.velocitaMedia, velocitaMedia) == 0 &&
-                velocitaVeicolo == that.velocitaVeicolo &&
-                orarioEntrata.equals(that.orarioEntrata) &&
-                orarioUscita.equals(that.orarioUscita);
+        return orarioEntrata.equals(that.orarioEntrata) &&
+                orarioUscita.equals(that.orarioUscita) &&
+                targa.equals(that.targa) &&
+                idTratta.equals(that.idTratta);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(orarioEntrata, orarioUscita, velocitaMedia, velocitaVeicolo);
+        return Objects.hash(orarioEntrata, orarioUscita, targa, idTratta);
     }
 
     @Override
     public String toString() {
         return "Percorrimento{" +
-                "orarioEntrata=" + orarioEntrata +
-                ", orarioUscita=" + orarioUscita +
-                ", velocitaMedia=" + velocitaMedia +
-                ", velocitaVeicolo=" + velocitaVeicolo +
+                ", orarioEntrata= " + orarioEntrata +
+                ", orarioUscita= " + orarioUscita +
+                ", targa= " + targa +
+                ", idTratta= " + idTratta +
                 '}';
     }
 }

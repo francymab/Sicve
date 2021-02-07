@@ -27,7 +27,7 @@ public class MostraAutovelox {
     Tratta tratta;
 
     @FXML
-    private ListView<SensoreIstantaneo> autoveloxListView;
+    private ListView<Autovelox> autoveloxListView;
 
     @FXML
     private Button addAutoveloxButton;

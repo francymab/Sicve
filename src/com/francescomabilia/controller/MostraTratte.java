@@ -1,6 +1,9 @@
 package com.francescomabilia.controller;
 
 import com.francescomabilia.db.SicveDb;
+import com.francescomabilia.model.auto.Autoveicolo;
+import com.francescomabilia.model.sensore.Autovelox;
+import com.francescomabilia.model.sensore.SensoreIstantaneo;
 import com.francescomabilia.model.tratta.Tratta;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -12,15 +15,21 @@ import javafx.stage.Stage;
 
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.Duration;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.List;
 import java.util.Optional;
+import java.util.Random;
 
 public class MostraTratte {
     private static final String fileNameAddTratta = "src/com/francescomabilia/view/fxml/aggiungiTratta.fxml";
     private static final String fileNameMostraAutovelox = "src/com/francescomabilia/view/fxml/mostraAutovelox.fxml";
 
     private final SicveDb sicveDb = SicveDb.getInstance();
-
+    Autoveicolo autoveicolo;
     private String tipoAccesso;
 
     @FXML
@@ -31,6 +40,7 @@ public class MostraTratte {
 
     @FXML
     private BorderPane borderPane;
+
 
     @FXML
     public void initialize() throws SQLException {
@@ -51,7 +61,12 @@ public class MostraTratte {
 
         enterMenuItem.setOnAction(e -> {
             Tratta tratta = tratteListView.getSelectionModel().getSelectedItem();
-            System.out.println(tratta);
+
+            try {
+                generaPercorrenza(tratta);
+            } catch (Exception exception) {
+                exception.printStackTrace();
+            }
         });
 
         autoveloxMenuItem.setOnAction(e ->{
@@ -149,9 +164,67 @@ public class MostraTratte {
         this.tipoAccesso = tipoAccesso;
     }
 
-    //GETTER
+    public void setAutoveicolo(Autoveicolo autoveicolo) {
+        this.autoveicolo = autoveicolo;
+    }
 
+    //GETTER
     public String getTipoAccesso() {
         return this.tipoAccesso;
+    }
+
+    public Autoveicolo getAutoveicolo() {
+        return autoveicolo;
+    }
+
+
+    //METODI
+    public void generaPercorrenza(Tratta tratta) throws Exception {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
+
+        System.out.println(tratta);
+        System.out.println(getAutoveicolo());
+        Random random = new Random();
+        List<Tratta> tratte = sicveDb.getTratte(sicveDb.connection());
+
+        int velocita = random.nextInt(tratta.getVelocitaMax() - tratta.getVelocitaMin()) + 80 + random.nextInt(15);
+        LocalDateTime timeStart = LocalDateTime.now();
+        String s = timeStart.format(formatter);
+        System.out.println("sei entrato con una velocita di: " + velocita + " all' ora: " + s);
+
+        int tMax = (int) (((float)tratta.getKmTratta()/(float) tratta.getVelocitaMin()) * 3600F);
+        int tMin = (int) (((float)tratta.getKmTratta()/(float) tratta.getVelocitaMax()) * 3600F);
+
+        int sec = random.nextInt(tMax - tMin) + tMin;
+        LocalDateTime timeEnd = LocalDateTime.now().plus(Duration.ofSeconds(sec));
+        s = timeEnd.format(formatter);
+
+        int idPercorrimento = sicveDb.insertPercorrenza(sicveDb.connection(), tratta, autoveicolo, timeStart, timeEnd);
+        
+        List<Autovelox> autoveloxList = tratta.getTutor().getAutovelox();
+
+        formatter = DateTimeFormatter.ofPattern("HH:mm:ss");
+
+        int t = sec/(autoveloxList.size()+1);
+        int tp = 0;
+        int z = random.nextInt(9) + 3;
+
+        for (Autovelox autovelox : autoveloxList){
+            int i = 0; 
+            if (i%2 == 0){
+                tp += t + z;
+                System.out.println("Sei passato all' autovelox " + autovelox + " all' istante " + timeStart.plus(Duration.ofSeconds(tp)).format(formatter));
+            }else {
+                tp += t-z;
+                z = random.nextInt(9) + 3;
+                System.out.println("Sei passato all' autovelox " + autovelox + " all' istante " + timeStart.plus(Duration.ofSeconds(tp)).format(formatter));
+            }
+            autovelox.calcolaVelocitaIstantanea(timeStart.plus(Duration.ofSeconds(tp)));
+
+            i++;
+        }
+
+        System.out.println("sei uscito dalla tratta all' ora: " + s);
+
     }
 }

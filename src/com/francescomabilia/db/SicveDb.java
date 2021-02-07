@@ -179,9 +179,9 @@ public class SicveDb {
         return ps.executeUpdate();
     }
 
-    public List<SensoreIstantaneo> getAutovelox(Connection conn, int idTratta) throws SQLException {
+    public List<Autovelox> getAutovelox(Connection conn, int idTratta) throws SQLException {
         //Inizializzo Lista di autovelox a vuoto
-        List<SensoreIstantaneo> autoveloxes = new ArrayList<>();
+        List<Autovelox> autoveloxes = new ArrayList<>();
 
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -203,31 +203,67 @@ public class SicveDb {
         return autoveloxes;
     }
 
-//    public int insertPercorrenza(Connection connection, Tratta tratta, Autoveicolo autoveicolo, LocalDateTime start, LocalDateTime end) throws SQLException {
+    public int insertPercorrenza(Connection connection, Tratta tratta, Autoveicolo autoveicolo, LocalDateTime start, LocalDateTime end) throws SQLException {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+
+        String s = start.format(formatter);
+        String e = end.format(formatter);
+
+        PreparedStatement ps = null;
+        int id = 0;
+        String qry = "INSERT INTO `percorrenza` (`id_tratta`, `orario_fine`, `orario_inizio`, `targa`) " +
+                     "VALUES (?, ?, ?, ?);";
+
+        ps = connection.prepareStatement(qry);
+
+        ps.setInt(1, tratta.getIdTratta());
+        ps.setString(2, e);
+        ps.setString(3, s);
+        ps.setString(4, autoveicolo.getTarga());
+
+        int i = ps.executeUpdate();
+
+        if (i != 0){
+            ResultSet rs = null;
+            String qrys = "SELECT id_percorrenza FROM `percorrenza` WHERE (`id_tratta` = ? AND `orario_fine` = ? AND `orario_inizio` = ? AND `targa` = ?)";
+            ps = connection.prepareStatement(qrys);
+            ps.setInt(1, tratta.getIdTratta());
+            ps.setString(2, e);
+            ps.setString(3, s);
+            ps.setString(4, autoveicolo.getTarga());
+            rs = ps.executeQuery();
+
+            while (rs.next()) {
+                id = rs.getInt("id_percorrenza");
+            }
+        }
+
+        return id;
+    }
+
+//    public ResultSet getIdPercorrenza(Connection connection, Tratta tratta, Autoveicolo autoveicolo, LocalDateTime start, LocalDateTime end) throws SQLException{
 //        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 //
 //        String s = start.format(formatter);
 //        String e = end.format(formatter);
 //
 //        PreparedStatement ps = null;
-//        String qry = "INSERT INTO `percorrenza` (`id_tratta`, `orario_fine`, `orario_inizio`, `targa`) " +
-//                "VALUES (?, ?, ?, ?);";
-//
+//        ResultSet rs = null;
+//        String qry = "SELECT * FROM `percorrenza` ";
 //        ps = connection.prepareStatement(qry);
 //
-//        ps.setInt(1, tratta.getIdTratta());
-//        ps.setString(2, e);
-//        ps.setString(3, s);
-//        ps.setString(4, autoveicolo.getTarga());
+//        rs = ps.executeQuery();
 //
-//        return ps.executeUpdate();
+//        return rs;
 //    }
+//
+//    public void addPercorrenzaAutovelox()
 
     public int insertAutovelox(Connection connection, Autovelox autovelox, Tratta tratta) throws SQLException{
         System.out.println(autovelox);
         PreparedStatement ps = null;
         String qry = "INSERT INTO `autovelox` (`id_tratta`, `id_autovelox`, `posizione_km`) " +
-                "VALUES (?, ?, ?);";
+                     "VALUES (?, ?, ?);";
 
         ps = connection.prepareStatement(qry);
 

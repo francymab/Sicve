@@ -14,7 +14,7 @@ public class Tutor {
     private Sensore fine;
 
     /*Lista degli autovelox della tratta*/
-    private List<SensoreIstantaneo> autovelox;
+    private List<Autovelox> autovelox;
 
     /**/
     private InfrazioneBuilder infrazioneBuilder;
@@ -27,7 +27,7 @@ public class Tutor {
      * @param fine Sensore di fine della tratta
      * @param autovelox Lista degli autovelox della tratta
      */
-    public Tutor(Sensore inizio, Sensore fine, List<SensoreIstantaneo> autovelox) {
+    public Tutor(Sensore inizio, Sensore fine, List<Autovelox> autovelox) {
         this.inizio = inizio;
         this.fine = fine;
         this.autovelox = autovelox;
@@ -40,7 +40,7 @@ public class Tutor {
      * @param autovelox
      * @param infrazioneBuilder
      */
-    public Tutor(Sensore inizio, Sensore fine, List<SensoreIstantaneo> autovelox, InfrazioneBuilder infrazioneBuilder) {
+    public Tutor(Sensore inizio, Sensore fine, List<Autovelox> autovelox, InfrazioneBuilder infrazioneBuilder) {
         this.inizio = inizio;
         this.fine = fine;
         this.autovelox = autovelox;
@@ -56,7 +56,7 @@ public class Tutor {
         this.fine = fine;
     }
 
-    public void setAutovelox(List<SensoreIstantaneo> autovelox) {
+    public void setAutovelox(List<Autovelox> autovelox) {
         this.autovelox = autovelox;
     }
 
@@ -73,7 +73,7 @@ public class Tutor {
         return this.fine;
     }
 
-    public List<SensoreIstantaneo> getAutovelox() {
+    public List<Autovelox> getAutovelox() {
         return this.autovelox;
     }
 

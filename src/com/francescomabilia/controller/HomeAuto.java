@@ -68,6 +68,7 @@ public class HomeAuto {
 
             MostraTratte showTratte = loader.getController();
             showTratte.setTipoAccesso("Auto");
+            showTratte.setAutoveicolo(this.autoveicolo);
 
             Stage loginStage = new Stage();
             loginStage.setTitle("SICVE");
@@ -147,41 +148,6 @@ public class HomeAuto {
             } catch (SQLException ioException) {
                 ioException.printStackTrace();
             }
-        }
-    }
-
-    public void generaPercorrenza() throws Exception {
-
-        System.out.println(getAutoveicolo());
-        Random random = new Random();
-        List<Tratta> tratte = sicveDb.getTratte(sicveDb.connection());
-        int iTratte = random.nextInt(tratte.size());
-
-        LocalDateTime timeStart = LocalDateTime.now();
-
-        int sec = random.nextInt(150) + 360;
-
-        LocalDateTime timeEnd = LocalDateTime.now().plus(Duration.ofSeconds(sec));
-
-        Tratta tratta = new Tratta();
-
-        for (Tratta t : tratte){
-            if (t.getIdTratta() ==(iTratte)){
-                tratta = t;
-                break;
-            }
-        }
-
-        //sicveDb.insertPercorrenza(sicveDb.connection(), tratta, autoveicolo, timeStart, timeEnd);
-
-        System.out.println(autoveicolo.isMandaSMS());
-        if (autoveicolo.isMandaSMS()){
-            System.out.println("3");
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Alert!");
-            alert.setContentText("Sei entrato nella tratta: " + tratta);
-            alert.show();
-
         }
     }
 

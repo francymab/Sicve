@@ -2,7 +2,6 @@ package com.francescomabilia.model.tratta;
 
 import com.francescomabilia.model.percorrimenti.Percorrimento;
 import com.francescomabilia.model.sensore.Tutor;
-
 import java.util.List;
 import java.util.Objects;
 
