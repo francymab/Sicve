@@ -1,47 +1,62 @@
 package com.francescomabilia.model.percorrimenti;
 
-import java.time.LocalTime;
+import java.sql.Timestamp;
 import java.util.Objects;
 
 public class Percorrimento {
     //VARIABILI D'ISTANZA
-    private LocalTime orarioEntrata;
-    private LocalTime orarioUscita;
+    private Timestamp orarioEntrata;
+    private Timestamp orarioUscita;
     private String targa;
-    private String idTratta;
+    private int idTratta;
 
     //COSTRUTTORI
 
 
-    public Percorrimento(LocalTime orarioEntrata, LocalTime orarioUscita, String targa, String idTratta) {
+    public Percorrimento(Timestamp orarioEntrata, Timestamp orarioUscita, String targa, int idTratta) {
         this.orarioEntrata = orarioEntrata;
         this.orarioUscita = orarioUscita;
         this.targa = targa;
         this.idTratta = idTratta;
     }
 
+    public Percorrimento(){}
+
     //SETTER
-    public void setOrarioEntrata(LocalTime orarioEntrata) {
+    public void setOrarioEntrata(Timestamp orarioEntrata) {
         this.orarioEntrata = orarioEntrata;
     }
 
-    public void setOrarioUscita(LocalTime orarioUscita) {
+    public void setOrarioUscita(Timestamp orarioUscita) {
         this.orarioUscita = orarioUscita;
     }
 
+    public void setIdTratta(int idTratta) {
+        this.idTratta = idTratta;
+    }
+
+    public void setTarga(String targa) {
+        this.targa = targa;
+    }
 
     //GETTER
 
 
-    public LocalTime getOrarioEntrata() {
+    public Timestamp getOrarioEntrata() {
         return this.orarioEntrata;
     }
 
-    public LocalTime getOrarioUscita() {
+    public Timestamp getOrarioUscita() {
         return this.orarioUscita;
     }
 
+    public String getTarga() {
+        return targa;
+    }
 
+    public int getIdTratta() {
+        return idTratta;
+    }
 
     //METODI SOVRASCRITTI
 
@@ -52,8 +67,7 @@ public class Percorrimento {
         Percorrimento that = (Percorrimento) o;
         return orarioEntrata.equals(that.orarioEntrata) &&
                 orarioUscita.equals(that.orarioUscita) &&
-                targa.equals(that.targa) &&
-                idTratta.equals(that.idTratta);
+                targa.equals(that.targa);
     }
 
     @Override

@@ -1,21 +1,21 @@
 package com.francescomabilia.db;
 
 import com.francescomabilia.model.auto.Autoveicolo;
+import com.francescomabilia.model.percorrimenti.Percorrimento;
 import com.francescomabilia.model.sensore.Autovelox;
+import com.francescomabilia.model.sensore.Sensore;
 import com.francescomabilia.model.sensore.SensoreIstantaneo;
 import com.francescomabilia.model.sensore.Tutor;
 import com.francescomabilia.model.tratta.Tratta;
 
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.net.ConnectException;
 import java.sql.*;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
+import java.util.Date;
 
 public class SicveDb {
     /*Singleton - Lazy Iniziatilation*/
@@ -150,10 +150,13 @@ public class SicveDb {
                         return 0;
                     },
                     percorrimento -> {
-                        return t.getKmTratta()/(Duration.between(percorrimento.getOrarioUscita(), percorrimento.getOrarioEntrata()).toMinutes()/60D);
+                        System.out.println(percorrimento.getOrarioUscita() + " |||| " +  percorrimento.getOrarioEntrata());
+
+                        return Math.abs(t.getKmTratta()/(Duration.between(percorrimento.getOrarioUscita().toInstant(), percorrimento.getOrarioEntrata().toInstant()).toMinutes()/60D));
                     },
                     getAutovelox(this.connection(), t.getIdTratta())
             ));
+            t.setPercorrimento(getPercorrenza(connection(), t.getIdTratta()));
 
             tratte.add(t);
         }
@@ -179,9 +182,9 @@ public class SicveDb {
         return ps.executeUpdate();
     }
 
-    public List<Autovelox> getAutovelox(Connection conn, int idTratta) throws SQLException {
+    public List<SensoreIstantaneo> getAutovelox(Connection conn, int idTratta) throws SQLException {
         //Inizializzo Lista di autovelox a vuoto
-        List<Autovelox> autoveloxes = new ArrayList<>();
+        List<SensoreIstantaneo> autoveloxes = new ArrayList<>();
 
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -241,23 +244,28 @@ public class SicveDb {
         return id;
     }
 
-//    public ResultSet getIdPercorrenza(Connection connection, Tratta tratta, Autoveicolo autoveicolo, LocalDateTime start, LocalDateTime end) throws SQLException{
-//        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-//
-//        String s = start.format(formatter);
-//        String e = end.format(formatter);
-//
-//        PreparedStatement ps = null;
-//        ResultSet rs = null;
-//        String qry = "SELECT * FROM `percorrenza` ";
-//        ps = connection.prepareStatement(qry);
-//
-//        rs = ps.executeQuery();
-//
-//        return rs;
-//    }
-//
-//    public void addPercorrenzaAutovelox()
+    public List<Percorrimento> getPercorrenza(Connection connection, int idTratta) throws SQLException{
+        List<Percorrimento> percorrimentoList = new ArrayList<>();
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        String qry = "SELECT * FROM `percorrenza` WHERE  id_tratta = ?";
+        ps = connection.prepareStatement(qry);
+        ps.setInt(1, idTratta);
+        rs = ps.executeQuery();
+
+        while(rs.next()){
+            Percorrimento percorrimento = new Percorrimento();
+
+            percorrimento.setOrarioEntrata(rs.getTimestamp("orario_inizio"));
+            percorrimento.setOrarioUscita((rs.getTimestamp("orario_fine")));
+            percorrimento.setIdTratta(rs.getInt("id_tratta"));
+            percorrimento.setTarga(rs.getString("targa"));
+
+            percorrimentoList.add(percorrimento);
+        }
+
+        return percorrimentoList;
+    }
 
     public int insertAutovelox(Connection connection, Autovelox autovelox, Tratta tratta) throws SQLException{
         System.out.println(autovelox);
@@ -278,7 +286,8 @@ public class SicveDb {
                         return 0;
                     },
                     percorrimento -> {
-                        return tratta.getKmTratta() / (Duration.between(percorrimento.getOrarioUscita(), percorrimento.getOrarioEntrata()).toMinutes() / 60D);
+                        System.out.println(percorrimento.getOrarioUscita() + " |||| " +  percorrimento.getOrarioEntrata());
+                        return Math.abs(tratta.getKmTratta() / (Duration.between(percorrimento.getOrarioUscita().toInstant(), percorrimento.getOrarioEntrata().toInstant()).toMinutes() / 60D));
                     },
                     getAutovelox(this.connection(), tratta.getIdTratta())
             ));

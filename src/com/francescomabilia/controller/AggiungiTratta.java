@@ -41,7 +41,7 @@ public class AggiungiTratta {
                     return 0;
                 },
                 percorrimento -> {
-                    return kmTratta/(Duration.between(percorrimento.getOrarioUscita(), percorrimento.getOrarioEntrata()).toMinutes()/60D);
+                    return kmTratta/(Duration.between(percorrimento.getOrarioUscita().toInstant(), percorrimento.getOrarioEntrata().toInstant()).toMinutes()/60D);
                 },
                 new ArrayList<>()
         ),cittaFineTratta, velocitàMin, velocitaMax, kmTratta, new ArrayList<>());

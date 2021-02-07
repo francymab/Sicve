@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 import java.util.Objects;
 import java.util.Random;
 
-public class Autovelox implements Sensore{
+public class Autovelox implements SensoreIstantaneo{
     //VARIABILI D'ISTANZA
 
     /*Km dell' autovelox*/
@@ -73,7 +73,8 @@ public class Autovelox implements Sensore{
     //METODI SOVRASCRITTI
     @Override
     public double calcolaVelocitaMedia(Percorrimento percorrimento) {
-        return 0;
+        System.out.println(percorrimento.getOrarioUscita() + " |||| " +  percorrimento.getOrarioEntrata());
+        return Math.abs(this.kmAutovelox/(Duration.between(percorrimento.getOrarioUscita().toInstant(), percorrimento.getOrarioEntrata().toInstant()).toMinutes()/60D));
     }
 
     @Override
@@ -97,8 +98,8 @@ public class Autovelox implements Sensore{
                 '}';
     }
 
-    //@Override
-    public int calcolaVelocitaIstantanea(LocalDateTime time){
+    @Override
+    public int calcolaVelocitaIstantanea(Autoveicolo autoveicolo){
 //        Random random = new Random();
 //        long i = Double.valueOf((1.2D + 0.8D * random.nextDouble())*1000D).longValue();
 //        System.out.println(i);

@@ -2,6 +2,7 @@ package com.francescomabilia.controller;
 
 import com.francescomabilia.db.SicveDb;
 import com.francescomabilia.model.auto.Autoveicolo;
+import com.francescomabilia.model.percorrimenti.Percorrimento;
 import com.francescomabilia.model.sensore.Autovelox;
 import com.francescomabilia.model.sensore.SensoreIstantaneo;
 import com.francescomabilia.model.tratta.Tratta;
@@ -15,6 +16,7 @@ import javafx.stage.Stage;
 
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.sql.Timestamp;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.Duration;
@@ -177,7 +179,7 @@ public class MostraTratte {
         return autoveicolo;
     }
 
-
+//TODO: controllare valori da generare per le velocita elevate 
     //METODI
     public void generaPercorrenza(Tratta tratta) throws Exception {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
@@ -189,19 +191,31 @@ public class MostraTratte {
 
         int velocita = random.nextInt(tratta.getVelocitaMax() - tratta.getVelocitaMin()) + 80 + random.nextInt(15);
         LocalDateTime timeStart = LocalDateTime.now();
+        Timestamp timestampTimeStart = Timestamp.valueOf(timeStart);
+        System.out.println("timesStamp enter : " + timestampTimeStart);
         String s = timeStart.format(formatter);
-        System.out.println("sei entrato con una velocita di: " + velocita + " all' ora: " + s);
+
 
         int tMax = (int) (((float)tratta.getKmTratta()/(float) tratta.getVelocitaMin()) * 3600F);
         int tMin = (int) (((float)tratta.getKmTratta()/(float) tratta.getVelocitaMax()) * 3600F);
+
+
+
+
+        Percorrimento percorrimento = new Percorrimento(timestampTimeStart, null, autoveicolo.getTarga(), tratta.getIdTratta());
+
+        double velocitaMedia = tratta.getTutor().getInizio().calcolaVelocitaMedia(percorrimento);
+        System.out.println("sei entrato con una velocita di: " + velocita + " all' ora: " + s + " hai avuto una velocita media di : " + velocitaMedia);
+
+
 
         int sec = random.nextInt(tMax - tMin) + tMin;
         LocalDateTime timeEnd = LocalDateTime.now().plus(Duration.ofSeconds(sec));
         s = timeEnd.format(formatter);
 
         int idPercorrimento = sicveDb.insertPercorrenza(sicveDb.connection(), tratta, autoveicolo, timeStart, timeEnd);
-        
-        List<Autovelox> autoveloxList = tratta.getTutor().getAutovelox();
+
+        List<SensoreIstantaneo> autoveloxList = tratta.getTutor().getAutovelox();
 
         formatter = DateTimeFormatter.ofPattern("HH:mm:ss");
 
@@ -209,22 +223,27 @@ public class MostraTratte {
         int tp = 0;
         int z = random.nextInt(9) + 3;
 
-        for (Autovelox autovelox : autoveloxList){
+        for (SensoreIstantaneo autovelox : autoveloxList){
             int i = 0; 
             if (i%2 == 0){
                 tp += t + z;
-                System.out.println("Sei passato all' autovelox " + autovelox + " all' istante " + timeStart.plus(Duration.ofSeconds(tp)).format(formatter));
             }else {
                 tp += t-z;
                 z = random.nextInt(9) + 3;
-                System.out.println("Sei passato all' autovelox " + autovelox + " all' istante " + timeStart.plus(Duration.ofSeconds(tp)).format(formatter));
             }
-            autovelox.calcolaVelocitaIstantanea(timeStart.plus(Duration.ofSeconds(tp)));
+            percorrimento.setOrarioUscita(Timestamp.valueOf(timeStart.plus(Duration.ofSeconds(tp))));
+            System.out.println("uscita" + percorrimento.getOrarioUscita());
+            velocitaMedia = autovelox.calcolaVelocitaMedia(percorrimento);
+            System.out.println("Sei passato all' autovelox " + autovelox + " all' istante " + timeStart.plus(Duration.ofSeconds(tp)).format(formatter)  + " hai avuto una velocita media di : " + velocitaMedia);
+            //autovelox.calcolaVelocitaIstantanea(timeStart.plus(Duration.ofSeconds(tp)));
 
             i++;
         }
 
-        System.out.println("sei uscito dalla tratta all' ora: " + s);
+        percorrimento.setOrarioUscita(Timestamp.valueOf(timeEnd));
+        velocitaMedia = tratta.getTutor().getFine().calcolaVelocitaMedia(percorrimento);
 
+        System.out.println("sei uscito dalla tratta all' ora: " + s + " hai avuto una velocita media di : " + velocitaMedia);
+        tratta.getPercorrimento().add(percorrimento);
     }
 }
