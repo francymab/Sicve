@@ -263,11 +263,25 @@ public class MostraTratte {
     
     private List<Infrazione> getInfrazione(List<Infrazione> infrazioni) throws Exception{
         List<Infrazione> infraziones = new ArrayList<>();
-        Infrazione maxInfrazione = infrazioni.get(0);
-        System.out.println("===============" + infrazioni);
-        System.out.println("================= " + maxInfrazione.getIdTratta());
-        Tratta tratta = sicveDb.getTratta(sicveDb.connection(), maxInfrazione.getIdTratta());
-        System.out.println(tratta);
+        int velMaxInfrazione = Integer.MIN_VALUE;
+//        int velocitaMaxTratta = sicveDb.getTratta(sicveDb.connection(), infrazioni.get(0).getIdTratta()).getVelocitaMax();
+        int indMax=0;
+
+
+        for (int i = 0; i < infrazioni.size(); i++){
+            Infrazione infrazione = infrazioni.get(i);
+
+            if (infrazione.getVelocitaIstantanea() > velMaxInfrazione){
+                velMaxInfrazione = infrazione.getVelocitaIstantanea();
+                indMax = i;
+            }
+
+            if(((i+1)%3 == 0)) {
+                infraziones.add(infrazioni.get(indMax));
+                indMax = i+1;
+            }
+        }
+
         return infraziones;
     }
 }
