@@ -12,6 +12,7 @@ public class Infrazione {
     public static final double PREZZO_ISTANTANEA = 1.00D;
     public static final double PREZZO_MEDIA = 2.47D;
     private int idTratta;
+    private Integer idAutovelox;
 
     //COSTRUTTORI
 
@@ -68,6 +69,10 @@ public class Infrazione {
         this.idTratta = idTratta;
     }
 
+    public void setIdAutovelox(Integer idAutovelox) {
+        this.idAutovelox = idAutovelox;
+    }
+
     //GETTER
 
     /**
@@ -112,6 +117,10 @@ public class Infrazione {
 
     public int getIdTratta() {
         return this.idTratta;
+    }
+
+    public Integer getIdAutovelox() {
+        return this.idAutovelox;
     }
 
     //METODI SOVRASCRITTI

@@ -1,9 +1,13 @@
 package com.francescomabilia.controller;
 
+import com.francescomabilia.db.InfrazioneIstantaneaStrategy;
+import com.francescomabilia.db.InfrazioneMediaStrategy;
+import com.francescomabilia.db.InfrazioneStrategy;
 import com.francescomabilia.db.SicveDb;
 import com.francescomabilia.model.auto.Autoveicolo;
 import com.francescomabilia.model.infrazione.Infrazione;
 import com.francescomabilia.model.infrazione.InfrazioneVelocitaIstantaneaBuilder;
+import com.francescomabilia.model.infrazione.InfrazioneVelocitaMediaBuilder;
 import com.francescomabilia.model.percorrimenti.Percorrimento;
 import com.francescomabilia.model.sensore.Autovelox;
 import com.francescomabilia.model.sensore.SensoreIstantaneo;
@@ -188,6 +192,8 @@ public class MostraTratte {
 
         System.out.println(tratta);
         System.out.println(getAutoveicolo());
+        Tutor tutor = tratta.getTutor();
+
         Random random = new Random();
         List<Tratta> tratte = sicveDb.getTratte(sicveDb.connection());
 
@@ -240,10 +246,11 @@ public class MostraTratte {
 
             if (velocitaIstantanea > (tratta.getVelocitaMax())){
                 String descrizione = "Superamento velocita massima della tratta";
-                Tutor tutor = tratta.getTutor();
                 tutor.setInfrazioneBuilder(new InfrazioneVelocitaIstantaneaBuilder());
-                tutor.builderVelocitaIstantanea(a.getKmAutovelox(), descrizione, autoveicolo.getTarga(), velocitaIstantanea, tratta.getIdTratta());
-                sicveDb.insertInfrazione(sicveDb.connection(), descrizione, tratta.getIdTratta(), a.getIdAutovelox(), autoveicolo.getTarga(), velocitaIstantanea);
+                tutor.builderVelocitaIstantanea(a.getKmAutovelox(), descrizione, autoveicolo.getTarga(), velocitaIstantanea, tratta.getIdTratta(), a.getIdAutovelox());
+                InfrazioneStrategy infrazioneStrategy = new InfrazioneIstantaneaStrategy();
+                infrazioneStrategy.salvaInfrazione(tutor.getInfrazioneBuilder().getResult());
+//                sicveDb.insertInfrazioneIstantanea(sicveDb.connection(), descrizione, tratta.getIdTratta(), a.getIdAutovelox(), autoveicolo.getTarga(), velocitaIstantanea);
                 
                 infrazioneList.add(tutor.getInfrazioneBuilder().getResult());
                 System.out.println(tutor);
@@ -252,6 +259,20 @@ public class MostraTratte {
 
         percorrimento.setOrarioUscita(Timestamp.valueOf(timeEnd));
         velocitaMedia = tratta.getTutor().getFine().calcolaVelocitaMedia(percorrimento);
+
+        if (velocitaMedia > (tratta.getVelocitaMax())){
+            String descrizione = "Superamento velocita media della tratta";
+            tutor.setInfrazioneBuilder(new InfrazioneVelocitaMediaBuilder());
+            tutor.builderVelocitaMedia(tratta.getKmTratta(), descrizione, autoveicolo.getTarga(), velocitaMedia, tratta.getIdTratta());
+            InfrazioneStrategy infrazioneStrategy = new InfrazioneMediaStrategy();
+            infrazioneStrategy.salvaInfrazione(tutor.getInfrazioneBuilder().getResult());
+//            sicveDb.insertInfrazioneMedia(sicveDb.connection(), descrizione, tratta.getIdTratta(), tratta.getKmTratta(), autoveicolo.getTarga(), velocitaMedia);
+
+            infrazioneList.add(tutor.getInfrazioneBuilder().getResult());
+            System.out.println(tutor);
+        }
+
+
 
         System.out.println("sei uscito dalla tratta all' ora: " + s + " hai avuto una velocita media di : " + velocitaMedia);
         tratta.getPercorrimento().add(percorrimento);

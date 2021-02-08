@@ -314,18 +314,36 @@ public class SicveDb {
         return i;
     }
 
-    public void insertInfrazione(Connection connection, String descrizione, int idTratta, int idAutovelox, String targa, Integer velocitaIstantanea) throws SQLException{
+    public void insertInfrazioneIstantanea(Connection connection, Infrazione infrazione) throws SQLException{
         PreparedStatement ps = null;
         String qry = "INSERT INTO `infrazione` (`id_tratta`, `id_autovelox`, `descrizione`, `targa`, `velocita_istantanea`) " +
                 "VALUES (?, ?, ?, ?, ?);";
 
         ps = connection.prepareStatement(qry);
 
-        ps.setInt(1, idTratta);
-        ps.setInt(2, idAutovelox);
-        ps.setString(3, descrizione);
-        ps.setString(4, targa);
-        ps.setInt(5, velocitaIstantanea);
+        ps.setInt(1, infrazione.getIdTratta());
+        ps.setInt(2, infrazione.getIdAutovelox());
+        ps.setString(3, infrazione.getDescrizione());
+        ps.setString(4, infrazione.getTarga());
+        ps.setInt(5, infrazione.getVelocitaIstantanea());
+
+        int i = ps.executeUpdate();
+        if (i == 0){
+            throw new SQLException();
+        }
+    }
+
+    public void insertInfrazioneMedia(Connection connection, Infrazione infrazione) throws SQLException{
+        PreparedStatement ps = null;
+        String qry = "INSERT INTO `infrazione` (`id_tratta`, `descrizione`, `targa`, `velocita_media`) " +
+                "VALUES (?, ?, ?, ?);";
+
+        ps = connection.prepareStatement(qry);
+
+        ps.setInt(1, infrazione.getIdTratta());
+        ps.setString(2, infrazione.getDescrizione());
+        ps.setString(3, infrazione.getTarga());
+        ps.setDouble(4, infrazione.getVelocitaMedia());
 
         int i = ps.executeUpdate();
         if (i == 0){

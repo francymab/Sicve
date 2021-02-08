@@ -31,4 +31,9 @@ public class InfrazioneVelocitaMediaBuilder extends InfrazioneBuilder{
     public void buildIdTratta(int idTratta) {
         infrazione.setIdTratta(idTratta);
     }
+
+    @Override
+    public void buildIdAutovelox(Integer idAutovelox) {
+        infrazione.setIdAutovelox(idAutovelox);
+    }
 }

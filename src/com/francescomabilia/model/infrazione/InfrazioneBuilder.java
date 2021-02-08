@@ -17,6 +17,8 @@ public abstract class InfrazioneBuilder {
 
     public abstract void buildIdTratta(int idTratta);
 
+    public abstract void buildIdAutovelox(Integer idAutovelox);
+
     public final Infrazione getResult(){
         return infrazione;
     }
