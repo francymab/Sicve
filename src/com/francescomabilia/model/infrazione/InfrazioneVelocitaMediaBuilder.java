@@ -19,11 +19,16 @@ public class InfrazioneVelocitaMediaBuilder extends InfrazioneBuilder{
 
     @Override
     public void buildVelocitaMedia(Double velocitaMedia) {
-
+        infrazione.setVelocitaMedia(velocitaMedia);
     }
 
     @Override
     public void buildKmTratta(int kmTratta) {
+        infrazione.setKmInfrazione(kmTratta);
+    }
 
+    @Override
+    public void buildIdTratta(int idTratta) {
+        infrazione.setIdTratta(idTratta);
     }
 }

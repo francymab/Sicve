@@ -1,8 +1,6 @@
 package com.francescomabilia.model.sensore;
 
-import com.francescomabilia.model.auto.Autoveicolo;
 import com.francescomabilia.model.percorrimenti.Percorrimento;
-
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.Objects;
@@ -73,7 +71,6 @@ public class Autovelox implements SensoreIstantaneo{
     //METODI SOVRASCRITTI
     @Override
     public double calcolaVelocitaMedia(Percorrimento percorrimento) {
-        System.out.println(percorrimento.getOrarioUscita() + " |||| " +  percorrimento.getOrarioEntrata());
         return Math.abs(this.kmAutovelox/(Duration.between(percorrimento.getOrarioUscita().toInstant(), percorrimento.getOrarioEntrata().toInstant()).toMinutes()/60D));
     }
 
@@ -99,16 +96,18 @@ public class Autovelox implements SensoreIstantaneo{
     }
 
     @Override
-    public int calcolaVelocitaIstantanea(Autoveicolo autoveicolo){
-//        Random random = new Random();
-//        long i = Double.valueOf((1.2D + 0.8D * random.nextDouble())*1000D).longValue();
-//        System.out.println(i);
-//        LocalDateTime timeEnd = time.plus(Duration.ofMillis(i));
-//        System.out.println(time + " " + timeEnd);
-//        double x = Duration.between(time, timeEnd).toSeconds() + (Duration.between(time, timeEnd).toMillis())/1000D;
-//        System.out.println(x);
-//        long n =(long) (45/x);
-//        System.out.println(n + " " + n*3.6);
-        return 0;
+    public int calcolaVelocitaIstantanea(LocalDateTime time){
+
+        //1.3  2.5
+        Random random = new Random();
+        long i = Double.valueOf((1.3D + 0.7D * random.nextDouble())*1000D).longValue();
+        System.out.println( "1 = " + i);
+        LocalDateTime timeEnd = time.plus(Duration.ofMillis(i));
+        System.out.println("2 = " + time + " " + timeEnd);
+
+        double x = (Duration.between(time, timeEnd).toMillis())/1000D;
+        System.out.println("3 = " + x);
+        int n =(int) (45/((Duration.between(time, timeEnd).toMillis())/1000D));
+        return (int) (n*3.6);
     }
 }

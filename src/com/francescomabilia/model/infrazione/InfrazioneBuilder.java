@@ -15,11 +15,13 @@ public abstract class InfrazioneBuilder {
 
     public abstract void buildKmTratta(int kmTratta);
 
-    final Infrazione getResult(){
+    public abstract void buildIdTratta(int idTratta);
+
+    public final Infrazione getResult(){
         return infrazione;
     }
 
     public void creazioneInfrazione(){
-
+        this.infrazione = new Infrazione();
     }
 }

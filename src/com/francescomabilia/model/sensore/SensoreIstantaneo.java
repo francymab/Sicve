@@ -1,7 +1,7 @@
 package com.francescomabilia.model.sensore;
 
-import com.francescomabilia.model.auto.Autoveicolo;
+import java.time.LocalDateTime;
 
 public interface SensoreIstantaneo extends Sensore{
-    int calcolaVelocitaIstantanea(Autoveicolo autoveicolo);
+    int calcolaVelocitaIstantanea(LocalDateTime time);
 }

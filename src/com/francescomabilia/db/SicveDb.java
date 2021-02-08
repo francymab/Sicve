@@ -1,13 +1,12 @@
 package com.francescomabilia.db;
 
 import com.francescomabilia.model.auto.Autoveicolo;
+import com.francescomabilia.model.infrazione.Infrazione;
 import com.francescomabilia.model.percorrimenti.Percorrimento;
 import com.francescomabilia.model.sensore.Autovelox;
-import com.francescomabilia.model.sensore.Sensore;
 import com.francescomabilia.model.sensore.SensoreIstantaneo;
 import com.francescomabilia.model.sensore.Tutor;
 import com.francescomabilia.model.tratta.Tratta;
-
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.sql.*;
@@ -15,7 +14,6 @@ import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
-import java.util.Date;
 
 public class SicveDb {
     /*Singleton - Lazy Iniziatilation*/
@@ -150,8 +148,6 @@ public class SicveDb {
                         return 0;
                     },
                     percorrimento -> {
-                        System.out.println(percorrimento.getOrarioUscita() + " |||| " +  percorrimento.getOrarioEntrata());
-
                         return Math.abs(t.getKmTratta()/(Duration.between(percorrimento.getOrarioUscita().toInstant(), percorrimento.getOrarioEntrata().toInstant()).toMinutes()/60D));
                     },
                     getAutovelox(this.connection(), t.getIdTratta())
@@ -244,6 +240,27 @@ public class SicveDb {
         return id;
     }
 
+    public void insertPercorrenzaAutovelox(Connection connection, int idPercorrenza, LocalDateTime start, int velocita) throws SQLException {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+
+        String s = start.format(formatter);
+
+        PreparedStatement ps = null;
+        String qry = "INSERT INTO `percorrenza_autovelox` (`id_percorrenza`, `istante_rilevamento`, `velocita`) " +
+                "VALUES (?, ?, ?);";
+
+        ps = connection.prepareStatement(qry);
+
+        ps.setInt(1, idPercorrenza);
+        ps.setString(2, s);
+        ps.setInt(3, velocita);
+
+        int i = ps.executeUpdate();
+        if (i == 0){
+            throw new SQLException();
+        }
+    }
+
     public List<Percorrimento> getPercorrenza(Connection connection, int idTratta) throws SQLException{
         List<Percorrimento> percorrimentoList = new ArrayList<>();
         PreparedStatement ps = null;
@@ -286,7 +303,6 @@ public class SicveDb {
                         return 0;
                     },
                     percorrimento -> {
-                        System.out.println(percorrimento.getOrarioUscita() + " |||| " +  percorrimento.getOrarioEntrata());
                         return Math.abs(tratta.getKmTratta() / (Duration.between(percorrimento.getOrarioUscita().toInstant(), percorrimento.getOrarioEntrata().toInstant()).toMinutes() / 60D));
                     },
                     getAutovelox(this.connection(), tratta.getIdTratta())
@@ -296,5 +312,76 @@ public class SicveDb {
         }
 
         return i;
+    }
+
+    public void insertInfrazione(Connection connection, String descrizione, int idTratta, int idAutovelox, String targa, Integer velocitaIstantanea) throws SQLException{
+        PreparedStatement ps = null;
+        String qry = "INSERT INTO `infrazione` (`id_tratta`, `id_autovelox`, `descrizione`, `targa`, `velocita_istantanea`) " +
+                "VALUES (?, ?, ?, ?, ?);";
+
+        ps = connection.prepareStatement(qry);
+
+        ps.setInt(1, idTratta);
+        ps.setInt(2, idAutovelox);
+        ps.setString(3, descrizione);
+        ps.setString(4, targa);
+        ps.setInt(5, velocitaIstantanea);
+
+        int i = ps.executeUpdate();
+        if (i == 0){
+            throw new SQLException();
+        }
+    }
+
+    public List<Infrazione> getInfrazioni(Connection connection, String targa) throws SQLException{
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        List<Infrazione> infrazioneList = new ArrayList<>();
+
+        String qry = "SELECT * FROM `infrazione` WHERE `targa` = ?";
+
+        ps = connection().prepareStatement(qry);
+        ps.setString(1, targa);
+        rs = ps.executeQuery();
+
+        while(rs.next()){
+            Infrazione infrazione = new Infrazione();
+
+        }
+
+        return infrazioneList;
+    }
+
+    public Tratta getTratta(Connection connection, int idTratta) throws SQLException{
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        String qry = "SELECT * FROM `tratta` WHERE `id_tratta` = ?;";
+        ps = connection.prepareStatement(qry);
+        ps.setInt(1, idTratta);
+        rs = ps.executeQuery();
+        Tratta t = new Tratta();
+
+        while (rs.next()){
+
+            t.setAutostrada(rs.getString("autostrada"));
+            t.setComune(rs.getString("comune"));
+            t.setKmTratta(rs.getInt("kmTratta"));
+            t.setIdTratta(rs.getInt("id_tratta"));
+            t.setVelocitaMax(rs.getInt("velocita_massima"));
+            t.setVelocitaMin(rs.getInt("velocita_minima"));
+            t.setDirezione(rs.getString("direzione"));
+            t.setTutor(new Tutor(
+                    percorrimento -> {
+                        return 0;
+                    },
+                    percorrimento -> {
+                        return Math.abs(t.getKmTratta()/(Duration.between(percorrimento.getOrarioUscita().toInstant(), percorrimento.getOrarioEntrata().toInstant()).toMinutes()/60D));
+                    },
+                    getAutovelox(this.connection(), t.getIdTratta())
+            ));
+            t.setPercorrimento(getPercorrenza(connection(), t.getIdTratta()));
+        }
+
+        return t;
     }
 }

@@ -78,10 +78,10 @@ public class Percorrimento {
     @Override
     public String toString() {
         return "Percorrimento{" +
+                "idTratta= " + idTratta +
+                ", targa= " + targa +
                 ", orarioEntrata= " + orarioEntrata +
                 ", orarioUscita= " + orarioUscita +
-                ", targa= " + targa +
-                ", idTratta= " + idTratta +
                 '}';
     }
 }

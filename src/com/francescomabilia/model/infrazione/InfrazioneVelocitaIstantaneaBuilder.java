@@ -26,4 +26,9 @@ public class InfrazioneVelocitaIstantaneaBuilder extends InfrazioneBuilder{
     public void buildKmTratta(int kmTratta) {
         infrazione.setKmInfrazione(kmTratta);
     }
+
+    @Override
+    public void buildIdTratta(int idTratta) {
+        infrazione.setIdTratta(idTratta);
+    }
 }

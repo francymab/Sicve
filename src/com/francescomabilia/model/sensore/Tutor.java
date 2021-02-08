@@ -82,20 +82,25 @@ public class Tutor {
     }
 
     //METODI
-    public void builderVelocitaIstantanea(int kmTratta, String descrizione, String targa, Integer velocitaIstantanea){
+    public void builderVelocitaIstantanea(int kmTratta, String descrizione, String targa, Integer velocitaIstantanea, int idTratta){
+        this.infrazioneBuilder.creazioneInfrazione();
         this.infrazioneBuilder.buildKmTratta(kmTratta);
         this.infrazioneBuilder.builDescrizione(descrizione);
         this.infrazioneBuilder.buildTarga(targa);
         this.infrazioneBuilder.buildVelocitaIstantanea(velocitaIstantanea);
         this.infrazioneBuilder.buildVelocitaMedia(null);
+        this.infrazioneBuilder.buildIdTratta(idTratta);
     }
 
-    public void builderVelocitaMedia(int kmTratta, String descrizione, String targa, Double velocitaMedia){
+    public void builderVelocitaMedia(int kmTratta, String descrizione, String targa, Double velocitaMedia, int idTratta){
+        this.infrazioneBuilder.creazioneInfrazione();
         this.infrazioneBuilder.buildKmTratta(kmTratta);
         this.infrazioneBuilder.builDescrizione(descrizione);
         this.infrazioneBuilder.buildTarga(targa);
         this.infrazioneBuilder.buildVelocitaIstantanea(null);
         this.infrazioneBuilder.buildVelocitaMedia(velocitaMedia);
+        this.infrazioneBuilder.buildIdTratta(idTratta);
+
     }
 
     //METODI SOVRASCRITTI

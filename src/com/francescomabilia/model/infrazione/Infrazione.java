@@ -9,6 +9,9 @@ public class Infrazione {
     private Integer velocitaIstantanea;
     private Double velocitaMedia;
     private int kmInfrazione;
+    public static final double PREZZO_ISTANTANEA = 1.00D;
+    public static final double PREZZO_MEDIA = 2.47D;
+    private int idTratta;
 
     //COSTRUTTORI
 
@@ -61,6 +64,10 @@ public class Infrazione {
         this.kmInfrazione = kmInfrazione;
     }
 
+    public void setIdTratta(int idTratta) {
+        this.idTratta = idTratta;
+    }
+
     //GETTER
 
     /**
@@ -103,6 +110,10 @@ public class Infrazione {
         return this.kmInfrazione;
     }
 
+    public int getIdTratta() {
+        return this.idTratta;
+    }
+
     //METODI SOVRASCRITTI
     @Override
     public boolean equals(Object o) {
@@ -129,6 +140,7 @@ public class Infrazione {
                 ", velocittaInstantanea=" + velocitaIstantanea +
                 ", velocitaMedia=" + velocitaMedia +
                 ", kmInfrazione=" + kmInfrazione +
+                ", idTratta= " + idTratta +
                 '}';
     }
 }
