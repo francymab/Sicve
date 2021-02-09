@@ -1,5 +1,8 @@
 package com.francescomabilia.controller;
 
+import com.francescomabilia.db.SicveDb;
+import com.francescomabilia.model.StazioneDiPolizia;
+import com.francescomabilia.model.infrazione.Multa;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -7,21 +10,31 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.ListView;
 import javafx.stage.Stage;
 
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.Optional;
 
 public class HomePolizia {
-    private static final String fileName = "src/com/francescomabilia/view/fxml/loginAdmin.fxml";
+    private static final String fileName = "src/com/francescomabilia/view/fxml/loginPolizia.fxml";
     private static final String fileNameMulte = "src/com/francescomabilia/view/fxml/mostraMulte.fxml";
 
     @FXML
-    private Button showMulteButton;
+    private ListView<Multa> multeListView;
 
     @FXML
     private Button logoutButton;
+
+    public void init(StazioneDiPolizia stazioneDiPolizia){
+        try {
+            multeListView.getItems().setAll(SicveDb.getInstance().getMulteDaComune(SicveDb.getInstance().connection(), stazioneDiPolizia.getComune()));
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+    }
 
     @FXML
     public void initialize(){
@@ -33,20 +46,7 @@ public class HomePolizia {
             }
         });
 
-        showMulteButton.setOnAction(e ->{
-            FXMLLoader loader = new FXMLLoader();
-            Parent root = null;
-            try {
-                root = loader.load(new FileInputStream(fileNameMulte));
-            } catch (IOException ioException) {
-                ioException.printStackTrace();
-            }
 
-            Stage loginStage = new Stage();
-            loginStage.setTitle("SICVE");
-            loginStage.setScene(new Scene(root, 810, 400));
-            loginStage.show();
-        });
     }
 
     public void logoutAlert() throws IOException {

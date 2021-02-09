@@ -136,7 +136,6 @@ public class Tratta {
                 ", Direzione = " + direzione +
                 ", Citta di Fine = " + comune +
                 ", Velocita Max= " + velocitaMax +
-                ", Velocita Min= " + velocitaMin +
-                "}";
+                ", Velocita Min= " + velocitaMin;
     }
 }

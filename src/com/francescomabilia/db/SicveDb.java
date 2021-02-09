@@ -437,6 +437,26 @@ public class SicveDb {
         return infrazioneList;
     }
 
+    public List<Multa> getMulteDaComune(Connection connection, String comune) throws SQLException{
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        List<Multa> multe = new ArrayList<>();
 
+        String qry = "SELECT `infrazione`.`id_infrazione`, `infrazione`.`id_tratta`, `infrazione`.`id_autovelox`, " +
+                            "`infrazione`.`descrizione`, `infrazione`.`targa`, `infrazione`.`velocita_istantanea`, `infrazione`.`velocita_media` " +
+                            "FROM infrazione INNER JOIN tratta ON `tratta`.`comune` = ? ";
+
+        ps = connection.prepareStatement(qry);
+        ps.setString(1, comune);
+        rs = ps.executeQuery();
+
+        while(rs.next()){
+            Multa multa = new Multa(getIfrazioneDaMulta(connection(), Multa.counter));
+
+            multe.add(multa);
+        }
+
+        return multe;
+    }
 
 }

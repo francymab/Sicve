@@ -53,12 +53,15 @@ public class LoginPolizia {
 
         loginButton.setOnAction(e ->{
             try{
-                login();
+                StazioneDiPolizia stazioneDiPolizia = login();
                 Stage stage = (Stage) loginButton.getScene().getWindow();
                 stage.close();
 
                 FXMLLoader loader = new FXMLLoader();
                 Parent root = loader.load(new FileInputStream(fileNameHomePolizia));
+
+                HomePolizia homePolizia = loader.getController();
+                homePolizia.init(stazioneDiPolizia);
 
                 Stage homePage = new Stage();
                 homePage.setTitle("SICVE");
@@ -81,18 +84,21 @@ public class LoginPolizia {
         loginStage.show();
     }
 
-    private void login() throws Exception {
+    private StazioneDiPolizia login() throws Exception {
         ResultSet rs = sicveDb.getPolizia(sicveDb.connection(), usernameTextField.getText().trim(), passwordField.getText().trim());
-        Utente polizia = new StazioneDiPolizia();
+        StazioneDiPolizia polizia = new StazioneDiPolizia();
 
         while(rs.next()){
             polizia.setUsername(rs.getString("username"));
             polizia.setPassword(rs.getString("password"));
+            polizia.setComune(rs.getString("comune"));
         }
 
         if (polizia.getUsername() == null){
             throw new Exception();
         }
+
+        return polizia;
     }
 
 }

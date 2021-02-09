@@ -22,7 +22,6 @@ public class Multa {
      */
     public Multa (List<Infrazione> infrazioni){
         this.infrazioni = infrazioni;
-        counter++;
     }
 
     public Multa(){
