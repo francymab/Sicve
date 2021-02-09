@@ -283,6 +283,7 @@ public class MostraTratte {
             List<Infrazione> infrazionePeggioreList = getInfrazione(infrazioneList);
             InfrazioneStrategy infrazioneStrategy;
             for (Infrazione infrazione : infrazionePeggioreList) {
+                infrazione.setIdInfrazione(Multa.counter+1);
                 try{
                     infrazioneStrategy = new InfrazioneIstantaneaStrategy();
                     infrazioneStrategy.salvaInfrazione(infrazione);
@@ -293,6 +294,7 @@ public class MostraTratte {
                 }
 
             }
+            Multa.counter++;
         }
     }
     

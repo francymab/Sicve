@@ -317,8 +317,8 @@ public class SicveDb {
 
     public void insertInfrazioneIstantanea(Connection connection, Infrazione infrazione) throws Exception{
         PreparedStatement ps = null;
-        String qry = "INSERT INTO `infrazione` (`id_tratta`, `id_autovelox`, `descrizione`, `targa`, `velocita_istantanea`) " +
-                "VALUES (?, ?, ?, ?, ?);";
+        String qry = "INSERT INTO `infrazione` (`id_tratta`, `id_autovelox`, `descrizione`, `targa`, `velocita_istantanea`, `id_infrazione`) " +
+                "VALUES (?, ?, ?, ?, ?, ?);";
 
         ps = connection.prepareStatement(qry);
 
@@ -327,6 +327,7 @@ public class SicveDb {
         ps.setString(3, infrazione.getDescrizione());
         ps.setString(4, infrazione.getTarga());
         ps.setInt(5, infrazione.getVelocitaIstantanea());
+        ps.setInt(6, infrazione.getIdInfrazione());
 
         int i = ps.executeUpdate();
         if (i == 0){
@@ -336,8 +337,8 @@ public class SicveDb {
 
     public void insertInfrazioneMedia(Connection connection, Infrazione infrazione) throws Exception{
         PreparedStatement ps = null;
-        String qry = "INSERT INTO `infrazione` (`id_tratta`, `descrizione`, `targa`, `velocita_media`) " +
-                "VALUES (?, ?, ?, ?);";
+        String qry = "INSERT INTO `infrazione` (`id_tratta`, `descrizione`, `targa`, `velocita_media`, `id_infrazione`) " +
+                "VALUES (?, ?, ?, ?, ?);";
 
         ps = connection.prepareStatement(qry);
 
@@ -345,6 +346,8 @@ public class SicveDb {
         ps.setString(2, infrazione.getDescrizione());
         ps.setString(3, infrazione.getTarga());
         ps.setDouble(4, infrazione.getVelocitaMedia());
+        ps.setInt(5, infrazione.getIdInfrazione());
+
 
         int i = ps.executeUpdate();
         if (i == 0){
