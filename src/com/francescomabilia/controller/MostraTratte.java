@@ -8,6 +8,7 @@ import com.francescomabilia.model.auto.Autoveicolo;
 import com.francescomabilia.model.infrazione.Infrazione;
 import com.francescomabilia.model.infrazione.InfrazioneVelocitaIstantaneaBuilder;
 import com.francescomabilia.model.infrazione.InfrazioneVelocitaMediaBuilder;
+import com.francescomabilia.model.infrazione.Multa;
 import com.francescomabilia.model.percorrimenti.Percorrimento;
 import com.francescomabilia.model.sensore.Autovelox;
 import com.francescomabilia.model.sensore.SensoreIstantaneo;
@@ -25,6 +26,7 @@ import java.io.IOException;
 import java.sql.Timestamp;
 import java.sql.SQLException;
 import java.time.Duration;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -222,6 +224,7 @@ public class MostraTratte {
 
         int tp;
         int velocitaIstantanea;
+        int i = 0;
 
         for (SensoreIstantaneo autovelox : autoveloxList){
             Autovelox a = (Autovelox) autovelox;
@@ -240,66 +243,91 @@ public class MostraTratte {
                                " hai avuto una velocita media di : " + velocitaMedia  + "km/h");
 
             //CONTROLLO
-            velocitaIstantanea = random.nextInt(1000) + 120;
+            if(i != 0) {
+                velocitaIstantanea = random.nextInt(1000) + 120;
+            }
+            i++;
 
             sicveDb.insertPercorrenzaAutovelox(sicveDb.connection(), idPercorrimento, timeStart, velocitaIstantanea);
 
+            //velocita istantanea
             if (velocitaIstantanea > (tratta.getVelocitaMax())){
                 String descrizione = "Superamento velocita massima della tratta";
                 tutor.setInfrazioneBuilder(new InfrazioneVelocitaIstantaneaBuilder());
                 tutor.builderVelocitaIstantanea(a.getKmAutovelox(), descrizione, autoveicolo.getTarga(), velocitaIstantanea, tratta.getIdTratta(), a.getIdAutovelox());
-                InfrazioneStrategy infrazioneStrategy = new InfrazioneIstantaneaStrategy();
-                infrazioneStrategy.salvaInfrazione(tutor.getInfrazioneBuilder().getResult());
-//                sicveDb.insertInfrazioneIstantanea(sicveDb.connection(), descrizione, tratta.getIdTratta(), a.getIdAutovelox(), autoveicolo.getTarga(), velocitaIstantanea);
-                
+
                 infrazioneList.add(tutor.getInfrazioneBuilder().getResult());
-                System.out.println(tutor);
+
             }
         }
 
         percorrimento.setOrarioUscita(Timestamp.valueOf(timeEnd));
         velocitaMedia = tratta.getTutor().getFine().calcolaVelocitaMedia(percorrimento);
+        velocitaMedia = 130;
 
+
+        //velocita media
         if (velocitaMedia > (tratta.getVelocitaMax())){
             String descrizione = "Superamento velocita media della tratta";
             tutor.setInfrazioneBuilder(new InfrazioneVelocitaMediaBuilder());
             tutor.builderVelocitaMedia(tratta.getKmTratta(), descrizione, autoveicolo.getTarga(), velocitaMedia, tratta.getIdTratta());
-            InfrazioneStrategy infrazioneStrategy = new InfrazioneMediaStrategy();
-            infrazioneStrategy.salvaInfrazione(tutor.getInfrazioneBuilder().getResult());
-//            sicveDb.insertInfrazioneMedia(sicveDb.connection(), descrizione, tratta.getIdTratta(), tratta.getKmTratta(), autoveicolo.getTarga(), velocitaMedia);
 
             infrazioneList.add(tutor.getInfrazioneBuilder().getResult());
-            System.out.println(tutor);
         }
-
-
 
         System.out.println("sei uscito dalla tratta all' ora: " + s + " hai avuto una velocita media di : " + velocitaMedia);
         tratta.getPercorrimento().add(percorrimento);
         
         if (infrazioneList.size() > 2){
-            System.out.println(getInfrazione(infrazioneList));
+            System.out.println("PEPPE " + getInfrazione(infrazioneList));
+            List<Infrazione> infrazionePeggioreList = getInfrazione(infrazioneList);
+            InfrazioneStrategy infrazioneStrategy;
+            for (Infrazione infrazione : infrazionePeggioreList) {
+                try{
+                    infrazioneStrategy = new InfrazioneIstantaneaStrategy();
+                    infrazioneStrategy.salvaInfrazione(infrazione);
+
+                }catch (Exception sqlException){
+                    infrazioneStrategy = new InfrazioneMediaStrategy();
+                    infrazioneStrategy.salvaInfrazione(infrazione);
+                }
+
+            }
         }
     }
     
     private List<Infrazione> getInfrazione(List<Infrazione> infrazioni) throws Exception{
         List<Infrazione> infraziones = new ArrayList<>();
-        int velMaxInfrazione = Integer.MIN_VALUE;
-//        int velocitaMaxTratta = sicveDb.getTratta(sicveDb.connection(), infrazioni.get(0).getIdTratta()).getVelocitaMax();
+        int velocitaMaxTratta = sicveDb.getTratta(sicveDb.connection(), infrazioni.get(0).getIdTratta()).getVelocitaMax();
         int indMax=0;
 
+        System.out.println("================ " + infrazioni);
+
+        double valueMax = 0D;
+        double value = 0D;
 
         for (int i = 0; i < infrazioni.size(); i++){
             Infrazione infrazione = infrazioni.get(i);
 
-            if (infrazione.getVelocitaIstantanea() > velMaxInfrazione){
-                velMaxInfrazione = infrazione.getVelocitaIstantanea();
-                indMax = i;
+            if (infrazione.getVelocitaIstantanea() != null) {
+                value = (infrazione.getVelocitaIstantanea() - velocitaMaxTratta) * Infrazione.PREZZO_ISTANTANEA;
+                System.out.println("prezzo istantaneo " + value);
+            }else{
+                value = (infrazione.getVelocitaMedia() - velocitaMaxTratta) * Infrazione.PREZZO_MEDIA;
+                System.out.println("prezzo medio " + value);
             }
 
-            if(((i+1)%3 == 0)) {
+            if (valueMax < value) {
+                indMax = i;
+
+                System.out.println("1) max " + valueMax + " value " + value);
+                valueMax = value;
+                System.out.println("2) max " + valueMax + " value " + value);
+            }
+
+            if (((i + 1) % 3 == 0)) {
                 infraziones.add(infrazioni.get(indMax));
-                indMax = i+1;
+                indMax = i + 1;
             }
         }
 

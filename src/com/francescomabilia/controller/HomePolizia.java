@@ -15,6 +15,7 @@ import java.util.Optional;
 
 public class HomePolizia {
     private static final String fileName = "src/com/francescomabilia/view/fxml/loginAdmin.fxml";
+    private static final String fileNameMulte = "src/com/francescomabilia/view/fxml/mostraMulte.fxml";
 
     @FXML
     private Button showMulteButton;
@@ -23,13 +24,28 @@ public class HomePolizia {
     private Button logoutButton;
 
     @FXML
-    public void initializa(){
+    public void initialize(){
         logoutButton.setOnAction(e -> {
             try{
                 logoutAlert();
             }catch (Exception exception){
                 exception.printStackTrace();
             }
+        });
+
+        showMulteButton.setOnAction(e ->{
+            FXMLLoader loader = new FXMLLoader();
+            Parent root = null;
+            try {
+                root = loader.load(new FileInputStream(fileNameMulte));
+            } catch (IOException ioException) {
+                ioException.printStackTrace();
+            }
+
+            Stage loginStage = new Stage();
+            loginStage.setTitle("SICVE");
+            loginStage.setScene(new Scene(root, 810, 400));
+            loginStage.show();
         });
     }
 

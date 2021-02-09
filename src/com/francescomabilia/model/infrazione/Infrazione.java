@@ -13,6 +13,7 @@ public class Infrazione {
     public static final double PREZZO_MEDIA = 2.47D;
     private int idTratta;
     private Integer idAutovelox;
+    private int idInfrazione;
 
     //COSTRUTTORI
 
@@ -73,6 +74,10 @@ public class Infrazione {
         this.idAutovelox = idAutovelox;
     }
 
+    public void setIdInfrazione(int idInfrazione) {
+        this.idInfrazione = idInfrazione;
+    }
+
     //GETTER
 
     /**
@@ -123,6 +128,10 @@ public class Infrazione {
         return this.idAutovelox;
     }
 
+    public int getIdInfrazione() {
+        return idInfrazione;
+    }
+
     //METODI SOVRASCRITTI
     @Override
     public boolean equals(Object o) {
@@ -144,12 +153,14 @@ public class Infrazione {
     @Override
     public String toString() {
         return "Infrazione{" +
-                "descrizione='" + descrizione + '\'' +
+                "id infrazione= " + idInfrazione +
+                ", descrizione='" + descrizione + '\'' +
                 ", targa='" + targa + '\'' +
                 ", velocittaInstantanea=" + velocitaIstantanea +
                 ", velocitaMedia=" + velocitaMedia +
                 ", kmInfrazione=" + kmInfrazione +
                 ", idTratta= " + idTratta +
+                ", id Autovelox= " + idAutovelox +
                 '}';
     }
 }

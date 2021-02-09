@@ -6,7 +6,7 @@ import java.sql.SQLException;
 
 public class InfrazioneIstantaneaStrategy implements InfrazioneStrategy{
     @Override
-    public void salvaInfrazione(Infrazione infrazione) throws SQLException {
+    public void salvaInfrazione(Infrazione infrazione) throws Exception {
         SicveDb sicveDb = SicveDb.getInstance();
         sicveDb.insertInfrazioneIstantanea(sicveDb.connection(), infrazione);
     }

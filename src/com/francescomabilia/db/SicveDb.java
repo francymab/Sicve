@@ -2,6 +2,7 @@ package com.francescomabilia.db;
 
 import com.francescomabilia.model.auto.Autoveicolo;
 import com.francescomabilia.model.infrazione.Infrazione;
+import com.francescomabilia.model.infrazione.Multa;
 import com.francescomabilia.model.percorrimenti.Percorrimento;
 import com.francescomabilia.model.sensore.Autovelox;
 import com.francescomabilia.model.sensore.SensoreIstantaneo;
@@ -314,7 +315,7 @@ public class SicveDb {
         return i;
     }
 
-    public void insertInfrazioneIstantanea(Connection connection, Infrazione infrazione) throws SQLException{
+    public void insertInfrazioneIstantanea(Connection connection, Infrazione infrazione) throws Exception{
         PreparedStatement ps = null;
         String qry = "INSERT INTO `infrazione` (`id_tratta`, `id_autovelox`, `descrizione`, `targa`, `velocita_istantanea`) " +
                 "VALUES (?, ?, ?, ?, ?);";
@@ -333,7 +334,7 @@ public class SicveDb {
         }
     }
 
-    public void insertInfrazioneMedia(Connection connection, Infrazione infrazione) throws SQLException{
+    public void insertInfrazioneMedia(Connection connection, Infrazione infrazione) throws Exception{
         PreparedStatement ps = null;
         String qry = "INSERT INTO `infrazione` (`id_tratta`, `descrizione`, `targa`, `velocita_media`) " +
                 "VALUES (?, ?, ?, ?);";
@@ -351,23 +352,25 @@ public class SicveDb {
         }
     }
 
-    public List<Infrazione> getInfrazioni(Connection connection, String targa) throws SQLException{
+    public List<Multa> getMulte(Connection connection) throws SQLException{
         PreparedStatement ps = null;
         ResultSet rs = null;
-        List<Infrazione> infrazioneList = new ArrayList<>();
+        List<Multa> multe = new ArrayList<>();
 
-        String qry = "SELECT * FROM `infrazione` WHERE `targa` = ?";
+        String qry = "SELECT * FROM `infrazione` ";
 
-        ps = connection().prepareStatement(qry);
-        ps.setString(1, targa);
+        ps = connection.prepareStatement(qry);
         rs = ps.executeQuery();
 
         while(rs.next()){
-            Infrazione infrazione = new Infrazione();
+            Multa multa = new Multa();
 
+            multa.setInfrazioni(getIfrazioneDaMulta(connection(), Multa.counter));
+
+            multe.add(multa);
         }
 
-        return infrazioneList;
+        return multe;
     }
 
     public Tratta getTratta(Connection connection, int idTratta) throws SQLException{
@@ -402,4 +405,35 @@ public class SicveDb {
 
         return t;
     }
+
+    public List<Infrazione> getIfrazioneDaMulta(Connection connection, int idInfrazione) throws SQLException{
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        List<Infrazione> infrazioneList = new ArrayList<>();
+
+        String qry = "SELECT * FROM `infrazione` WHERE `id_infrazione` = ?";
+
+        ps = connection.prepareStatement(qry);
+        ps.setInt(1, idInfrazione);
+        rs = ps.executeQuery();
+
+        while(rs.next()){
+            Infrazione infrazione = new Infrazione();
+
+            infrazione.setDescrizione(rs.getString("descrizione"));
+            infrazione.setIdAutovelox(rs.getInt("id_autovelox"));
+            infrazione.setIdTratta(rs.getInt("id_tratta"));
+            infrazione.setIdInfrazione(rs.getInt("id_infrazione"));
+            infrazione.setTarga(rs.getString("targa"));
+            infrazione.setVelocitaInstantanea(rs.getInt("velocita_istantanea"));
+            infrazione.setVelocitaMedia(rs.getDouble("velocita_media"));
+
+            infrazioneList.add(infrazione);
+        }
+
+        return infrazioneList;
+    }
+
+
+
 }

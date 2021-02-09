@@ -3,6 +3,7 @@ package com.francescomabilia.model.infrazione;
 import com.francescomabilia.model.Proprietario;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
 
@@ -11,8 +12,7 @@ public class Multa {
     /* Lista delle Infrazioni*/
     private List<Infrazione> infrazioni;
 
-    /*Data della multa*/
-    private LocalDate dataMulta;
+    public static int counter = 0;
 
     //COSTRUTTORI
 
@@ -20,9 +20,13 @@ public class Multa {
      * Costruttore della multa
      * @param infrazioni Lista delle Infrazioni
      */
-    public Multa (List<Infrazione> infrazioni, LocalDate dataMulta){
+    public Multa (List<Infrazione> infrazioni){
         this.infrazioni = infrazioni;
-        this.dataMulta = dataMulta;
+        counter++;
+    }
+
+    public Multa(){
+        counter++;
     }
 
     //SETTER
@@ -35,14 +39,6 @@ public class Multa {
         this.infrazioni = infrazioni;
     }
 
-    /**
-     * Setter della data della multa
-     * @param dataMulta Data della multa
-     */
-    public void setDataMulta(LocalDate dataMulta){
-        this.dataMulta = dataMulta;
-    }
-
     //GETTER
 
     /**
@@ -51,14 +47,6 @@ public class Multa {
      */
     public List<Infrazione> getInfrazioni() {
         return this.infrazioni;
-    }
-
-    /**
-     * Getter della data della multa
-     * @return Data della multa
-     */
-    public LocalDate getDataMulta() {
-        return this.dataMulta;
     }
 
     //METODI SOVRASCRITTI

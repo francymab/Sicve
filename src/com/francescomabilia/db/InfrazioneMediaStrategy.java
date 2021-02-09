@@ -5,7 +5,7 @@ import java.sql.SQLException;
 
 public class InfrazioneMediaStrategy implements InfrazioneStrategy{
     @Override
-    public void salvaInfrazione(Infrazione infrazione) throws SQLException {
+    public void salvaInfrazione(Infrazione infrazione) throws Exception {
         SicveDb sicveDb = SicveDb.getInstance();
         sicveDb.insertInfrazioneMedia(sicveDb.connection(), infrazione);
     }

@@ -26,14 +26,18 @@
 
     <center>
         <GridPane alignment="CENTER">
-            <Label text="Targa" GridPane.rowIndex="0" GridPane.columnIndex="0" style="-fx-font-family: 'Times New Roman'; -fx-font-size: 20;"/>
-            <TextField fx:id="usernameTextField" promptText="Targa" prefWidth="207" prefHeight="25" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+            <Label text="Autoveicolo" GridPane.rowIndex="0" GridPane.columnIndex="0" style="-fx-font-family: 'Times New Roman'; -fx-font-size: 25;"/>
 
-            <Label text="Password" GridPane.rowIndex="2" GridPane.columnIndex="0" style="-fx-font-family: 'Times New Roman'; -fx-font-size: 20;"/>
-            <PasswordField fx:id="passwordField" promptText="Password" prefWidth="207" prefHeight="25" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
-            <Label fx:id="errorLogin" text="" GridPane.rowIndex="5" GridPane.columnIndex="0" style="-fx-font-family: 'Times New Roman'; -fx-text-fill: red"/>
+            <Label text="" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
 
-            <Button fx:id="loginButton" text="Login" GridPane.rowIndex="6" GridPane.columnIndex="0"/>
+            <Label text="Targa" GridPane.rowIndex="2" GridPane.columnIndex="0" style="-fx-font-family: 'Times New Roman'; -fx-font-size: 20;"/>
+            <TextField fx:id="usernameTextField" promptText="Targa" prefWidth="207" prefHeight="25" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+
+            <Label text="Password" GridPane.rowIndex="4" GridPane.columnIndex="0" style="-fx-font-family: 'Times New Roman'; -fx-font-size: 20;"/>
+            <PasswordField fx:id="passwordField" promptText="Password" prefWidth="207" prefHeight="25" GridPane.rowIndex="5" GridPane.columnIndex="0"/>
+            <Label fx:id="errorLogin" text="" GridPane.rowIndex="6" GridPane.columnIndex="0" style="-fx-font-family: 'Times New Roman'; -fx-text-fill: red"/>
+
+            <Button fx:id="loginButton" text="Login" GridPane.rowIndex="7" GridPane.columnIndex="0"/>
         </GridPane>
     </center>
 
