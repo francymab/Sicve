@@ -459,4 +459,75 @@ public class SicveDb {
         return multe;
     }
 
+    public List<Integer> getVelocitaIstantanee(Connection connection, int idTratta) throws SQLException{
+        List<Integer> velocita = new ArrayList<>();
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+
+        String qry = "SELECT `percorrenza_autovelox`.`velocita` FROM percorrenza_autovelox " +
+                     "INNER JOIN percorrenza ON `percorrenza_autovelox`.`id_percorrenza` = `percorrenza`.`id_percorrenza` " +
+                     "INNER JOIN tratta ON `percorrenza`.`id_tratta` = ?";
+
+        ps = connection.prepareStatement(qry);
+        ps.setInt(1, idTratta);
+        rs = ps.executeQuery();
+
+        while (rs.next()){
+
+            velocita.add(rs.getInt("velocita"));
+        }
+
+        return velocita;
+    }
+
+    public List<Double> getVelocitaMedie(Connection connection, int idTratta) throws SQLException{
+        List<Double> velocita = new ArrayList<>();
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+
+        String qry = "SELECT `percorrenza`.`orario_inizio`, `percorrenza`.`orario_fine`, `tratta`.`kmTratta`" +
+                     "FROM `percorrenza` " +
+                     "INNER JOIN `tratta` " +
+                     "ON `percorrenza`.`id_tratta` = ?";
+
+        ps = connection.prepareStatement(qry);
+        ps.setInt(1, idTratta);
+        rs = ps.executeQuery();
+
+        while (rs.next()){
+            Timestamp tStart = rs.getTimestamp("orario_inizio");
+            Timestamp tEnd = rs.getTimestamp("orario_fine");
+
+            velocita.add(Math.abs(rs.getInt("kmTratta")/(Duration.between(tStart.toInstant(), tEnd.toInstant()).toMinutes()/60D)));
+
+        }
+
+        return velocita;
+    }
+
+    public List<Long> getTempoMedio(Connection connection, int idTratta) throws SQLException{
+        List<Long> tempo = new ArrayList<>();
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+
+        String qry = "SELECT `percorrenza`.`orario_inizio`, `percorrenza`.`orario_fine`" +
+                "FROM `percorrenza` " +
+                "INNER JOIN `tratta` " +
+                "ON `percorrenza`.`id_tratta` = ?";
+
+        ps = connection.prepareStatement(qry);
+        ps.setInt(1, idTratta);
+        rs = ps.executeQuery();
+
+        while (rs.next()){
+            Timestamp tStart = rs.getTimestamp("orario_inizio");
+            Timestamp tEnd = rs.getTimestamp("orario_fine");
+
+            tempo.add(Math.abs((Duration.between(tStart.toInstant(), tEnd.toInstant()).toMinutes())));
+
+        }
+
+        return tempo;
+    }
+
 }

@@ -20,7 +20,6 @@ import java.util.Optional;
 
 public class HomePolizia {
     private static final String fileName = "src/com/francescomabilia/view/fxml/loginPolizia.fxml";
-    private static final String fileNameMulte = "src/com/francescomabilia/view/fxml/mostraMulte.fxml";
 
     @FXML
     private ListView<Multa> multeListView;

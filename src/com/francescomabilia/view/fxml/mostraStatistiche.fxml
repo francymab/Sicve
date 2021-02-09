@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<GridPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.francescomabilia.controller.MostraStatistiche"
+            prefHeight="400.0" prefWidth="600.0"
+            hgap="10" vgap="10">
+
+    <Label text="Velocita istantanea media: " GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+    <TextField fx:id="velocitaIstantaneaMediaTextField" editable="false" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+
+    <Label text="Media delle velocita media: " GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+    <TextField fx:id="velocitaMediaMediaTextField" editable="false" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+
+    <Label text="Numero percorrimenti: " GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+    <TextField fx:id="percorrimentiTextField" editable="false" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+
+    <Label text="Numero multe: " GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+    <TextField fx:id="multeTextField" editable="false" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
+
+    <Label text="Tempo di percorrenza medio: " GridPane.rowIndex="4" GridPane.columnIndex="0"/>
+    <TextField fx:id="tempoTextField" editable="false" GridPane.rowIndex="4" GridPane.columnIndex="1"/>
+</GridPane>

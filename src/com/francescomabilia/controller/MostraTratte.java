@@ -37,6 +37,7 @@ import java.util.Random;
 public class MostraTratte {
     private static final String fileNameAddTratta = "src/com/francescomabilia/view/fxml/aggiungiTratta.fxml";
     private static final String fileNameMostraAutovelox = "src/com/francescomabilia/view/fxml/mostraAutovelox.fxml";
+    private static final String fileNameMostraStatistiche = "src/com/francescomabilia/view/fxml/mostraStatistiche.fxml";
 
     private final SicveDb sicveDb = SicveDb.getInstance();
     Autoveicolo autoveicolo;
@@ -59,6 +60,7 @@ public class MostraTratte {
         MenuItem updateMenuItem = new MenuItem("Modifica");
         MenuItem enterMenuItem = new MenuItem("Entra");
         MenuItem autoveloxMenuItem = new MenuItem("Autovelox");
+        MenuItem statisticheMenuItem = new MenuItem("Statistiche");
 
         updateMenuItem.setOnAction(e -> {
             Tratta tratta = tratteListView.getSelectionModel().getSelectedItem();
@@ -100,7 +102,27 @@ public class MostraTratte {
             loginStage.show();
         });
 
-        contextMenu.getItems().addAll(updateMenuItem, enterMenuItem, autoveloxMenuItem);
+        statisticheMenuItem.setOnAction(e->{
+            Tratta tratta = tratteListView.getSelectionModel().getSelectedItem();
+
+            FXMLLoader loader = new FXMLLoader();
+            Parent root = null;
+            try {
+                root = loader.load(new FileInputStream(fileNameMostraStatistiche));
+            } catch (IOException ioException) {
+                ioException.printStackTrace();
+            }
+
+            MostraStatistiche mostraStatistiche = loader.getController();
+            mostraStatistiche.init(tratta);
+
+            Stage loginStage = new Stage();
+            loginStage.setTitle("SICVE");
+            loginStage.setScene(new Scene(root, 810, 400));
+            loginStage.show();
+        });
+
+        contextMenu.getItems().addAll(updateMenuItem, enterMenuItem, autoveloxMenuItem, statisticheMenuItem);
 
         tratteListView.getItems().setAll(sicveDb.getTratte(sicveDb.connection()));
         tratteListView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
@@ -126,6 +148,7 @@ public class MostraTratte {
                     if (getTipoAccesso().equals("Auto")){
                         autoveloxMenuItem.setDisable(true);
                         updateMenuItem.setDisable(true);
+                        statisticheMenuItem.setDisable(true);
                     }else {
                         enterMenuItem.setDisable(true);
                     }
