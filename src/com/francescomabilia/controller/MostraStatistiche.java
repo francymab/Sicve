@@ -5,23 +5,40 @@ import com.francescomabilia.model.GestoreStatistiche;
 import com.francescomabilia.model.tratta.Tratta;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
-
 import java.sql.SQLException;
 
+/**
+ * Classe per la gestione della view per mostrare la lista delle statistiche di una tratta
+ */
 public class MostraStatistiche {
 
+    /**
+     * TextField utile per il setting della media della velocita istantanea
+     */
     @FXML
     private TextField velocitaIstantaneaMediaTextField;
 
+    /**
+     * TextField utile per il setting della media della velocita media
+     */
     @FXML
     private TextField velocitaMediaMediaTextField;
 
+    /**
+     * TextField utile per il setting del numero dei percorrimenti
+     */
     @FXML
     private TextField percorrimentiTextField;
 
+    /**
+     * TextField utile per il setting della media della velocita istantanea
+     */
     @FXML
     private TextField multeTextField;
 
+    /**
+     * TextField utile per il setting del tempo medio di percorrenza
+     */
     @FXML
     private TextField tempoTextField;
 
@@ -39,6 +56,9 @@ public class MostraStatistiche {
 
     }
 
+    /**
+     * Questo metodo inizializza la view a cui è collegato il controller corrente
+     */
     @FXML
     public void initialize(){
 

@@ -16,25 +16,54 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Optional;
 
+/**
+ * Classe per la gestione della view per Homepage dell' amministratore
+ */
 public class HomeAdmin {
+    /**
+     * Variabile statica che rappresenta il percorso alla view del login per l' amministratore
+     */
     private static final String fileName = "src/com/francescomabilia/view/fxml/loginAdmin.fxml";
+
+    /**
+     * Variabile statica che rappresenta il percorso alla view dell' aggiungi una tratta
+     */
     private static final String fileNameAddTratta = "src/com/francescomabilia/view/fxml/aggiungiTratta.fxml";
+
+    /**
+     * Variabile statica che rappresenta il percorso alla view del mostra lista tratte
+     */
     private static final String fileNameMostraTratta = "src/com/francescomabilia/view/fxml/mostraTratte.fxml";
 
+    /**
+     * Variabile per l'inizializzazione dell' istanza al database
+     */
     private final SicveDb sicveDb = SicveDb.getInstance();
 
+    /**
+     * Button per la gestione del caso in cui si voglia aggiungere una nuova tratta
+     */
     @FXML
     private Button addTrattaButton;
 
+    /**
+     * Button per la gestione del caso in cui si voglia mostrare le tratte
+     */
     @FXML
     private Button showTratteButton;
 
     @FXML
     private BorderPane borderPane;
 
+    /**
+     * Button per la gestione del caso in cui si voglia effettuare il logout
+     */
     @FXML
     private Button logoutButton;
 
+    /**
+     * Questo metodo inizializza la view a cui è collegato il controller corrente
+     */
     @FXML
     public void initialize(){
         addTrattaButton.setOnAction(e ->{
@@ -72,6 +101,10 @@ public class HomeAdmin {
         });
     }
 
+    /**
+     * Metodo per l' operazione di logout
+     * @throws IOException
+     */
     public void logoutAlert() throws IOException {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Exit!");
@@ -92,6 +125,10 @@ public class HomeAdmin {
         }
     }
 
+    /**
+     * Metodo per l' aggiunta di una tratta
+     * @throws Exception
+     */
     public void aggiungiTratta() throws Exception {
         Dialog<ButtonType> dialog = new Dialog<>();
         dialog.initOwner(borderPane.getScene().getWindow());
@@ -116,7 +153,5 @@ public class HomeAdmin {
             }
         }
     }
-
-
 
 }

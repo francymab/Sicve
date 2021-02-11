@@ -6,22 +6,39 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
-
 import java.io.FileInputStream;
 import java.io.IOException;
 
+/**
+ * Classe per la gestione della view principale
+ */
 public class Sicve {
+    /**
+     * Variabile statica che rappresenta il percorso alla view
+     */
     private String fileName = "";
 
+    /**
+     * Button per la gestione del caso in cui si voglia entrare nel login dell' autoveicolo
+     */
     @FXML
     private Button buttonAutoveicolo;
 
+    /**
+     * Button per la gestione del caso in cui si voglia entrare nel login dell' amministratore
+     */
     @FXML
     private Button buttonAmministratore;
 
+    /**
+     * Button per la gestione del caso in cui si voglia entrare nel login della polizia
+     */
     @FXML
     private Button buttonPolizia;
 
+    /**
+     * Questo metodo inizializza la view a cui è collegato il controller corrente
+     */
     @FXML
     public void initialize(){
         buttonAutoveicolo.setOnAction(e ->{
@@ -58,6 +75,13 @@ public class Sicve {
         });
     }
 
+    //METODI
+
+    /**
+     * Metodo per mostrare la view del login
+     * @param fileName nome del file per il login
+     * @throws IOException
+     */
     private void showLogin(String fileName) throws IOException {
         FXMLLoader loader = new FXMLLoader();
         Parent root = loader.load(new FileInputStream(fileName));

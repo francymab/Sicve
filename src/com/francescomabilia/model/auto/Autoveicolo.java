@@ -6,7 +6,6 @@ import java.util.Objects;
 /**
  * Classe che definisce un Autoveicolo
  */
-
 public class Autoveicolo {
     //VARIABILI D'ISTANZA
 
@@ -179,6 +178,10 @@ public class Autoveicolo {
 
     //METODI SOVRASCRITTI
 
+    /**
+     * Override del metodo equals atto a constatare l'uguaglianza di due oggetti di tipo Autoveicolo
+     * @return true se i due oggetti sono uguali ritorna, altrimenti false
+     */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -192,11 +195,19 @@ public class Autoveicolo {
                 telefono.equals(that.telefono);
     }
 
+    /**
+     * Override del metodo hascode
+     * @return Il valore intero rappresentato dall'oggetto
+     */
     @Override
     public int hashCode() {
         return Objects.hash(super.hashCode(), marca, modello, targa, telefono, mandaSMS);
     }
 
+    /**
+     * Override del metodo to String atto a creare una stringa dato un oggetto di tipo Autoveicolo
+     * @return Stringa dell'oggetto di tipo Autoveicolo
+     */
     @Override
     public String toString() {
         return "Autoveicolo{" +

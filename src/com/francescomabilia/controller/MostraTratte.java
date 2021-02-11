@@ -26,7 +26,6 @@ import java.io.IOException;
 import java.sql.Timestamp;
 import java.sql.SQLException;
 import java.time.Duration;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -39,20 +38,31 @@ public class MostraTratte {
     private static final String fileNameMostraAutovelox = "src/com/francescomabilia/view/fxml/mostraAutovelox.fxml";
     private static final String fileNameMostraStatistiche = "src/com/francescomabilia/view/fxml/mostraStatistiche.fxml";
 
+    /**
+     * Variabile per l'inizializzazione dell' istanza al database
+     */
     private final SicveDb sicveDb = SicveDb.getInstance();
     Autoveicolo autoveicolo;
     private String tipoAccesso;
 
+    /**
+     * ListView delle tratte
+     */
     @FXML
     private ListView<Tratta> tratteListView;
 
+    /**
+     * Menu di scelta delle operazioni sulle tratte
+     */
     @FXML
     private ContextMenu contextMenu;
 
     @FXML
     private BorderPane borderPane;
 
-
+    /**
+     * Questo metodo inizializza la view a cui è collegato il controller corrente
+     */
     @FXML
     public void initialize() throws SQLException {
 
@@ -159,6 +169,197 @@ public class MostraTratte {
         });
     }
 
+    //SETTER
+
+    /**
+     * Setter del tipo dell' accesso
+     * @param tipoAccesso Tipo Accesso
+     */
+    public void setTipoAccesso(String tipoAccesso) {
+        this.tipoAccesso = tipoAccesso;
+    }
+
+    /**
+     * Setter dell' autoveicolo
+     * @param autoveicolo Autoveicolo
+     */
+    public void setAutoveicolo(Autoveicolo autoveicolo) {
+        this.autoveicolo = autoveicolo;
+    }
+
+    //GETTER
+
+    /**
+     * Getter del tipo di accesso
+     * @return tipo di accesso
+     */
+    public String getTipoAccesso() {
+        return this.tipoAccesso;
+    }
+
+    /**
+     * Getter dell' autoveicolo
+     * @return autoveicolo
+     */
+    public Autoveicolo getAutoveicolo() {
+        return autoveicolo;
+    }
+
+    //METODI
+
+    /**
+     * Metodo di generazione di una percorrenza data una tratta
+     * @param tratta Tratta
+     * @throws Exception
+     */
+    public void generaPercorrenza(Tratta tratta) throws Exception {
+        List<Infrazione> infrazioneList = new ArrayList<>();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
+
+        System.out.println(tratta);
+        System.out.println(getAutoveicolo());
+        Tutor tutor = tratta.getTutor();
+
+        Random random = new Random();
+
+        LocalDateTime timeStart = LocalDateTime.now();
+        Timestamp timestampTimeStart = Timestamp.valueOf(timeStart);
+        String s = timeStart.format(formatter);
+
+
+        int tMax = (int) (((float)tratta.getKmTratta()/(float) tratta.getVelocitaMin()) * 3600F);
+        int tMin = (int) (((float)tratta.getKmTratta()/((float) tratta.getVelocitaMax()+10F)) * 3600F);
+
+        Percorrimento percorrimento = new Percorrimento(timestampTimeStart, null, autoveicolo.getTarga(), tratta.getIdTratta());
+
+        double velocitaMedia = tratta.getTutor().getInizio().calcolaVelocitaMedia(percorrimento);
+        System.out.println("sei entrato nella tratta all' ora: " + s + " hai avuto una velocita media di : " + velocitaMedia);
+
+        int sec = random.nextInt(tMax - tMin) + tMin;
+        LocalDateTime timeEnd = LocalDateTime.now().plus(Duration.ofSeconds(sec));
+        s = timeEnd.format(formatter);
+
+        int idPercorrimento = sicveDb.insertPercorrenza(sicveDb.connection(), tratta, autoveicolo, timeStart, timeEnd);
+
+        List<SensoreIstantaneo> autoveloxList = tratta.getTutor().getAutovelox();
+
+        formatter = DateTimeFormatter.ofPattern("HH:mm:ss");
+
+        int tp;
+        int velocitaIstantanea;
+//        int i = 0;
+
+        for (SensoreIstantaneo autovelox : autoveloxList){
+            Autovelox a = (Autovelox) autovelox;
+
+            tMax = (int) (((float)a.getKmAutovelox()/(float) tratta.getVelocitaMin()) * 3600F);
+            tMin = (int) (((float)a.getKmAutovelox()/((float) tratta.getVelocitaMax()+10F)) * 3600F);
+
+            tp = random.nextInt(tMax-tMin) + tMin;
+
+            percorrimento.setOrarioUscita(Timestamp.valueOf(timeStart.plus(Duration.ofSeconds(tp))));
+            velocitaMedia = autovelox.calcolaVelocitaMedia(percorrimento);
+            velocitaIstantanea = autovelox.calcolaVelocitaIstantanea(timeStart);
+
+            System.out.println("Sei passato all' autovelox " + autovelox + " all' istante " + timeStart.plus(Duration.ofSeconds(tp)).format(formatter) +
+                               " con una velocita istantane di " + velocitaIstantanea + "km/h" +
+                               " hai avuto una velocita media di : " + velocitaMedia  + "km/h");
+
+//            //CONTROLLO
+//            if(i != 0) {
+//                velocitaIstantanea = random.nextInt(1000) + 120;
+//            }
+//            i++;
+
+            sicveDb.insertPercorrenzaAutovelox(sicveDb.connection(), idPercorrimento, timeStart, velocitaIstantanea);
+
+            //velocita istantanea
+            if (velocitaIstantanea > (tratta.getVelocitaMax())){
+                String descrizione = "Superamento velocita massima della tratta";
+                tutor.setInfrazioneBuilder(new InfrazioneVelocitaIstantaneaBuilder());
+                tutor.builderVelocitaIstantanea(a.getKmAutovelox(), descrizione, autoveicolo.getTarga(), velocitaIstantanea, tratta.getIdTratta(), a.getIdAutovelox());
+
+                infrazioneList.add(tutor.getInfrazioneBuilder().getResult());
+
+            }
+        }
+
+        percorrimento.setOrarioUscita(Timestamp.valueOf(timeEnd));
+        velocitaMedia = tratta.getTutor().getFine().calcolaVelocitaMedia(percorrimento);
+
+        //velocita media
+        if (velocitaMedia > (tratta.getVelocitaMax())){
+            String descrizione = "Superamento velocita media della tratta";
+            tutor.setInfrazioneBuilder(new InfrazioneVelocitaMediaBuilder());
+            tutor.builderVelocitaMedia(tratta.getKmTratta(), descrizione, autoveicolo.getTarga(), velocitaMedia, tratta.getIdTratta());
+
+            infrazioneList.add(tutor.getInfrazioneBuilder().getResult());
+        }
+
+        System.out.println("sei uscito dalla tratta all' ora: " + s + " hai avuto una velocita media di : " + velocitaMedia);
+        tratta.getPercorrimento().add(percorrimento);
+        
+        if (infrazioneList.size() > 2){
+            List<Infrazione> infrazionePeggioreList = getInfrazione(infrazioneList);
+            InfrazioneStrategy infrazioneStrategy;
+            for (Infrazione infrazione : infrazionePeggioreList) {
+                infrazione.setIdInfrazione(Multa.counter+1);
+                try{
+                    infrazioneStrategy = new InfrazioneIstantaneaStrategy();
+                    infrazioneStrategy.salvaInfrazione(infrazione);
+
+                }catch (Exception sqlException){
+                    infrazioneStrategy = new InfrazioneMediaStrategy();
+                    infrazioneStrategy.salvaInfrazione(infrazione);
+                }
+
+            }
+            Multa.counter++;
+        }
+    }
+
+    /**
+     * Metodo per il calcolo della lista di infrazioni peggiori
+     * @param infrazioni Lista di infrazioni
+     * @return Lista di infrazioni peggiori
+     * @throws Exception
+     */
+    private List<Infrazione> getInfrazione(List<Infrazione> infrazioni) throws Exception{
+        List<Infrazione> infraziones = new ArrayList<>();
+        int velocitaMaxTratta = sicveDb.getTratta(sicveDb.connection(), infrazioni.get(0).getIdTratta()).getVelocitaMax();
+        int indMax=0;
+
+        double valueMax = 0D;
+        double value = 0D;
+
+        for (int i = 0; i < infrazioni.size(); i++){
+            Infrazione infrazione = infrazioni.get(i);
+
+            if (infrazione.getVelocitaIstantanea() != null) {
+                value = (infrazione.getVelocitaIstantanea() - velocitaMaxTratta) * Infrazione.PREZZO_ISTANTANEA;
+            }else{
+                value = (infrazione.getVelocitaMedia() - velocitaMaxTratta) * Infrazione.PREZZO_MEDIA;
+            }
+
+            if (valueMax < value) {
+                indMax = i;
+            }
+
+            if (((i + 1) % 3 == 0)) {
+                infraziones.add(infrazioni.get(indMax));
+                indMax = i + 1;
+            }
+        }
+
+        return infraziones;
+    }
+
+
+    /**
+     * Metodo per aggiornare una tratta
+     * @param oldTratta Vecchia tratta
+     * @throws Exception
+     */
     public void updateTratta(Tratta oldTratta) throws Exception {
         Dialog<ButtonType> dialog = new Dialog<>();
         dialog.initOwner(borderPane.getScene().getWindow());
@@ -190,172 +391,5 @@ public class MostraTratte {
                 tratteListView.getItems().setAll(sicveDb.getTratte(sicveDb.connection()));
             }
         }
-    }
-
-    //SETTER
-    public void setTipoAccesso(String tipoAccesso) {
-        this.tipoAccesso = tipoAccesso;
-    }
-
-    public void setAutoveicolo(Autoveicolo autoveicolo) {
-        this.autoveicolo = autoveicolo;
-    }
-
-    //GETTER
-    public String getTipoAccesso() {
-        return this.tipoAccesso;
-    }
-
-    public Autoveicolo getAutoveicolo() {
-        return autoveicolo;
-    }
-
-    //METODI
-    public void generaPercorrenza(Tratta tratta) throws Exception {
-        List<Infrazione> infrazioneList = new ArrayList<>();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
-
-        System.out.println(tratta);
-        System.out.println(getAutoveicolo());
-        Tutor tutor = tratta.getTutor();
-
-        Random random = new Random();
-        List<Tratta> tratte = sicveDb.getTratte(sicveDb.connection());
-
-        LocalDateTime timeStart = LocalDateTime.now();
-        Timestamp timestampTimeStart = Timestamp.valueOf(timeStart);
-        String s = timeStart.format(formatter);
-
-
-        int tMax = (int) (((float)tratta.getKmTratta()/(float) tratta.getVelocitaMin()) * 3600F);
-        int tMin = (int) (((float)tratta.getKmTratta()/((float) tratta.getVelocitaMax()+10F)) * 3600F);
-
-        Percorrimento percorrimento = new Percorrimento(timestampTimeStart, null, autoveicolo.getTarga(), tratta.getIdTratta());
-
-        double velocitaMedia = tratta.getTutor().getInizio().calcolaVelocitaMedia(percorrimento);
-        System.out.println("sei entrato nella tratta all' ora: " + s + " hai avuto una velocita media di : " + velocitaMedia);
-
-        int sec = random.nextInt(tMax - tMin) + tMin;
-        LocalDateTime timeEnd = LocalDateTime.now().plus(Duration.ofSeconds(sec));
-        s = timeEnd.format(formatter);
-
-        int idPercorrimento = sicveDb.insertPercorrenza(sicveDb.connection(), tratta, autoveicolo, timeStart, timeEnd);
-
-        List<SensoreIstantaneo> autoveloxList = tratta.getTutor().getAutovelox();
-
-        formatter = DateTimeFormatter.ofPattern("HH:mm:ss");
-
-        int tp;
-        int velocitaIstantanea;
-        int i = 0;
-
-        for (SensoreIstantaneo autovelox : autoveloxList){
-            Autovelox a = (Autovelox) autovelox;
-
-            tMax = (int) (((float)a.getKmAutovelox()/(float) tratta.getVelocitaMin()) * 3600F);
-            tMin = (int) (((float)a.getKmAutovelox()/((float) tratta.getVelocitaMax()+10F)) * 3600F);
-
-            tp = random.nextInt(tMax-tMin) + tMin;
-
-            percorrimento.setOrarioUscita(Timestamp.valueOf(timeStart.plus(Duration.ofSeconds(tp))));
-            velocitaMedia = autovelox.calcolaVelocitaMedia(percorrimento);
-            velocitaIstantanea = autovelox.calcolaVelocitaIstantanea(timeStart);
-
-            System.out.println("Sei passato all' autovelox " + autovelox + " all' istante " + timeStart.plus(Duration.ofSeconds(tp)).format(formatter) +
-                               " con una velocita istantane di " + velocitaIstantanea + "km/h" +
-                               " hai avuto una velocita media di : " + velocitaMedia  + "km/h");
-
-            //CONTROLLO
-            if(i != 0) {
-                velocitaIstantanea = random.nextInt(1000) + 120;
-            }
-            i++;
-
-            sicveDb.insertPercorrenzaAutovelox(sicveDb.connection(), idPercorrimento, timeStart, velocitaIstantanea);
-
-            //velocita istantanea
-            if (velocitaIstantanea > (tratta.getVelocitaMax())){
-                String descrizione = "Superamento velocita massima della tratta";
-                tutor.setInfrazioneBuilder(new InfrazioneVelocitaIstantaneaBuilder());
-                tutor.builderVelocitaIstantanea(a.getKmAutovelox(), descrizione, autoveicolo.getTarga(), velocitaIstantanea, tratta.getIdTratta(), a.getIdAutovelox());
-
-                infrazioneList.add(tutor.getInfrazioneBuilder().getResult());
-
-            }
-        }
-
-        percorrimento.setOrarioUscita(Timestamp.valueOf(timeEnd));
-        velocitaMedia = tratta.getTutor().getFine().calcolaVelocitaMedia(percorrimento);
-        velocitaMedia = 130;
-
-
-        //velocita media
-        if (velocitaMedia > (tratta.getVelocitaMax())){
-            String descrizione = "Superamento velocita media della tratta";
-            tutor.setInfrazioneBuilder(new InfrazioneVelocitaMediaBuilder());
-            tutor.builderVelocitaMedia(tratta.getKmTratta(), descrizione, autoveicolo.getTarga(), velocitaMedia, tratta.getIdTratta());
-
-            infrazioneList.add(tutor.getInfrazioneBuilder().getResult());
-        }
-
-        System.out.println("sei uscito dalla tratta all' ora: " + s + " hai avuto una velocita media di : " + velocitaMedia);
-        tratta.getPercorrimento().add(percorrimento);
-        
-        if (infrazioneList.size() > 2){
-            System.out.println("PEPPE " + getInfrazione(infrazioneList));
-            List<Infrazione> infrazionePeggioreList = getInfrazione(infrazioneList);
-            InfrazioneStrategy infrazioneStrategy;
-            for (Infrazione infrazione : infrazionePeggioreList) {
-                infrazione.setIdInfrazione(Multa.counter+1);
-                try{
-                    infrazioneStrategy = new InfrazioneIstantaneaStrategy();
-                    infrazioneStrategy.salvaInfrazione(infrazione);
-
-                }catch (Exception sqlException){
-                    infrazioneStrategy = new InfrazioneMediaStrategy();
-                    infrazioneStrategy.salvaInfrazione(infrazione);
-                }
-
-            }
-            Multa.counter++;
-        }
-    }
-    
-    private List<Infrazione> getInfrazione(List<Infrazione> infrazioni) throws Exception{
-        List<Infrazione> infraziones = new ArrayList<>();
-        int velocitaMaxTratta = sicveDb.getTratta(sicveDb.connection(), infrazioni.get(0).getIdTratta()).getVelocitaMax();
-        int indMax=0;
-
-        System.out.println("================ " + infrazioni);
-
-        double valueMax = 0D;
-        double value = 0D;
-
-        for (int i = 0; i < infrazioni.size(); i++){
-            Infrazione infrazione = infrazioni.get(i);
-
-            if (infrazione.getVelocitaIstantanea() != null) {
-                value = (infrazione.getVelocitaIstantanea() - velocitaMaxTratta) * Infrazione.PREZZO_ISTANTANEA;
-                System.out.println("prezzo istantaneo " + value);
-            }else{
-                value = (infrazione.getVelocitaMedia() - velocitaMaxTratta) * Infrazione.PREZZO_MEDIA;
-                System.out.println("prezzo medio " + value);
-            }
-
-            if (valueMax < value) {
-                indMax = i;
-
-                System.out.println("1) max " + valueMax + " value " + value);
-                valueMax = value;
-                System.out.println("2) max " + valueMax + " value " + value);
-            }
-
-            if (((i + 1) % 3 == 0)) {
-                infraziones.add(infrazioni.get(indMax));
-                indMax = i + 1;
-            }
-        }
-
-        return infraziones;
     }
 }

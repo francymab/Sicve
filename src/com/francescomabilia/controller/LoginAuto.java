@@ -16,28 +16,60 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.sql.ResultSet;
 
+/**
+ * Classe per la gestione della view per il login dell' autoveicolo
+ */
 public class LoginAuto {
+    /**
+     * Variabile statica che rappresenta il percorso alla view della pagina di start dell' applicativo
+     */
     private static final String fileName = "src/com/francescomabilia/view/fxml/sicve.fxml";
+
+    /**
+     * Variabile statica che rappresenta il percorso alla view della homepage dell' amminiestratore
+     */
     private static final String fileNameHome = "src/com/francescomabilia/view/fxml/homeAuto.fxml";
 
+    /**
+     * Variabile per l'inizializzazione dell' istanza al database
+     */
     private final SicveDb sicveDb = SicveDb.getInstance();
+
     Autoveicolo autoveicolo = new Autoveicolo();
 
+    /**
+     * Button per la gestione del caso in cui si voglia tornare indietro
+     */
     @FXML
     private Button backButton;
 
+    /**
+     * Button per la gestione del caso in cui si voglia effettuare l' accesso
+     */
     @FXML
     private Button loginButton;
 
+    /**
+     * TextField utile per l' inserimento della targa dell' autoveicolo per il login
+     */
     @FXML
     private TextField usernameTextField;
 
+    /**
+     * PasswordField utile per l' inserimento della password dell'autoveicolo per il login
+     */
     @FXML
     private PasswordField passwordField;
 
+    /**
+     * Label per l' errore di accesso
+     */
     @FXML
     private Label errorLogin;
 
+    /**
+     * Questo metodo inizializza la view a cui è collegato il controller corrente
+     */
     @FXML
     public void initialize(){
         backButton.setOnAction(e ->{
@@ -76,6 +108,12 @@ public class LoginAuto {
         });
     }
 
+    //METODI
+
+    /**
+     * Metodo per tornare indietro
+     * @throws IOException
+     */
     private void goBack() throws IOException {
         FXMLLoader loader = new FXMLLoader();
         Parent root = loader.load(new FileInputStream(fileName));
@@ -86,6 +124,10 @@ public class LoginAuto {
         loginStage.show();
     }
 
+    /**
+     * Metodo per effettruare il login dell'autoveicolo
+     * @throws Exception
+     */
     private Autoveicolo login() throws Exception {
         ResultSet rs = sicveDb.getAuto(sicveDb.connection(), usernameTextField.getText().trim(), passwordField.getText().trim());
         Autoveicolo autoveicolo = new Autoveicolo();

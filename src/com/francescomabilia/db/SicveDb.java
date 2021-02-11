@@ -16,6 +16,10 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 
+/**
+ * Questa classe si occupa di utilizzare un database. Inoltre vi è applicato un singleton
+ * Che restituisce una singola istanza per evitare la costruzione di molteplici db
+ */
 public class SicveDb {
     /*Singleton - Lazy Iniziatilation*/
     private static SicveDb instance;
@@ -25,6 +29,9 @@ public class SicveDb {
     private String address = "";
     private String driver = "";
 
+    /**
+     * Metodo costruttore privato volto alla realizzazione di un Singleton Pattern
+     * */
     private SicveDb (){
         Properties configFile = new Properties();
 
@@ -40,6 +47,10 @@ public class SicveDb {
         }
     }
 
+    /**
+     * Metodo atto a ritornare la singola istanza di TaxiFinderData (Singleton - versione Lazy)
+     * @return Istanza di SicveDb (singleton)
+     * */
     public static SicveDb getInstance(){
         if (instance == null){
             instance = new SicveDb();
@@ -47,12 +58,15 @@ public class SicveDb {
         return instance;
     }
 
+    /**
+     * Metodo per la connessione al database
+     * @return Connessione al database
+     */
     public Connection connection(){
         Connection connection = null;
         try {
             Class.forName(this.driver);
             connection = DriverManager.getConnection(this.address, this.username, this.password);
-            System.out.println("avvenuta la connessione");
         }catch (ClassNotFoundException | SQLException e){
             if (e instanceof ClassNotFoundException){
                 System.out.println("driver not found!");
@@ -63,6 +77,14 @@ public class SicveDb {
         return connection;
     }
 
+    /**
+     * Metodo per la selezione dell' autoveicolo giusto dal database
+     * @param conn connection al databasse
+     * @param targa Targa dell' autoveicolo
+     * @param password Password dell' autoveicolo
+     * @return Resultset con le informazioni del db dell' autoveicolo selezionato
+     * @throws SQLException Questo metodo può lanciare una exception nel caso in cui vi sia un errore di accesso al database o altri errori
+     */
     public ResultSet getAuto(Connection conn, String targa, String password) throws SQLException {
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -74,6 +96,12 @@ public class SicveDb {
         return rs;
     }
 
+    /**
+     * Metodo per il cambiamento dell' opzione di sms nel db dell' autoveicolo corrente
+     * @param connection Connection al db
+     * @param autoveicolo Autoveicolo corrente
+     * @throws SQLException Questo metodo può lanciare una exception nel caso in cui vi sia un errore di accesso al database o altri errori
+     */
     public void changeStateMandaSMS(Connection connection, Autoveicolo autoveicolo) throws SQLException {
         PreparedStatement ps = null;
         String qry = "UPDATE `autoveicolo` SET `sms` = ? WHERE `autoveicolo`.`targa` = ?;";
@@ -87,6 +115,14 @@ public class SicveDb {
         ps.executeUpdate();
     }
 
+    /**
+     * Metodo per la selezione dell' amministratore giusto dal database
+     * @param conn Connection al db
+     * @param username Username dell' amministratore
+     * @param password Password dell' amministratore
+     * @return Resultset con le informazioni del db dell' amministratore selezionato
+     * @throws SQLException Questo metodo può lanciare una exception nel caso in cui vi sia un errore di accesso al database o altri errori
+     */
     public ResultSet getAdmin(Connection conn, String username, String password) throws SQLException {
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -98,6 +134,14 @@ public class SicveDb {
         return rs;
     }
 
+    /**
+     * Metodo per la selezione della polizia giusto dal database
+     * @param conn Connection al db
+     * @param username Username della polizia
+     * @param password Password della polizia
+     * @return Resultset con le informazioni del db della polizia selezionato
+     * @throws SQLException Questo metodo può lanciare una exception nel caso in cui vi sia un errore di accesso al database o altri errori
+     */
     public ResultSet getPolizia(Connection conn, String username, String password) throws SQLException {
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -109,9 +153,16 @@ public class SicveDb {
         return rs;
     }
 
+    /**
+     * Metodo per l' inserimento di una nuova tratta nel db
+     * @param connection Connection al db
+     * @param tratta Nuova tratta da inserire nel db
+     * @return 0 se la query non ha avuto esito positivo, altrimenti n!=0
+     * @throws SQLException Questo metodo può lanciare una exception nel caso in cui vi sia un errore di accesso al database o altri errori
+     */
     public int insertTratta(Connection connection, Tratta tratta) throws SQLException {
         PreparedStatement ps = null;
-        String qry = "INSERT INTO `tratta` (`comune`, `autostrada`, `velocita_minima`, `velocità_massima`, `kmTratta`, `direzione`) " +
+        String qry = "INSERT INTO `tratta` (`comune`, `autostrada`, `velocita_minima`, `velocita_massima`, `kmTratta`, `direzione`) " +
                      "VALUES (?, ?, ?, ?, ?, ?);";
 
         ps = connection.prepareStatement(qry);
@@ -126,6 +177,12 @@ public class SicveDb {
         return ps.executeUpdate();
     }
 
+    /**
+     * Metodo per visualizzare tutte le tratte contenute nel db
+     * @param connection Connection al db
+     * @return Lista di tratte
+     * @throws SQLException Questo metodo può lanciare una exception nel caso in cui vi sia un errore di accesso al database o altri errori
+     */
     public List<Tratta> getTratte(Connection connection) throws SQLException{
         List<Tratta> tratte = new ArrayList<>();
         PreparedStatement ps = null;
@@ -161,6 +218,14 @@ public class SicveDb {
         return tratte;
     }
 
+    /**
+     * Metodo per aggiornare una tratta gia esistente
+     * @param connection Connection al db
+     * @param oldTratta Vecchia tratta
+     * @param newTratta Nuova tratta
+     * @return 0 se la query non ha avuto esito positivo, altrimenti n!=0
+     * @throws SQLException Questo metodo può lanciare una exception nel caso in cui vi sia un errore di accesso al database o altri errori
+     */
     public int updateTratta(Connection connection, Tratta oldTratta, Tratta newTratta) throws SQLException {
         PreparedStatement ps = null;
         String qry = "UPDATE `tratta` SET `comune` = ?, `autostrada` = ?, `velocita_minima` = ?, `velocita_massima` = ?," +
@@ -179,6 +244,13 @@ public class SicveDb {
         return ps.executeUpdate();
     }
 
+    /**
+     * Metodo per vedere la lista di autovelox appartenenti ad una determinata tratta
+     * @param conn Connection al db
+     * @param idTratta Id della tratta selezionata
+     * @return Lista degli autovelox appartenenti a quella tratta
+     * @throws SQLException Questo metodo può lanciare una exception nel caso in cui vi sia un errore di accesso al database o altri errori
+     */
     public List<SensoreIstantaneo> getAutovelox(Connection conn, int idTratta) throws SQLException {
         //Inizializzo Lista di autovelox a vuoto
         List<SensoreIstantaneo> autoveloxes = new ArrayList<>();
@@ -203,6 +275,16 @@ public class SicveDb {
         return autoveloxes;
     }
 
+    /**
+     * Metodo per l' inserimento di una percorrenza di una tratta e ricezione dal db dell' id di quest'ultima
+     * @param connection Connection al db
+     * @param tratta Tratta percorsa
+     * @param autoveicolo Autoveicolo che l' ha percorsa
+     * @param start Orario e tempo di entrata
+     * @param end  Orario e tempo di uscita
+     * @return Id della percorrenza appena inserita
+     * @throws SQLException Questo metodo può lanciare una exception nel caso in cui vi sia un errore di accesso al database o altri errori
+     */
     public int insertPercorrenza(Connection connection, Tratta tratta, Autoveicolo autoveicolo, LocalDateTime start, LocalDateTime end) throws SQLException {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
@@ -241,6 +323,14 @@ public class SicveDb {
         return id;
     }
 
+    /**
+     * Metodo per l' inserimento di una percorrenza di un autovelox
+     * @param connection Connection al db
+     * @param idPercorrenza Id della percorrenza corrente
+     * @param start Orario e tempo di entrata
+     * @param velocita Velocita istantanea
+     * @throws SQLException Questo metodo può lanciare una exception nel caso in cui vi sia un errore di accesso al database o altri errori
+     */
     public void insertPercorrenzaAutovelox(Connection connection, int idPercorrenza, LocalDateTime start, int velocita) throws SQLException {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
@@ -262,6 +352,13 @@ public class SicveDb {
         }
     }
 
+    /**
+     * Metodo per vedere la lista delle percorrenze di una tratta
+     * @param connection Connection al db
+     * @param idTratta Id della tratta
+     * @return Lista delle percorrenze
+     * @throws SQLException Questo metodo può lanciare una exception nel caso in cui vi sia un errore di accesso al database o altri errori
+     */
     public List<Percorrimento> getPercorrenza(Connection connection, int idTratta) throws SQLException{
         List<Percorrimento> percorrimentoList = new ArrayList<>();
         PreparedStatement ps = null;
@@ -285,6 +382,14 @@ public class SicveDb {
         return percorrimentoList;
     }
 
+    /**
+     * Metodo per l' inserimento di un nuovo autovelox in una determinata tratta
+     * @param connection Connection al db
+     * @param autovelox Autovelox da inserire
+     * @param tratta Tratta a cui aggiungere l' autovelox
+     * @return 0 se la query non ha avuto esito positivo, altrimenti n!=0
+     * @throws SQLException Questo metodo può lanciare una exception nel caso in cui vi sia un errore di accesso al database o altri errori
+     */
     public int insertAutovelox(Connection connection, Autovelox autovelox, Tratta tratta) throws SQLException{
         System.out.println(autovelox);
         PreparedStatement ps = null;
@@ -315,6 +420,12 @@ public class SicveDb {
         return i;
     }
 
+    /**
+     * Metodo per l' inserimento dell' infrazione per velocita istantanea
+     * @param connection Connection al db
+     * @param infrazione Infrazione
+     * @throws Exception Questo metodo può lanciare una exception nel caso in cui vi sia un errore di accesso al database o altri errori
+     */
     public void insertInfrazioneIstantanea(Connection connection, Infrazione infrazione) throws Exception{
         PreparedStatement ps = null;
         String qry = "INSERT INTO `infrazione` (`id_tratta`, `id_autovelox`, `descrizione`, `targa`, `velocita_istantanea`, `id_infrazione`) " +
@@ -335,6 +446,12 @@ public class SicveDb {
         }
     }
 
+    /**
+     * Metodo per l' inserimento dell' infrazione per velocita media
+     * @param connection Connection al db
+     * @param infrazione Infrazione
+     * @throws Exception Questo metodo può lanciare una exception nel caso in cui vi sia un errore di accesso al database o altri errori
+     */
     public void insertInfrazioneMedia(Connection connection, Infrazione infrazione) throws Exception{
         PreparedStatement ps = null;
         String qry = "INSERT INTO `infrazione` (`id_tratta`, `descrizione`, `targa`, `velocita_media`, `id_infrazione`) " +
@@ -355,6 +472,12 @@ public class SicveDb {
         }
     }
 
+    /**
+     * Metodo per la creazione della lista delle multe
+     * @param connection Connection al db
+     * @return Lista delle multe
+     * @throws SQLException Questo metodo può lanciare una exception nel caso in cui vi sia un errore di accesso al database o altri errori
+     */
     public List<Multa> getMulte(Connection connection) throws SQLException{
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -376,6 +499,13 @@ public class SicveDb {
         return multe;
     }
 
+    /**
+     * Metodo per prendere le informazioni di una specifica tratta
+     * @param connection Connection al db
+     * @param idTratta Id della tratta da selezionare
+     * @return Tratta
+     * @throws SQLException Questo metodo può lanciare una exception nel caso in cui vi sia un errore di accesso al database o altri errori
+     */
     public Tratta getTratta(Connection connection, int idTratta) throws SQLException{
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -409,6 +539,13 @@ public class SicveDb {
         return t;
     }
 
+    /**
+     * Metodo per prendere le infrazioni per la multa
+     * @param connection Connection al db
+     * @param idInfrazione Id dell' infrazione
+     * @return Lista di infrazioni con lo stesso id
+     * @throws SQLException Questo metodo può lanciare una exception nel caso in cui vi sia un errore di accesso al database o altri errori
+     */
     public List<Infrazione> getIfrazioneDaMulta(Connection connection, int idInfrazione) throws SQLException{
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -437,6 +574,13 @@ public class SicveDb {
         return infrazioneList;
     }
 
+    /**
+     * Metodo per prendere le multe di un determinato comune
+     * @param connection Connection al db
+     * @param comune Comune della polizia
+     * @return Lista delle multe in quel comune
+     * @throws SQLException Questo metodo può lanciare una exception nel caso in cui vi sia un errore di accesso al database o altri errori
+     */
     public List<Multa> getMulteDaComune(Connection connection, String comune) throws SQLException{
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -459,6 +603,13 @@ public class SicveDb {
         return multe;
     }
 
+    /**
+     * Metodo per prendere tutte le velocita istantanee di una tratta
+     * @param connection Connection al db
+     * @param idTratta Id della tratta
+     * @return Lista delle velocita istantanee della tratta
+     * @throws SQLException Questo metodo può lanciare una exception nel caso in cui vi sia un errore di accesso al database o altri errori
+     */
     public List<Integer> getVelocitaIstantanee(Connection connection, int idTratta) throws SQLException{
         List<Integer> velocita = new ArrayList<>();
         PreparedStatement ps = null;
@@ -480,6 +631,13 @@ public class SicveDb {
         return velocita;
     }
 
+    /**
+     * Metodo per prendere tutte le velocita medie di una tratta
+     * @param connection Connection al db
+     * @param idTratta Id della tratta
+     * @return Lista delle velocita medie della tratta
+     * @throws SQLException Questo metodo può lanciare una exception nel caso in cui vi sia un errore di accesso al database o altri errori
+     */
     public List<Double> getVelocitaMedie(Connection connection, int idTratta) throws SQLException{
         List<Double> velocita = new ArrayList<>();
         PreparedStatement ps = null;
@@ -505,6 +663,13 @@ public class SicveDb {
         return velocita;
     }
 
+    /**
+     * Metodo per prendere tutti i tempi medi di una tratta
+     * @param connection Connection al db
+     * @param idTratta Id della tratta
+     * @return Lista dei tempi medii della tratta
+     * @throws SQLException Questo metodo può lanciare una exception nel caso in cui vi sia un errore di accesso al database o altri errori
+     */
     public List<Long> getTempoMedio(Connection connection, int idTratta) throws SQLException{
         List<Long> tempo = new ArrayList<>();
         PreparedStatement ps = null;

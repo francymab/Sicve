@@ -1,8 +1,10 @@
 package com.francescomabilia.model.sensore;
 
-import com.francescomabilia.model.auto.Autoveicolo;
 import com.francescomabilia.model.percorrimenti.Percorrimento;
 
+/**
+ * Classe che definisce l' interfaccia Sensore
+ */
 public interface Sensore {
     //METODI
 

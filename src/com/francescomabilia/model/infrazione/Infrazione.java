@@ -2,17 +2,40 @@ package com.francescomabilia.model.infrazione;
 
 import java.util.Objects;
 
+/**
+ * Classe che definisce un' infrazione
+ */
 public class Infrazione {
     //VARIABILI D'ISTANZA
+
+    /*Descrizione dell' infrazione*/
     private String descrizione;
+
+    /*Targa dell' autoveicolo*/
     private String targa;
+
+    /*Velocita istantanea dell' autoveicolo*/
     private Integer velocitaIstantanea;
+
+    /*Velocita media dell' autoveicolo*/
     private Double velocitaMedia;
+
+    /*Km dell' infrazione*/
     private int kmInfrazione;
+
+    /*Prezzo per km oltre il limite per velocita istantanea*/
     public static final double PREZZO_ISTANTANEA = 1.00D;
+
+    /*Prezzo per km oltre il limite per velocita media*/
     public static final double PREZZO_MEDIA = 2.47D;
+
+    /*Id della tratta*/
     private int idTratta;
+
+    /*Id dell' autovelox*/
     private Integer idAutovelox;
+
+    /*Id dell' infrazione*/
     private int idInfrazione;
 
     //COSTRUTTORI
@@ -66,14 +89,26 @@ public class Infrazione {
         this.kmInfrazione = kmInfrazione;
     }
 
+    /**
+     * Setter dell' id della tratta
+     * @param idTratta Id della tratta
+     */
     public void setIdTratta(int idTratta) {
         this.idTratta = idTratta;
     }
 
+    /**
+     * Setter dell' id dell' autovelox
+     * @param idAutovelox Id dell' autovelox
+     */
     public void setIdAutovelox(Integer idAutovelox) {
         this.idAutovelox = idAutovelox;
     }
 
+    /**
+     * Setter dell' id dell' infrazione
+     * @param idInfrazione Id dell' infrazione
+     */
     public void setIdInfrazione(int idInfrazione) {
         this.idInfrazione = idInfrazione;
     }
@@ -120,19 +155,36 @@ public class Infrazione {
         return this.kmInfrazione;
     }
 
+    /**
+     * Getter dell' id della tratta
+     * @return Id della tratta
+     */
     public int getIdTratta() {
         return this.idTratta;
     }
 
+    /**
+     * Getter dell' id dell' autovelox
+     * @return Id dell' autovelox
+     */
     public Integer getIdAutovelox() {
         return this.idAutovelox;
     }
 
+    /**
+     * Getter dell' id dell' infrazione
+     * @return Id dell' infrazione
+     */
     public int getIdInfrazione() {
         return idInfrazione;
     }
 
     //METODI SOVRASCRITTI
+
+    /**
+     * Override del metodo equals atto a constatare l'uguaglianza di due oggetti di tipo Infrazione
+     * @return true se i due oggetti sono uguali ritorna, altrimenti false
+     */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -145,11 +197,19 @@ public class Infrazione {
                 targa.equals(that.targa);
     }
 
+    /**
+     * Override del metodo hascode
+     * @return Il valore intero rappresentato dall'oggetto
+     */
     @Override
     public int hashCode() {
         return Objects.hash(descrizione, targa, velocitaIstantanea, velocitaMedia, kmInfrazione);
     }
 
+    /**
+     * Override del metodo to String atto a creare una stringa dato un oggetto di tipo Infrazione
+     * @return Stringa dell'oggetto di tipo Infrazione
+     */
     @Override
     public String toString() {
         return "Infrazione{" +

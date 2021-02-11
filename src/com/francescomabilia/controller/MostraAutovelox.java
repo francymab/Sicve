@@ -11,24 +11,36 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Dialog;
 import javafx.scene.control.ListView;
-import javafx.scene.layout.Border;
 import javafx.scene.layout.BorderPane;
-
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.Optional;
 
-
+/**
+ * Classe per la gestione della view per mostrare la lista degli autovelox
+ */
 public class MostraAutovelox {
+    /**
+     * Variabile statica che rappresenta il percorso alla view della pagina di aggiunta di un autovelox
+     */
     private static final String fileNameAddAutovelox = "src/com/francescomabilia/view/fxml/aggiungiAutovelox.fxml";
 
+    /**
+     * Variabile per l'inizializzazione dell' istanza al database
+     */
     private final SicveDb sicveDb = SicveDb.getInstance();
     Tratta tratta;
 
+    /**
+     * ListView per la visualizzazione degli autovelox
+     */
     @FXML
     private ListView<SensoreIstantaneo> autoveloxListView;
 
+    /**
+     * Button per la gestione del caso in cui si voglia aggiungere un autovelox
+     */
     @FXML
     private Button addAutoveloxButton;
 
@@ -81,14 +93,20 @@ public class MostraAutovelox {
         });
     }
 
+    /**
+     * Questo metodo inizializza la view a cui è collegato il controller corrente
+     */
     @FXML
     public void initialize() {
-//        addAutoveloxButton.setOnAction(e ->{
-//
-//        });
+
     }
 
     //SETTER
+
+    /**
+     * Setter della tratta corrente
+     * @param tratta Tratta
+     */
     public void setTratta(Tratta tratta) {
         this.tratta = tratta;
     }

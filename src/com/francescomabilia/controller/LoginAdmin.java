@@ -3,7 +3,6 @@ package com.francescomabilia.controller;
 import com.francescomabilia.db.SicveDb;
 import com.francescomabilia.model.Amministratore;
 import com.francescomabilia.model.Utente;
-import com.francescomabilia.model.auto.Autoveicolo;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -17,27 +16,58 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.sql.ResultSet;
 
+/**
+ * Classe per la gestione della view per il login dell' amministratore
+ */
 public class LoginAdmin {
+    /**
+     * Variabile statica che rappresenta il percorso alla view della pagina di start dell' applicativo
+     */
     private static final String fileName = "src/com/francescomabilia/view/fxml/sicve.fxml";
+
+    /**
+     * Variabile statica che rappresenta il percorso alla view della homepage dell' amminiestratore
+     */
     private static final String fileNameHomeAdmin = "src/com/francescomabilia/view/fxml/homeAdmin.fxml";
 
+    /**
+     * Variabile per l'inizializzazione dell' istanza al database
+     */
     private final SicveDb sicveDb = SicveDb.getInstance();
 
+    /**
+     * Button per la gestione del caso in cui si voglia tornare indietro
+     */
     @FXML
     private Button backButton;
 
+    /**
+     * Button per la gestione del caso in cui si voglia effettuare l' accesso
+     */
     @FXML
     private Button loginButton;
 
+    /**
+     * TextField utile per l' inserimento del username dell' amministratore per il login
+     */
     @FXML
     private TextField usernameTextField;
 
+    /**
+     * PasswordField utile per l' inserimento della password dell' amministratore per il login
+     */
     @FXML
     private PasswordField passwordField;
 
+    /**
+     * Label per l' errore di accesso
+     */
     @FXML
     private Label errorLogin;
 
+    /**
+     * Questo metodo inizializza la view a cui è collegato il controller corrente
+     */
     @FXML
     public void initialize(){
         backButton.setOnAction(e ->{
@@ -68,6 +98,12 @@ public class LoginAdmin {
         });
     }
 
+    //METODI
+
+    /**
+     * Metodo per tornare indietro
+     * @throws IOException
+     */
     private void goBack() throws IOException {
         FXMLLoader loader = new FXMLLoader();
         Parent root = loader.load(new FileInputStream(fileName));
@@ -79,6 +115,10 @@ public class LoginAdmin {
         loginStage.show();
     }
 
+    /**
+     * Metodo per effettruare il login dell' amministratore
+     * @throws Exception
+     */
     private void login() throws Exception {
         ResultSet rs = sicveDb.getAdmin(sicveDb.connection(), usernameTextField.getText().trim(), passwordField.getText().trim());
         Utente amministratore = new Amministratore();

@@ -6,11 +6,17 @@ import java.time.LocalDateTime;
 import java.util.Objects;
 import java.util.Random;
 
+/**
+ * Classe che definisce un Autovelox
+ */
 public class Autovelox implements SensoreIstantaneo{
     //VARIABILI D'ISTANZA
 
     /*Km dell' autovelox*/
+    /*Km dell' autovelox*/
     private int kmAutovelox;
+
+    /*Id dell' autovelox*/
     private int idAutovelox;
 
     //COSTRUTTORI
@@ -69,11 +75,21 @@ public class Autovelox implements SensoreIstantaneo{
     }
 
     //METODI SOVRASCRITTI
+
+    /**
+     * Override del metodo calcolaVelocitaMedia dato un percorrimento
+     * @param percorrimento Percporrimento
+     * @return Velocita media dell' autoveicolo
+     */
     @Override
     public double calcolaVelocitaMedia(Percorrimento percorrimento) {
         return Math.abs(this.kmAutovelox/(Duration.between(percorrimento.getOrarioUscita().toInstant(), percorrimento.getOrarioEntrata().toInstant()).toMinutes()/60D));
     }
 
+    /**
+     * Override del metodo equals atto a constatare l'uguaglianza di due oggetti di tipo Autovelox
+     * @return true se i due oggetti sono uguali ritorna, altrimenti false
+     */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -82,11 +98,19 @@ public class Autovelox implements SensoreIstantaneo{
         return kmAutovelox == autovelox.kmAutovelox;
     }
 
+    /**
+     * Override del metodo hascode
+     * @return Il valore intero rappresentato dall'oggetto
+     */
     @Override
     public int hashCode() {
         return Objects.hash(kmAutovelox);
     }
 
+    /**
+     * Override del metodo to String atto a creare una stringa dato un oggetto di tipo Autovelox
+     * @return Stringa dell'oggetto di tipo Autovelox
+     */
     @Override
     public String toString() {
         return "Autovelox{" +
@@ -95,10 +119,14 @@ public class Autovelox implements SensoreIstantaneo{
                 '}';
     }
 
+    /**
+     * Override del medoto calcolaVelocitaIstantanea atto a calcolare la velocita istantanea dato un tempo di rilevamento
+     * @param time Tempo di rilevamento
+     * @return Velocita istantanea dell' autoveicolo all' istante time
+     */
     @Override
     public int calcolaVelocitaIstantanea(LocalDateTime time){
 
-        //1.3  2.5
         Random random = new Random();
         long i = Double.valueOf((1.3D + 0.7D * random.nextDouble())*1000D).longValue();
         System.out.println( "1 = " + i);
