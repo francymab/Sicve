@@ -216,8 +216,8 @@ public class MostraTratte {
         List<Infrazione> infrazioneList = new ArrayList<>();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
 
-        System.out.println(tratta);
-        System.out.println(getAutoveicolo());
+//        System.out.println(tratta);
+//        System.out.println(getAutoveicolo());
         Tutor tutor = tratta.getTutor();
 
         Random random = new Random();
@@ -363,7 +363,7 @@ public class MostraTratte {
     public void updateTratta(Tratta oldTratta) throws Exception {
         Dialog<ButtonType> dialog = new Dialog<>();
         dialog.initOwner(borderPane.getScene().getWindow());
-        dialog.setTitle("Aggiungi una nuova tratta");
+        dialog.setTitle("Modifica la tratta");
         dialog.setHeaderText("Inserire i nuvi dati della nuova tratta:");
         FXMLLoader loader = new FXMLLoader();
         Parent root = loader.load(new FileInputStream(fileNameAddTratta));

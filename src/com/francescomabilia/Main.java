@@ -1,7 +1,6 @@
 package com.francescomabilia;
 
 import com.francescomabilia.db.SicveDb;
-import com.francescomabilia.model.infrazione.Multa;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
