@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.francescomabilia.controller.HomeAdmin"
+            prefHeight="400.0" prefWidth="600.0"
+            fx:id="borderPane">
+
+    <top>
+        <Label fx:id="salveLabel" text="Salve, Amministratore" alignment="CENTER" style="-fx-font-family: 'Times New Roman'; -fx-font-size: 20;"/>
+    </top>
+
+
+    <center>
+        <GridPane alignment="CENTER">
+            <Label text="Per aggiungere una tratta " GridPane.rowIndex="1" GridPane.columnIndex="0" style="-fx-font-family: 'Times New Roman'; -fx-font-size: 15;"/>
+            <Button fx:id="addTrattaButton" text="Clicca qui" GridPane.rowIndex="1" GridPane.columnIndex="1" style="-fx-font-family: 'Times New Roman';"/>
+
+            <Label GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+
+            <Label text="Per effettuare operazioni su una tratta " GridPane.rowIndex="4" GridPane.columnIndex="0" style="-fx-font-family: 'Times New Roman'; -fx-font-size: 15;"/>
+            <Button fx:id="showTratteButton" text="Clicca qui" GridPane.rowIndex="4" GridPane.columnIndex="1" style="-fx-font-family: 'Times New Roman';"/>
+
+         </GridPane>
+    </center>
+
+    <bottom>
+        <HBox>
+            <Button fx:id="logoutButton" text="Logout" style="-fx-font-family: 'Times New Roman'; -fx-font-size: 15;"/>
+        </HBox>
+    </bottom>
+
+</BorderPane>
+

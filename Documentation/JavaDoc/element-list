@@ -1,0 +1,10 @@
+module:Sicve
+com.francescomabilia
+com.francescomabilia.controller
+com.francescomabilia.db
+com.francescomabilia.model
+com.francescomabilia.model.auto
+com.francescomabilia.model.infrazione
+com.francescomabilia.model.percorrimenti
+com.francescomabilia.model.sensore
+com.francescomabilia.model.tratta

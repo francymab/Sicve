@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Button?>
+
+<?import javafx.scene.control.ListView?>
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.francescomabilia.controller.HomePolizia"
+            prefHeight="400.0" prefWidth="600.0"
+            fx:id="borderPane">
+
+    <top>
+        <Label fx:id="salveLabel" text="Salve, Polizia" alignment="CENTER" style="-fx-font-family: 'Times New Roman'; -fx-font-size: 20;"/>
+    </top>
+
+
+    <center>
+        <ListView fx:id="multeListView">
+
+        </ListView>
+    </center>
+
+    <bottom>
+        <HBox>
+            <Button fx:id="logoutButton" text="Logout" style="-fx-font-family: 'Times New Roman'; -fx-font-size: 15;"/>
+        </HBox>
+    </bottom>
+
+</BorderPane>

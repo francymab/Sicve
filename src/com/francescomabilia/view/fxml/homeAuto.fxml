@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ToggleButton?>
+<?import javafx.scene.control.Button?>
+
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.francescomabilia.controller.HomeAuto"
+            prefHeight="400.0" prefWidth="600.0">
+
+    <top>
+        <Label fx:id="salveLabel" text="Salve, " alignment="CENTER" style="-fx-font-family: 'Times New Roman'; -fx-font-size: 20;"/>
+    </top>
+
+
+    <center>
+        <GridPane alignment="CENTER">
+            <Label text="Scegliere se ricevere un SMS quando si entra in una tratta " GridPane.rowIndex="0" GridPane.columnIndex="0" style="-fx-font-family: 'Times New Roman'; -fx-font-size: 15;"/>
+            <ToggleButton fx:id="sendSMSToggleButton" text="" GridPane.rowIndex="0" GridPane.columnIndex="1" style="-fx-font-family: 'Times New Roman'"/>
+
+            <Label text="Per entrare in una tratta " GridPane.rowIndex="2" GridPane.columnIndex="0" style="-fx-font-family: 'Times New Roman'; -fx-font-size: 15;"/>
+            <Button fx:id="enterTratteButton" text="Clicca qui" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+        </GridPane>
+    </center>
+
+    <bottom>
+        <HBox>
+            <Button fx:id="logoutButton" text="Logout" style="-fx-font-family: 'Times New Roman'; -fx-font-size: 15;"/>
+        </HBox>
+    </bottom>
+
+</BorderPane>
