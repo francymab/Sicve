@@ -1,14 +1,14 @@
 # Sicve
-##Corso di Programmazione 3
-##Progetto Esame
-##Docente: Proﬀ. Angelo Ciaramella e Raﬀaele Montella
-##A.A. 2020/2021
-##Studente
+## Corso di Programmazione 3
+## Progetto Esame
+## Docente: Proﬀ. Angelo Ciaramella e Raﬀaele Montella
+## A.A. 2020/2021
+## Studente
 • Cognome: Mabilia
 • Nome: Francesco
 • Matricola: 124/1910
 
-#Traccia - SICVE autostradale
+# Traccia - SICVE autostradale
 
 Si vuole sviluppare un sistema SICVE (Sistema Informativo per il Controllo del-
 la Velocit`a) autostradale, detto anche Tutor (vedi sotto). Il Tutor `e un sistema
@@ -40,10 +40,10 @@ L’utente (autoveicolo) pu`o eﬀettuare le seguenti operazioni
 • entrare e uscire da una tratta coperta da Tutor
 • richiedere di essere avvisato automaticamente dal sistema (e.g., sms) quando sta entrando in una tratta controllata dal Tutor
 
-#Sistema SICVE
+# Sistema SICVE
 Per i dettagli di sviluppo vedere: https://it.wikipedia.org/wiki/SICVE
 
-#Note di sviluppo
+# Note di sviluppo
 La prova d’esame richiede la progettazione e lo sviluppo della traccia proposta.
 Lo studente p`o scegliere di sviluppare il progetto nelle due modalit`a: Applica-
 zione Web o programma standalone con supporto graﬁco.
@@ -63,13 +63,13 @@ scaricare un template dalla piattaforma e-learning). La relazione deve contenere
 • parti rilevanti del codice sviluppato.
 
 
-#Consegna progetto
+# Consegna progetto
 La relazione e il codice del progetto devono essere messi a disposizine secondo le
 modalit`a ritenute pi`u opportune (Dropbox, Google Drive, Piattaforma Sebeto,
 Pendrive, CD, . . .) entro la data di scadenza della prenotazione on-line
 dell’esame.
 
-#Modalit`a di esame
+# Modalit`a di esame
 La prima parte della prova di esame verter`a sulla discussione del progetto. Lo
 studente deve preparare una presentazione sintetica (slide) per descrivere
 il progetto svolto. La seconda parte della prova verter`a sulla discussione degli
