@@ -4,9 +4,9 @@
 ## Docente: Proﬀ. Angelo Ciaramella e Raﬀaele Montella
 ## A.A. 2020/2021
 ## Studente
-• Cognome: Mabilia
-• Nome: Francesco
-• Matricola: 124/1910
+- Cognome: Mabilia
+- Nome: Francesco
+- Matricola: 124/1910
 
 # Traccia - SICVE autostradale
 
