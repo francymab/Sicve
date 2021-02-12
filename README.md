@@ -1,13 +1,15 @@
 # Sicve
-Corso di Programmazione 3
-Progetto Esame
-Docente: Proﬀ. Angelo Ciaramella e Raﬀaele Montella
-A.A. 2020/2021
-Studente
+##Corso di Programmazione 3
+##Progetto Esame
+##Docente: Proﬀ. Angelo Ciaramella e Raﬀaele Montella
+##A.A. 2020/2021
+##Studente
 • Cognome: Mabilia
 • Nome: Francesco
 • Matricola: 124/1910
-Traccia - SICVE autostradale
+
+#Traccia - SICVE autostradale
+
 Si vuole sviluppare un sistema SICVE (Sistema Informativo per il Controllo del-
 la Velocit`a) autostradale, detto anche Tutor (vedi sotto). Il Tutor `e un sistema
 per la misurazione della velocit`a media dei veicoli.
